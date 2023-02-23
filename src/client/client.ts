@@ -1,17 +1,28 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import Stats from 'three/examples/jsm/libs/stats.module'
+import { GUI } from 'dat.gui'
+import { RotatableMesh } from './RotatableMesh'
 
+// SET ENVIRONMENT
 const scene : THREE.Scene = new THREE.Scene()
-
 const camera = createPerspectiveCamera()
-
 const renderer = createRenderer()
 document.body.appendChild(renderer.domElement)
 
-addOrbitControls(camera, renderer)
+// addOrbitControls(camera, renderer)
+
+// SET DEBUG STUFF
+addGUI()
+const stats = Stats()
+document.body.appendChild(stats.dom)
+
+
+// SET SCENE
 addRoomEnvironment(scene)
-addMainObject(scene)
 addTopLight(scene)
+scene.add(createMainObject())
 
 window.addEventListener('resize', onWindowResize, false)
 function onWindowResize() {
@@ -23,7 +34,7 @@ function onWindowResize() {
 
 function animate() {
     requestAnimationFrame(animate)
-
+    stats.update()
 
     render()
 }
@@ -33,7 +44,7 @@ function render() {
 }
 
 function addRoomEnvironment(scene: THREE.Scene) {
-    const roomGeometry = new THREE.BoxGeometry(2,2,2)
+    const roomGeometry = new THREE.BoxGeometry(3.5,3.5,3.5)
     const roomMaterial = new THREE.MeshLambertMaterial( {color: 0xaaaaaa, side: THREE.BackSide} )
     const room = new THREE.Mesh(roomGeometry, roomMaterial)
     room.castShadow = true
@@ -54,18 +65,20 @@ function createRenderer() : THREE.Renderer {
     return renderer
 }
 
-animate()
-function addMainObject(scene: THREE.Scene) {
+function createMainObject() : THREE.Mesh {
     const geometry = new THREE.BoxGeometry(0.5,0.5,0.5)
     const material = new THREE.MeshLambertMaterial({
         color: 0x00ff00,
         wireframe: false,
     })
 
-    const mainObject = new THREE.Mesh(geometry, material)
+    const mainObject = new RotatableMesh(geometry, material, renderer.domElement)
     mainObject.castShadow = true
     mainObject.receiveShadow = true
-    scene.add(mainObject)
+    mainObject.scale.set(0.5,0.5,0.5)
+    
+    return mainObject
+    
 }
 
 function createPerspectiveCamera() : THREE.PerspectiveCamera {
@@ -75,15 +88,19 @@ function createPerspectiveCamera() : THREE.PerspectiveCamera {
         0.1,
         1000
     )
-    camera.position.z = 2
+    camera.position.x = 0.5
+    camera.position.z = 0.5
+    camera.position.y = 0.5
+    camera.lookAt(0,0,0)
     return camera
 }
 
 function addTopLight(scene: THREE.Scene) {
     const light = new THREE.SpotLight()
-    light.castShadow = true;
+    // light.castShadow = true;
     light.shadow.mapSize.width = 512;
     light.shadow.mapSize.height = 512;
+    light.position.y = 2
 
     const helper = new THREE.SpotLightHelper(light)
 
@@ -91,3 +108,19 @@ function addTopLight(scene: THREE.Scene) {
     scene.add(helper)
 }
 
+
+function addGUI() {
+    const gui = new GUI()
+    const cubeFolder = gui.addFolder('Cube')
+    // cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2)
+    // cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2)
+    // cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2)
+    // cubeFolder.open()
+    const cameraFolder = gui.addFolder('Camera')
+    cameraFolder.add(camera.position, 'z', 0, 10)
+    cameraFolder.open()
+}
+
+
+
+animate()
