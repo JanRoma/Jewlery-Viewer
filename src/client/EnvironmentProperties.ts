@@ -20,6 +20,8 @@ export class EnvironmentProperties {
         this.controls = new OrbitControls(this.camera, this.renderer.domElement)
         this.controls.minDistance=0.35
         this.controls.maxDistance=1
+        this.controls.minPolarAngle = Math.PI / 4
+        this.controls.maxPolarAngle = Math.PI - (Math.PI / 4)
     }
 }
 
