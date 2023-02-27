@@ -5,19 +5,22 @@ import { Utils } from './Utils'
 import { ApplicationProperties } from './ApplicationProperties'
 import { ObjectLoadingUtils } from './ObjectLoadingUtils'
 import { EnvironmentProperties } from './EnvironmentProperties'
+import {Loader} from 'three/src/loaders/Loader'
+import { DragAndDropHandler } from './DragAndDropHandler'
 
 // VARIABLES
-const applicationProperties = new ApplicationProperties()
+const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById("progress") as HTMLDivElement
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
 const envProperties = new EnvironmentProperties()
+const dragAndDropHandler = new DragAndDropHandler(document, loadingManager, appProperties)
+let dropZoneAdded = false
 
-const stats = Utils.addStats()
+// const stats = Utils.addStats()
 
 document.body.appendChild(envProperties.renderer.domElement)
-Utils.addMouseHandler(envProperties, applicationProperties)
-ObjectLoadingUtils.loadModel('models/decorated_ring/scene.gltf', loadingManager, applicationProperties)
-
+Utils.addMouseHandler(envProperties, appProperties)
+ObjectLoadingUtils.loadModel('models/decorated_ring/scene.gltf', loadingManager, appProperties)
 window.addEventListener('resize', onWindowResize, false)
 
 function onWindowResize() {
@@ -29,14 +32,16 @@ function onWindowResize() {
 
 function animate() {
     requestAnimationFrame(animate)
-    stats.update()
+    //stats.update()
     
-    if(!applicationProperties.isModelAdded){
-        if(applicationProperties.isModelLoaded){
-            applicationProperties.mainObject.scale.set(0.2,0.2,0.2)
-            envProperties.scene.add(applicationProperties.mainObject)
-            Utils.addGUI(applicationProperties.mainObject, envProperties.controls)
-            applicationProperties.isModelAdded = true
+    // dragAndDropHandler.SetDragAndDrop()
+
+    if(!appProperties.isModelAdded){
+        if(appProperties.isModelLoaded){
+            appProperties.mainObject.scale.set(0.2,0.2,0.2)
+            envProperties.scene.add(appProperties.mainObject)
+            Utils.addGUI(appProperties.mainObject, envProperties.controls)
+            appProperties.isModelAdded = true
         }
     }
     envProperties.controls.update()
