@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-export class EnvironmentProperties {
+export class SceneProperties {
 
     scene : THREE.Scene
     light : THREE.Light 
     camera : THREE.PerspectiveCamera
     renderer : THREE.Renderer
     controls : OrbitControls
+    sceneMeshes: THREE.Object3D[]
 
     constructor(){
         this.scene = new THREE.Scene()
@@ -22,6 +23,7 @@ export class EnvironmentProperties {
         this.controls.maxDistance=1
         this.controls.minPolarAngle = Math.PI / 4
         this.controls.maxPolarAngle = Math.PI - (Math.PI / 4)
+        this.sceneMeshes = []
     }
 }
 
@@ -33,11 +35,12 @@ function createLight(scene: THREE.Scene) {
     light.position.y = 0.15
     light.position.z = 1
 
-    const axesHelper = new THREE.AxesHelper(5);
-    const lightHelper = new THREE.SpotLightHelper(light)
+    // const axesHelper = new THREE.AxesHelper(5);
+    // const lightHelper = new THREE.SpotLightHelper(light)
     
     // scene.add(axesHelper)
     // scene.add(lightHelper)
+    // scene.add(light)
     return light
 }
 
@@ -57,6 +60,7 @@ function createPerspectiveCamera() : THREE.PerspectiveCamera {
         0.1,
         1000
     )
+
     camera.position.x = 0
     camera.position.z = 0.5
     camera.position.y = 0.3

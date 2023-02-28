@@ -1,8 +1,8 @@
 import { LoadingManager } from "three";
-import { ApplicationProperties } from "./ApplicationProperties";
-import { ObjectLoadingUtils } from "./ObjectLoadingUtils";
+import { ApplicationProperties } from "../ApplicationProperties";
+import { ModelLoadingUtils } from "./ModelLoadingUtils";
 
-export class DragAndDropHandler{
+export class DragAndDropFileHandler{
     dropZoneAdded : boolean
     loadingManager: LoadingManager
     appProperties: ApplicationProperties
@@ -15,7 +15,7 @@ export class DragAndDropHandler{
         this.document = document
     }
     // Drag and Drop handling  - prototype
-     SetDragAndDrop(){
+     SetDragAndDropZone(){
         if (this.dropZoneAdded) return
         if (document.readyState === "complete") {
             const dropZone = this.createDnDDiv()
@@ -25,8 +25,7 @@ export class DragAndDropHandler{
             dropZone.addEventListener('click', this.onClick, false)
         }
     }
-
-        
+  
     onClick(ev: Event){
         console.log('CLICKED!!')
         ev.preventDefault();
@@ -44,7 +43,7 @@ export class DragAndDropHandler{
         // Prevent default behavior (Prevent file from being opened)
         ev.preventDefault();
         const file : File = ev.dataTransfer?.files[0] as File
-        ObjectLoadingUtils.loadModelFromFile(file, this.loadingManager, this.appProperties)
+        ModelLoadingUtils.loadGLTFModelFromFile(file, this.loadingManager, this.appProperties)
     
         console.log(ev.dataTransfer?.files[0])
         // if (ev.dataTransfer.items) {

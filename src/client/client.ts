@@ -1,26 +1,28 @@
-import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import { Utils } from './Utils'
 import { ApplicationProperties } from './ApplicationProperties'
-import { ObjectLoadingUtils } from './ObjectLoadingUtils'
-import { EnvironmentProperties } from './EnvironmentProperties'
-import {Loader} from 'three/src/loaders/Loader'
-import { DragAndDropHandler } from './DragAndDropHandler'
+import { ModelLoadingUtils } from './files/ModelLoadingUtils'
+import { SceneProperties } from './SceneProperties'
+import { DragAndDropFileHandler as DragAndDropFileHandler } from './files/DragAndDropFileHandler'
+import * as THREE from 'three'
+import { Color, Mesh, MeshPhongMaterial, Object3D } from 'three'
+import { LastClickedObject } from './model/LastClickedObject'
+import { ObjectPicker } from './ObjectPicker'
 
 // VARIABLES
 const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById("progress") as HTMLDivElement
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
-const envProperties = new EnvironmentProperties()
-const dragAndDropHandler = new DragAndDropHandler(document, loadingManager, appProperties)
-let dropZoneAdded = false
+const envProperties = new SceneProperties()
+const dragAndDropFileHandler = new DragAndDropFileHandler(document, loadingManager, appProperties)
+const objectPicker = new ObjectPicker(envProperties)
 
 // const stats = Utils.addStats()
 
 document.body.appendChild(envProperties.renderer.domElement)
-Utils.addMouseHandler(envProperties, appProperties)
-ObjectLoadingUtils.loadModel('models/decorated_ring/scene.gltf', loadingManager, appProperties)
+// Utils.addMouseHandler(envProperties, appProperties)
+ModelLoadingUtils.loadGLTFModel('models/decorated_ring2/ring.glb', loadingManager, appProperties, envProperties)
+
 window.addEventListener('resize', onWindowResize, false)
 
 function onWindowResize() {
@@ -42,6 +44,7 @@ function animate() {
             envProperties.scene.add(appProperties.mainObject)
             Utils.addGUI(appProperties.mainObject, envProperties.controls)
             appProperties.isModelAdded = true
+            console.dir(appProperties.mainObject)
         }
     }
     envProperties.controls.update()
@@ -53,6 +56,10 @@ function render() {
 }
 
 animate()
+
+
+
+
 
 
 

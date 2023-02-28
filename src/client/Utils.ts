@@ -3,7 +3,7 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import Stats from "three/examples/jsm/libs/stats.module"
 import { ApplicationProperties } from "./ApplicationProperties"
-import { EnvironmentProperties } from "./EnvironmentProperties"
+import { SceneProperties } from "./SceneProperties"
 
 export class Utils {
 
@@ -41,7 +41,7 @@ static returnLoadingManager(loadProgressDiv : HTMLDivElement){
     return manager
 }
 
-static addMouseHandler(envProperties : EnvironmentProperties, appProperties: ApplicationProperties) {
+static addMouseHandler(envProperties : SceneProperties, appProperties: ApplicationProperties) {
     envProperties.renderer.domElement.addEventListener('mousemove', function (e) {
         onMouseMove(e, appProperties, envProperties.controls);
     }, false);
