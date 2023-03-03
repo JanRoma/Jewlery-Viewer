@@ -3,7 +3,6 @@ import { type Texture, type WebGLRenderer } from 'three'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
 
 export class TextureDatabase {
-  //
   textures: Map<string, Texture>
 
   constructor (renderer: WebGLRenderer) {
@@ -13,7 +12,6 @@ export class TextureDatabase {
     const generator = new THREE.PMREMGenerator(renderer)
 
     new RGBELoader().load('img/industrial_sunset_02_puresky_1k.hdr', (hdrmap) => {
-      // ...
       const envmap = generator.fromEquirectangular(hdrmap)
       this.textures.set('hdi', envmap.texture)
     })

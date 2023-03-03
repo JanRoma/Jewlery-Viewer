@@ -1,22 +1,9 @@
-import { GUI } from 'dat.gui'
 import * as THREE from 'three'
 import { type LoadingManager } from 'three'
 import { type OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'three/examples/jsm/libs/stats.module'
-import { type ApplicationProperties } from './ApplicationProperties'
-import { type SceneProperties } from './SceneProperties'
-
-export function addGUI (object: THREE.Group, controls: OrbitControls): void {
-  const gui = new GUI()
-  const ringFolder = gui.addFolder('Ring')
-  ringFolder.add(object.rotation, 'x', 0, Math.PI * 2)
-  ringFolder.add(object.rotation, 'y', 0, Math.PI * 2)
-  ringFolder.add(object.rotation, 'z', 0, Math.PI * 2)
-  ringFolder.open()
-  const autoRotateFolder = gui.addFolder('Auto Rotate')
-  autoRotateFolder.add(controls, 'autoRotate').listen()
-  autoRotateFolder.open()
-}
+import { type ApplicationProperties } from './properties/ApplicationProperties'
+import { type SceneProperties } from './properties/SceneProperties'
 
 export function returnLoadingManager (loadProgressDiv: HTMLDivElement): LoadingManager {
   const manager = new THREE.LoadingManager()

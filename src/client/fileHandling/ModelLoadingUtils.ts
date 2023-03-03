@@ -1,11 +1,11 @@
 import * as THREE from 'three'
 import { type LoadingManager } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { type ApplicationProperties } from '../ApplicationProperties'
+import { type ApplicationProperties } from '../properties/ApplicationProperties'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { type TextureDatabase } from './TextureDatabase'
-import { type SceneProperties } from '../SceneProperties'
+import { type SceneProperties } from '../properties/SceneProperties'
 
 export function loadOBJModel (path: string, applicationProperties: ApplicationProperties): void {
   applicationProperties.isModelLoaded = false
@@ -52,7 +52,12 @@ export function loadOBJModel (path: string, applicationProperties: ApplicationPr
   })
 }
 
-export function loadGLTFModel (path: string, loadingManager: LoadingManager, applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, textureDatabase: TextureDatabase): void {
+export function loadGLTFModel (
+  path: string,
+  loadingManager: LoadingManager,
+  applicationProperties: ApplicationProperties,
+  sceneProperties: SceneProperties,
+  textureDatabase: TextureDatabase): void {
   applicationProperties.isModelLoaded = false
   applicationProperties.isModelAdded = false
   const loader = new GLTFLoader(loadingManager)

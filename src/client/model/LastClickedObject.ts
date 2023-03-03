@@ -13,13 +13,18 @@ export class LastClickedObject {
 
   // Add proper handling for picker, not with changing the color.
   // Decide how it should be handled
-  resetPickedObject (): void {
+  removePickedObject (): void {
     this.objectLoaded = false
     this.object = new Mesh()
     this.originalColor = new Color(0xffffff)
   }
 
-  pickObject (object: Mesh): void {
+  setObjectNotPicked (): void {
+    (this.object.material as MeshPhongMaterial).color = this.originalColor
+    this.removePickedObject()
+  }
+
+  pickNewObject (object: Mesh): void {
     this.objectLoaded = true
     this.object = object
     this.originalColor = (object.material as MeshPhongMaterial).color;

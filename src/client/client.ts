@@ -1,10 +1,15 @@
 import * as Utils from './Utils'
-import { ApplicationProperties } from './ApplicationProperties'
-import { SceneProperties } from './SceneProperties'
-import { ObjectPicker } from './ObjectPicker'
+import { ApplicationProperties } from './properties/ApplicationProperties'
+import { SceneProperties } from './properties/SceneProperties'
+import { ObjectPicker } from './model/ObjectPicker'
 import { type WebGLRenderer } from 'three'
-import { TextureDatabase } from './files/TextureDatabase'
-import * as ModelLoadingUtils from './files/ModelLoadingUtils'
+import { TextureDatabase } from './fileHandling/TextureDatabase'
+import * as ModelLoadingUtils from './fileHandling/ModelLoadingUtils'
+import { GUIHandler } from './uiHandling/GUIHandler'
+import { GUI } from 'dat.gui'
+import { UIHandler } from './uiHandling/UIHandler'
+import Stats from 'three/examples/jsm/libs/stats.module'
+import { DragAndDropUIHandler } from './uiHandling/DragAndDropUIHandler'
 
 // VARIABLES
 const appProperties = new ApplicationProperties()
@@ -12,9 +17,10 @@ const loadProgressDiv = document.getElementById('progress') as HTMLDivElement
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
 const sceneProperties = new SceneProperties()
 const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
-const objectPicker = new ObjectPicker(sceneProperties)
+const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties), new GUIHandler(new GUI()), Stats())
+const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
 objectPicker.SetMouseListeners()
-// const stats = Utils.addStats()
+const stats = Utils.addStats()
 
 document.body.appendChild(sceneProperties.renderer.domElement)
 // Utils.addMouseHandler(envProperties, appProperties)
@@ -31,7 +37,7 @@ function onWindowResize (): void {
 
 function animate (): void {
   requestAnimationFrame(animate)
-  // stats.update()
+  stats.update()
 
   // dragAndDropHandler.SetDragAndDrop()
 

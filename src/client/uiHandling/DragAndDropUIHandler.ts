@@ -1,8 +1,8 @@
 import { type LoadingManager } from 'three'
-import { type ApplicationProperties } from '../ApplicationProperties'
-import * as ModelLoadingUtils from './ModelLoadingUtils'
+import { type ApplicationProperties } from '../properties/ApplicationProperties'
+import * as ModelLoadingUtils from '../fileHandling/ModelLoadingUtils'
 
-export class DragAndDropFileHandler {
+export class DragAndDropUIHandler {
   dropZoneAdded: boolean
   loadingManager: LoadingManager
   appProperties: ApplicationProperties
@@ -15,7 +15,7 @@ export class DragAndDropFileHandler {
     this.document = document
   }
 
-  // Drag and Drop handling  - prototype
+  // Drag and Drop file handling  - prototype
   SetDragAndDropZone (): void {
     if (this.dropZoneAdded) return
     if (document.readyState === 'complete') {
