@@ -7,6 +7,7 @@ export class DragAndDropUIHandler {
   loadingManager: LoadingManager
   appProperties: ApplicationProperties
   document: Document
+  dropZoneDiv!: HTMLDivElement
 
   constructor (document: Document, loadingManager: LoadingManager, appProperties: ApplicationProperties) {
     this.dropZoneAdded = false
@@ -15,15 +16,14 @@ export class DragAndDropUIHandler {
     this.document = document
   }
 
-  // Drag and Drop file handling  - prototype
-  SetDragAndDropZone (): void {
+  SetDragAndDropZoneToDocument (): void {
     if (this.dropZoneAdded) return
     if (document.readyState === 'complete') {
-      const dropZone = this.createAndReturnDnDDiv()
+      this.dropZoneDiv = this.createAndReturnDropZoneDiv()
 
-      dropZone.addEventListener('dragover', this.dragOverHandler, false)
-      dropZone.addEventListener('drop', this.dropHandler, false)
-      dropZone.addEventListener('click', this.onClick, false)
+      this.dropZoneDiv.addEventListener('dragover', this.dragOverHandler, false)
+      this.dropZoneDiv.addEventListener('drop', this.dropHandler, false)
+      this.dropZoneDiv.addEventListener('click', this.onClick, false)
     }
   }
 
@@ -63,7 +63,7 @@ export class DragAndDropUIHandler {
     // }
   }
 
-  createAndReturnDnDDiv (): HTMLDivElement {
+  createAndReturnDropZoneDiv (): HTMLDivElement {
     const dragAndDropStyle = 'border: 5px solid #ffaaaa;width: 200px;height: 100px;position: absolute;bottom: 20px;left:50%;-webkit-transform: translateX(-50%);-ms-transform: translateX(-50%);transform: translateX(-50%);'
 
     const dndDiv = document.createElement('div')

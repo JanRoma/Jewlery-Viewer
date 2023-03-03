@@ -62,10 +62,8 @@ export class ObjectPicker {
     if (this.mouseClicked) {
       if (anyObjectWasClickedNow) {
         const object = intersects[0].object as Mesh
-        const otherObjectClickedThanBefore = lastClickedObject.object.name !== object.name
 
-        if (otherObjectClickedThanBefore) lastClickedObject.setObjectNotPicked()
-
+        lastClickedObject.setObjectNotPicked()
         lastClickedObject.pickNewObject(object)
         guiHandler.showGUI(lastClickedObject.object)
       } else {

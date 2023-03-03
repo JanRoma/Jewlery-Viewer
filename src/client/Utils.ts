@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { type LoadingManager } from 'three'
-import { type OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import { type ApplicationProperties } from './properties/ApplicationProperties'
 import { type SceneProperties } from './properties/SceneProperties'
@@ -29,7 +28,7 @@ export function returnLoadingManager (loadProgressDiv: HTMLDivElement): LoadingM
 
 export function addMouseHandler (envProperties: SceneProperties, appProperties: ApplicationProperties): void {
   envProperties.renderer.domElement.addEventListener('mousemove', function (e) {
-    onMouseMove(e, appProperties, envProperties.controls)
+    onMouseMove(e, appProperties)
   }, false)
   envProperties.renderer.domElement.addEventListener('mousedown', function (e) {
     onMouseDown(e, appProperties)
@@ -53,9 +52,5 @@ function onMouseDown (evt: MouseEvent, appProperties: ApplicationProperties): vo
   appProperties.mouseDown = true
 }
 
-function onMouseMove (evt: MouseEvent, appProperties: ApplicationProperties, controls: OrbitControls): void {
-  if (!appProperties.mouseDown) {
-    return
-  }
-  controls.autoRotate = false
+function onMouseMove (evt: MouseEvent, appProperties: ApplicationProperties): void {
 }

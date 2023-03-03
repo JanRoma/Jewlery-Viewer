@@ -6,7 +6,7 @@ export class SceneProperties {
   light: THREE.Light
   camera: THREE.PerspectiveCamera
   renderer: THREE.Renderer
-  controls: OrbitControls
+  orbitControls: OrbitControls
   sceneMeshes: THREE.Object3D[]
 
   constructor () {
@@ -17,11 +17,11 @@ export class SceneProperties {
     this.scene.add(this.light)
     this.camera = createPerspectiveCamera()
     this.renderer = createRenderer()
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.controls.minDistance = 0.35
-    this.controls.maxDistance = 1
-    this.controls.minPolarAngle = Math.PI / 4
-    this.controls.maxPolarAngle = Math.PI - (Math.PI / 4)
+    this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement)
+    this.orbitControls.minDistance = 0.35
+    this.orbitControls.maxDistance = 1
+    this.orbitControls.minPolarAngle = Math.PI / 4
+    this.orbitControls.maxPolarAngle = Math.PI - (Math.PI / 4)
     this.sceneMeshes = []
   }
 }

@@ -10,6 +10,8 @@ import { GUI } from 'dat.gui'
 import { UIHandler } from './uiHandling/UIHandler'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import { DragAndDropUIHandler } from './uiHandling/DragAndDropUIHandler'
+import { RotationUIHandler } from './uiHandling/RotationUIHandler'
+import { RotationController } from './model/RotationController'
 
 // VARIABLES
 const appProperties = new ApplicationProperties()
@@ -17,8 +19,10 @@ const loadProgressDiv = document.getElementById('progress') as HTMLDivElement
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
 const sceneProperties = new SceneProperties()
 const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
-const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties), new GUIHandler(new GUI()), Stats())
+const rotationUIHandler = new RotationUIHandler(document, new RotationController(sceneProperties.orbitControls))
+const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties), new GUIHandler(new GUI()), Stats(), rotationUIHandler)
 const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
+uiHandler.createRotationDiv()
 objectPicker.SetMouseListeners()
 const stats = Utils.addStats()
 
@@ -50,7 +54,7 @@ function animate (): void {
       console.dir(appProperties.mainObject)
     }
   }
-  sceneProperties.controls.update()
+  sceneProperties.orbitControls.update()
   render()
 }
 
