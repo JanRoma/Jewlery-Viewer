@@ -14,27 +14,42 @@ export class MetalUIHandler {
   }
 
   setMetalDivToDocument (): void {
-    const metalDivStyle = 'font-size: 10px;width: 200px;height: 100px;position: absolute;bottom: 100px;left:50%;-webkit-transform: translateX(-30%);-ms-transform: translateX(-30%);transform: translateX(-30%);'
+    const metalDivStyle = 'font-size: 10px;width: 200px;height: 50px;position: absolute;bottom: 150px;left:50%;-webkit-transform: translateX(-30%);-ms-transform: translateX(-30%);transform: translateX(-30%);'
 
     this.metalDiv = this.document.createElement('div')
-    const button = this.document.createElement('button')
-    button.className = 'foo-button mdc-button'
-    button.innerHTML = '<div class="mdc-button__ripple"></div><span id="metal-text" class="mdc-button__label">Metal</span><span class="material-icons ">autorenew</span>'
-    button.addEventListener('click', (evt) => { this.onClick(this.metalController, evt) })
-    this.metalDiv.appendChild(button)
+    const goldButton = this.createGoldButton()
+    const silverButton = this.createSilverButton()
+
+    this.metalDiv.appendChild(goldButton)
+    this.metalDiv.appendChild(silverButton)
     this.metalDiv.style.cssText = metalDivStyle
 
     this.document.body.appendChild(this.metalDiv)
   }
 
-  onClick (metalController: MetalController, event: Event): void {
-    const metalTextSpan = this.document.getElementById('metal-text') as HTMLSpanElement
+  createSilverButton (): HTMLButtonElement {
+    const silverButton = this.document.createElement('button')
+    silverButton.className = 'foo-button mdc-button'
+    silverButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="silver-text" class="mdc-button__label">Silver</span>'
+    silverButton.addEventListener('click', (evt) => { this.silverOnClick(this.metalController, evt) })
+    return silverButton
+  }
 
-    const silverColor = new Color(0xfffff)
+  createGoldButton (): HTMLButtonElement {
+    const goldButton = this.document.createElement('button')
+    goldButton.className = 'foo-button mdc-button'
+    goldButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="gold-text" class="mdc-button__label">Gold</span>'
+    goldButton.addEventListener('click', (evt) => { this.goldOnClick(this.metalController, evt) })
+    return goldButton
+  }
+
+  goldOnClick (metalController: MetalController, event: Event): void {
     const goldColor = new Color(0xffff00)
-    const pickedColor = metalController.color ? goldColor : silverColor
-    metalController.changeMetal(pickedColor)
-    const onOffText = metalController.color ? 'Silver' : 'Gold'
-    metalTextSpan.textContent = onOffText
+    metalController.changeMetal(goldColor)
+  }
+
+  silverOnClick (metalController: MetalController, event: Event): void {
+    const silverColor = new Color(0xfffff)
+    metalController.changeMetal(silverColor)
   }
 }

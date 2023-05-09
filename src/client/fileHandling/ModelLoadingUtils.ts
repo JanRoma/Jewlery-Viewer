@@ -7,28 +7,18 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { type TextureDatabase } from './TextureDatabase'
 import { type SceneProperties } from '../properties/SceneProperties'
 import { type UIHandler } from '../uiHandling/UIHandler'
-import { type MetalController } from '../model/MetalController'
 import { type MetalUIHandler } from '../uiHandling/MetalChangeUIHandler'
 
 export function loadOBJModel (path: string, applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, uiHandler: UIHandler, metalUIHandler: MetalUIHandler): void {
   applicationProperties.isModelLoaded = false
   applicationProperties.isModelAdded = false
-  // const objLoader = new OBJLoader()
-  // const envTexture = new THREE.CubeTextureLoader().load(['img/px_50.png', 'img/nx_50.png', 'img/py_50.png', 'img/ny_50.png', 'img/pz_50.png', 'img/nz_50.png'])
-  // const metalnessTexture = new THREE.TextureLoader().load('models/DefaultMaterial_metallicRoughness.png')
 
   const mtlLoader = new MTLLoader()
   mtlLoader.setResourcePath(path)
   mtlLoader.setPath(path)
   const url = '/Jasiu3'
 
-  // mtlLoader.load(
-  //   url + '.mtl',
-  //   (materials) => {
-  //     materials.preload()
-  //     console.log(materials)
   const objLoader = new OBJLoader()
-  // objLoader.setMaterials(materials)
   objLoader.setPath(path)
   objLoader.load(
     url + '.obj',
@@ -45,13 +35,6 @@ export function loadOBJModel (path: string, applicationProperties: ApplicationPr
           sceneProperties.sceneMeshes.push(m)
         }
       })
-      // const object3D = object as THREE.Object3D
-
-      // object.traverse(node => {
-      //   if (object3D.material) {
-      //     node.material.side = THREE.BackSide
-      //   }
-      // })
       uiHandler.guiHandler.showGUI(object)
       metalUIHandler.metalController.changeObject(object)
     },
@@ -59,12 +42,6 @@ export function loadOBJModel (path: string, applicationProperties: ApplicationPr
       // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
     }
   )
-  // },
-  // (xhr) => {
-  //   // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-  // }
-
-  // )
 }
 
 export function loadGLTFModel (

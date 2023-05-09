@@ -1,11 +1,9 @@
 import { type Mesh, type Color, type Object3D, MeshPhongMaterial } from 'three'
 
 export class MetalController {
-  color: boolean
   object: Object3D
 
   constructor (object: Object3D) {
-    this.color = true
     this.object = object
   }
 
@@ -14,7 +12,6 @@ export class MetalController {
   }
 
   changeMetal (color: Color): void {
-    this.color = !this.color
     console.dir(this.object)
     this.object.children.forEach(element => {
       if (element.name.startsWith('Metal')) {
@@ -22,7 +19,5 @@ export class MetalController {
         ((element as Mesh).material as MeshPhongMaterial).color = color
       }
     })
-
-    // this.object.visible = this.color
   }
 }
