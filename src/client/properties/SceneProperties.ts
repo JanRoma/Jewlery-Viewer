@@ -18,8 +18,8 @@ export class SceneProperties {
     this.camera = createPerspectiveCamera()
     this.renderer = createRenderer()
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.orbitControls.minDistance = 0.35
-    this.orbitControls.maxDistance = 1
+    this.orbitControls.minDistance = 3 // 0.35
+    this.orbitControls.maxDistance = 35 // 1
     this.orbitControls.minPolarAngle = Math.PI / 4
     this.orbitControls.maxPolarAngle = Math.PI - (Math.PI / 4)
     this.sceneMeshes = []
@@ -28,10 +28,10 @@ export class SceneProperties {
 
 function createLight (scene: THREE.Scene): THREE.SpotLight {
   const light = new THREE.SpotLight()
-  // light.castShadow = true;
+  light.castShadow = true
   light.shadow.mapSize.width = 512
   light.shadow.mapSize.height = 512
-  light.position.y = 0.15
+  light.position.y = 10
   light.position.z = 1
 
   // const axesHelper = new THREE.AxesHelper(5);
@@ -61,8 +61,8 @@ function createPerspectiveCamera (): THREE.PerspectiveCamera {
   )
 
   camera.position.x = 0
-  camera.position.z = 0.5
-  camera.position.y = 0.3
+  camera.position.z = 5
+  camera.position.y = 3
   camera.lookAt(0, 0, 0)
   return camera
 }

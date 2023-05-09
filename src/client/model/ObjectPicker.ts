@@ -59,10 +59,19 @@ export class ObjectPicker {
     const anyObjectWasClickedNow = intersects.length > 0
     const anyObjectClickedBefore = lastClickedObject?.objectLoaded
 
+    console.log('aa')
+
     if (this.mouseClicked) {
+      // console.log('mouseClicked')
+      // console.log(this.mouseClicked)
+      console.dir('intersects')
+      console.dir(intersects)
+
+      console.log('any Object Clicked')
+      console.log(anyObjectWasClickedNow)
       if (anyObjectWasClickedNow) {
         const object = intersects[0].object as Mesh
-
+        console.log(object.name)
         lastClickedObject.setObjectNotPicked()
         lastClickedObject.pickNewObject(object)
         guiHandler.showGUI(lastClickedObject.object)

@@ -6,50 +6,65 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { type TextureDatabase } from './TextureDatabase'
 import { type SceneProperties } from '../properties/SceneProperties'
+import { type UIHandler } from '../uiHandling/UIHandler'
+import { type MetalController } from '../model/MetalController'
+import { type MetalUIHandler } from '../uiHandling/MetalChangeUIHandler'
 
-export function loadOBJModel (path: string, applicationProperties: ApplicationProperties): void {
+export function loadOBJModel (path: string, applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, uiHandler: UIHandler, metalUIHandler: MetalUIHandler): void {
   applicationProperties.isModelLoaded = false
   applicationProperties.isModelAdded = false
-  const objLoader = new OBJLoader()
-  const envTexture = new THREE.CubeTextureLoader().load(['img/px_50.png', 'img/nx_50.png', 'img/py_50.png', 'img/ny_50.png', 'img/pz_50.png', 'img/nz_50.png'])
-  const metalnessTexture = new THREE.TextureLoader().load('models/DefaultMaterial_metallicRoughness.png')
+  // const objLoader = new OBJLoader()
+  // const envTexture = new THREE.CubeTextureLoader().load(['img/px_50.png', 'img/nx_50.png', 'img/py_50.png', 'img/ny_50.png', 'img/pz_50.png', 'img/nz_50.png'])
+  // const metalnessTexture = new THREE.TextureLoader().load('models/DefaultMaterial_metallicRoughness.png')
 
   const mtlLoader = new MTLLoader()
-  mtlLoader.load(path + '.mtl', function (materials) {
-    materials.preload()
-    objLoader.setMaterials(materials)
-    console.dir(objLoader.materials)
+  mtlLoader.setResourcePath(path)
+  mtlLoader.setPath(path)
+  const url = '/Jasiu3'
 
-    objLoader.load(
-      path + '.obj',
-      (object) => {
-        object.traverse(function (child) {
-          if ((child as THREE.Mesh).isMesh) {
-            const m = (child as THREE.Mesh)
-            m.receiveShadow = true
-            m.castShadow = true;
-            (m.material as THREE.MeshStandardMaterial).envMap = envTexture;
-            (m.material as THREE.MeshStandardMaterial).metalnessMap = metalnessTexture
-          }
-          if (((child as THREE.Light)).isLight) {
-            const l = (child as THREE.Light)
-            l.castShadow = true
-            l.shadow.bias = -0.003
-            l.shadow.mapSize.width = 2048
-            l.shadow.mapSize.height = 2048
-          }
-        })
-        applicationProperties.mainObject = object
-        applicationProperties.isModelLoaded = true
-      },
-      (xhr) => {
-        console.log((String((xhr.loaded / xhr.total) * 100)) + '% loaded')
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
-  })
+  // mtlLoader.load(
+  //   url + '.mtl',
+  //   (materials) => {
+  //     materials.preload()
+  //     console.log(materials)
+  const objLoader = new OBJLoader()
+  // objLoader.setMaterials(materials)
+  objLoader.setPath(path)
+  objLoader.load(
+    url + '.obj',
+    (object) => {
+      object.scale.set(0.05, 0.05, 0.05)
+      console.dir(object)
+      sceneProperties.scene.add(object)
+      sceneProperties.sceneMeshes.push(object)
+      object.traverse(function (child) {
+        if ((child as THREE.Mesh).isMesh) {
+          const m = (child as THREE.Mesh)
+          m.receiveShadow = true
+          m.castShadow = true
+          sceneProperties.sceneMeshes.push(m)
+        }
+      })
+      // const object3D = object as THREE.Object3D
+
+      // object.traverse(node => {
+      //   if (object3D.material) {
+      //     node.material.side = THREE.BackSide
+      //   }
+      // })
+      uiHandler.guiHandler.showGUI(object)
+      metalUIHandler.metalController.changeObject(object)
+    },
+    (xhr) => {
+      // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+    }
+  )
+  // },
+  // (xhr) => {
+  //   // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+  // }
+
+  // )
 }
 
 export function loadGLTFModel (
