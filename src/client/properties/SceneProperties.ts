@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment'
 
 export class SceneProperties {
   scene: THREE.Scene
   light: THREE.Light
   camera: THREE.PerspectiveCamera
-  renderer: THREE.Renderer
+  renderer: THREE.WebGLRenderer
   orbitControls: OrbitControls
   sceneMeshes: THREE.Object3D[]
 
@@ -23,6 +24,9 @@ export class SceneProperties {
     this.orbitControls.minPolarAngle = Math.PI / 4
     this.orbitControls.maxPolarAngle = Math.PI - (Math.PI / 4)
     this.sceneMeshes = []
+    const environment = new RoomEnvironment()
+    const pmremGenerator = new THREE.PMREMGenerator(this.renderer)
+    this.scene.environment = pmremGenerator.fromScene(environment).texture
   }
 }
 
@@ -43,7 +47,7 @@ function createLight (scene: THREE.Scene): THREE.SpotLight {
   return light
 }
 
-function createRenderer (): THREE.Renderer {
+function createRenderer (): THREE.WebGLRenderer {
   const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer()
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.shadowMap.enabled = true

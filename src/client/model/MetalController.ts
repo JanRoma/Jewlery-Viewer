@@ -1,4 +1,4 @@
-import { type Mesh, type Color, type Object3D, MeshPhongMaterial } from 'three'
+import { type Mesh, type Object3D, type MeshStandardMaterial } from 'three'
 
 export class MetalController {
   object: Object3D
@@ -11,12 +11,11 @@ export class MetalController {
     this.object = object
   }
 
-  changeMetal (color: Color): void {
+  changeMetal (material: MeshStandardMaterial): void {
     console.dir(this.object)
     this.object.children.forEach(element => {
       if (element.name.startsWith('Metal')) {
-        (element as Mesh).material = new MeshPhongMaterial();
-        ((element as Mesh).material as MeshPhongMaterial).color = color
+        (element as Mesh).material = material
       }
     })
   }

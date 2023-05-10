@@ -1,4 +1,4 @@
-import { Color } from 'three'
+import { MeshStandardMaterial } from 'three'
 import { type MetalController } from '../model/MetalController'
 
 export class MetalUIHandler {
@@ -44,12 +44,22 @@ export class MetalUIHandler {
   }
 
   goldOnClick (metalController: MetalController, event: Event): void {
-    const goldColor = new Color(0xffff00)
-    metalController.changeMetal(goldColor)
+    const material = new MeshStandardMaterial({
+      color: 0xffd700,
+      roughness: 0.1,
+      metalness: 0.4
+    })
+
+    metalController.changeMetal(material)
   }
 
   silverOnClick (metalController: MetalController, event: Event): void {
-    const silverColor = new Color(0xfffff)
-    metalController.changeMetal(silverColor)
+    const material = new MeshStandardMaterial({
+      color: 0xc0c0c0,
+      roughness: 0.1,
+      metalness: 0.4
+    })
+
+    metalController.changeMetal(material)
   }
 }

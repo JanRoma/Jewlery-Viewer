@@ -14,7 +14,6 @@ import { RotationUIHandler } from './uiHandling/RotationUIHandler'
 import { RotationController } from './model/RotationController'
 import { MetalUIHandler } from './uiHandling/MetalChangeUIHandler'
 import { MetalController } from './model/MetalController'
-import { type Mesh } from 'three'
 // import { type WebGLRenderer } from 'three'
 
 // VARIABLES
