@@ -14,6 +14,9 @@ import { RotationUIHandler } from './uiHandling/RotationUIHandler'
 import { RotationController } from './model/RotationController'
 import { MetalUIHandler } from './uiHandling/MetalChangeUIHandler'
 import { MetalController } from './model/MetalController'
+import { GemUIHandler } from './uiHandling/GemChangeUIHandler'
+import { GemController } from './model/GemController'
+import { CssController } from './model/CssController'
 // import { type WebGLRenderer } from 'three'
 
 // VARIABLES
@@ -21,13 +24,16 @@ const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById('progress') as HTMLDivElement
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
 const sceneProperties = new SceneProperties()
+const colorController = new CssController()
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
 const rotationUIHandler = new RotationUIHandler(document, new RotationController(sceneProperties.orbitControls))
-const metalUIHandler = new MetalUIHandler(document, new MetalController(appProperties.mainObject))
-const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties), new GUIHandler(new GUI()), Stats(), rotationUIHandler, metalUIHandler)
+const metalUIHandler = new MetalUIHandler(document, new MetalController(appProperties.mainObject), colorController)
+const gemUIHandler = new GemUIHandler(document, new GemController(appProperties.mainObject), colorController)
+const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties), new GUIHandler(new GUI()), Stats(), rotationUIHandler, metalUIHandler, gemUIHandler)
 // const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
 uiHandler.createRotationDiv()
 uiHandler.createMetalDiv()
+uiHandler.createGemDiv()
 // objectPicker.SetMouseListeners()
 const stats = Utils.addStats()
 
@@ -36,7 +42,7 @@ document.body.appendChild(sceneProperties.renderer.domElement)
 // ModelLoadingUtils.loadGLTFModel('models/decorated_ring2/ring.glb', loadingManager, appProperties, sceneProperties, textureDatabase)
 // ModelLoadingUtils.loadGLTFModel('models/jasiu/Jasiu2.glb', loadingManager, appProperties, sceneProperties, textureDatabase)
 
-ModelLoadingUtils.loadOBJModel('models/jasiu', appProperties, sceneProperties, uiHandler, metalUIHandler)
+ModelLoadingUtils.loadOBJModel('models/jasiu', 'Jasiu3', appProperties, sceneProperties, uiHandler)
 
 window.addEventListener('resize', onWindowResize, false)
 

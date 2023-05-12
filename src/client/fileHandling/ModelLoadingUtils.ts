@@ -7,23 +7,22 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { type TextureDatabase } from './TextureDatabase'
 import { type SceneProperties } from '../properties/SceneProperties'
 import { type UIHandler } from '../uiHandling/UIHandler'
-import { type MetalUIHandler } from '../uiHandling/MetalChangeUIHandler'
 
-export function loadOBJModel (path: string, applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, uiHandler: UIHandler, metalUIHandler: MetalUIHandler): void {
+export function loadOBJModel (path: string, name: string, applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, uiHandler: UIHandler): void {
   applicationProperties.isModelLoaded = false
   applicationProperties.isModelAdded = false
 
   const mtlLoader = new MTLLoader()
   mtlLoader.setResourcePath(path)
   mtlLoader.setPath(path)
-  const url = '/Jasiu3'
+  const url = `/${name}`
 
   const objLoader = new OBJLoader()
   objLoader.setPath(path)
   objLoader.load(
     url + '.obj',
     (object) => {
-      object.scale.set(0.05, 0.05, 0.05)
+      object.scale.set(0.1, 0.1, 0.1)
       console.dir(object)
       sceneProperties.scene.add(object)
       sceneProperties.sceneMeshes.push(object)
@@ -36,7 +35,8 @@ export function loadOBJModel (path: string, applicationProperties: ApplicationPr
         }
       })
       uiHandler.guiHandler.showGUI(object)
-      metalUIHandler.metalController.changeObject(object)
+      uiHandler.metalUIHandler.metalController.changeObject(object)
+      uiHandler.gemUIHandler.gemController.changeObject(object)
     },
     (xhr) => {
       // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')

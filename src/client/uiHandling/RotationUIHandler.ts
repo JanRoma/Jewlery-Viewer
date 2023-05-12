@@ -13,7 +13,7 @@ export class RotationUIHandler {
   }
 
   setRotationDivToDocument (): void {
-    const rotationDivStyle = 'font-size: 10px;width: 200px;height: 100px;position: absolute;bottom: 20px;left:50%;-webkit-transform: translateX(-30%);-ms-transform: translateX(-30%);transform: translateX(-30%);'
+    const rotationDivStyle = 'font-size: 10px;width: 200px;height: 100px;position: absolute;bottom: -40px;left:50%;-webkit-transform: translateX(-30%);-ms-transform: translateX(-30%);transform: translateX(-30%);'
 
     this.rotationDiv = this.document.createElement('div')
     const button = this.document.createElement('button')
