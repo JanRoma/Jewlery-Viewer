@@ -29,6 +29,10 @@ export class CssController {
     return this.returnDivStyle(75)
   }
 
+  returnModelDivStyle (): string {
+    return this.returnDivStyle(95)
+  }
+
   returnDivStyle (top: number): string {
     return `
     background-color: #${this.backgroundColor.getHexString()};
@@ -38,7 +42,7 @@ export class CssController {
     position: absolute;
     top: ${top}%;
     left: 50%;
-    transform: translate(-50%, -90%);
+    transform: translate(-50%, -${top}%);
     border-radius: 25px;
     text-align:center;
     display: flex;

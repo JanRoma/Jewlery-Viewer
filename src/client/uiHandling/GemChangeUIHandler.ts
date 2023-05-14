@@ -1,6 +1,7 @@
 import { MeshPhysicalMaterial } from 'three'
 import { type GemController } from '../model/GemController'
 import { type CssController } from '../model/CssController'
+import { type ApplicationProperties } from '../properties/ApplicationProperties'
 
 export class GemUIHandler {
   gemDiv!: HTMLDivElement
@@ -8,12 +9,14 @@ export class GemUIHandler {
   document: Document
   gemController: GemController
   cssController: CssController
+  appProperties: ApplicationProperties
 
-  constructor (document: Document, gemController: GemController, cssController: CssController) {
+  constructor (document: Document, appProperties: ApplicationProperties, gemController: GemController, cssController: CssController) {
     this.gemlDivAdded = true
     this.document = document
     this.gemController = gemController
     this.cssController = cssController
+    this.appProperties = appProperties
   }
 
   setGemDivToDocument (): void {
@@ -67,7 +70,7 @@ export class GemUIHandler {
       transmission: 1
     })
     material.thickness = 0.5
-    gemController.changeGem(material)
+    gemController.changeGem(this.appProperties.mainObject, material)
   }
 
   emerald2OnClick (gemController: GemController, evt: Event): void {
@@ -78,7 +81,7 @@ export class GemUIHandler {
       transmission: 0.99
     })
     material.thickness = 1
-    gemController.changeGem(material)
+    gemController.changeGem(this.appProperties.mainObject, material)
   }
 
   sapphireOnClick (gemController: GemController, evt: Event): void {
@@ -88,6 +91,6 @@ export class GemUIHandler {
       metalness: 0.4,
       transmission: 0.99
     })
-    gemController.changeGem(material)
+    gemController.changeGem(this.appProperties.mainObject, material)
   }
 }

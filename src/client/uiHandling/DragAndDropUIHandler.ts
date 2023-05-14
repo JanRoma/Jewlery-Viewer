@@ -1,6 +1,6 @@
 import { type LoadingManager } from 'three'
 import { type ApplicationProperties } from '../properties/ApplicationProperties'
-import * as ModelLoadingUtils from '../fileHandling/ModelLoadingUtils'
+import { type ModelLoader } from '../fileHandling/ModelLoader'
 
 export class DragAndDropUIHandler {
   dropZoneAdded: boolean
@@ -8,12 +8,14 @@ export class DragAndDropUIHandler {
   appProperties: ApplicationProperties
   document: Document
   dropZoneDiv!: HTMLDivElement
+  modelLoader: ModelLoader
 
-  constructor (document: Document, loadingManager: LoadingManager, appProperties: ApplicationProperties) {
+  constructor (document: Document, loadingManager: LoadingManager, appProperties: ApplicationProperties, modelLoader: ModelLoader) {
     this.dropZoneAdded = false
     this.loadingManager = loadingManager
     this.appProperties = appProperties
     this.document = document
+    this.modelLoader = modelLoader
   }
 
   SetDragAndDropZoneToDocument (): void {
@@ -43,7 +45,7 @@ export class DragAndDropUIHandler {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault()
     const file: File = ev.dataTransfer?.files[0] as File
-    ModelLoadingUtils.loadGLTFModelFromFile(file, this.loadingManager, this.appProperties)
+    this.modelLoader.loadGLTFModelFromFile(file, this.loadingManager, this.appProperties)
 
     console.log(ev.dataTransfer?.files[0])
     // if (ev.dataTransfer.items) {

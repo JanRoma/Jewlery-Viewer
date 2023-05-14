@@ -11,7 +11,8 @@ export class MetalController {
     this.object = object
   }
 
-  changeMetal (material: MeshStandardMaterial): void {
+  changeMetal (object: Object3D, material: MeshStandardMaterial): void {
+    this.object = object
     console.dir(this.object)
     this.object.children.forEach(element => {
       if (element.name.startsWith('Metal')) {

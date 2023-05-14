@@ -4,7 +4,7 @@ import { SceneProperties } from './properties/SceneProperties'
 // import { ObjectPicker } from './model/ObjectPicker'
 // import { type WebGLRenderer } from 'three'//
 // import { TextureDatabase } from './fileHandling/TextureDatabase'
-import * as ModelLoadingUtils from './fileHandling/ModelLoadingUtils'
+import * as ModelLoadingUtils from './fileHandling/ModelLoader'
 import { GUIHandler } from './uiHandling/GUIHandler'
 import { GUI } from 'dat.gui'
 import { UIHandler } from './uiHandling/UIHandler'
@@ -17,6 +17,8 @@ import { MetalController } from './model/MetalController'
 import { GemUIHandler } from './uiHandling/GemChangeUIHandler'
 import { GemController } from './model/GemController'
 import { CssController } from './model/CssController'
+import { ModelUIHandler } from './uiHandling/ModelChangeUIHandler'
+import { ModelController } from './model/ModelController'
 // import { type WebGLRenderer } from 'three'
 
 // VARIABLES
@@ -24,16 +26,23 @@ const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById('progress') as HTMLDivElement
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
 const sceneProperties = new SceneProperties()
-const colorController = new CssController()
+const cssController = new CssController()
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
+
+const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties)
+
 const rotationUIHandler = new RotationUIHandler(document, new RotationController(sceneProperties.orbitControls))
-const metalUIHandler = new MetalUIHandler(document, new MetalController(appProperties.mainObject), colorController)
-const gemUIHandler = new GemUIHandler(document, new GemController(appProperties.mainObject), colorController)
-const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties), new GUIHandler(new GUI()), Stats(), rotationUIHandler, metalUIHandler, gemUIHandler)
+const metalUIHandler = new MetalUIHandler(document, new MetalController(appProperties.mainObject), cssController, appProperties)
+const gemUIHandler = new GemUIHandler(document, appProperties, new GemController(appProperties.mainObject), cssController)
+const modelUIHandler = new ModelUIHandler(document, new ModelController(appProperties.mainObject, modelLoader), cssController)
+
+const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties, modelLoader), new GUIHandler(new GUI()), Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler)
+
 // const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
 uiHandler.createRotationDiv()
 uiHandler.createMetalDiv()
 uiHandler.createGemDiv()
+uiHandler.createModelDiv()
 // objectPicker.SetMouseListeners()
 const stats = Utils.addStats()
 
@@ -42,7 +51,7 @@ document.body.appendChild(sceneProperties.renderer.domElement)
 // ModelLoadingUtils.loadGLTFModel('models/decorated_ring2/ring.glb', loadingManager, appProperties, sceneProperties, textureDatabase)
 // ModelLoadingUtils.loadGLTFModel('models/jasiu/Jasiu2.glb', loadingManager, appProperties, sceneProperties, textureDatabase)
 
-ModelLoadingUtils.loadOBJModel('models/jasiu', 'Jasiu3', appProperties, sceneProperties, uiHandler)
+modelLoader.loadOBJModel('models/jasiu', 'Jasiu3')
 
 window.addEventListener('resize', onWindowResize, false)
 

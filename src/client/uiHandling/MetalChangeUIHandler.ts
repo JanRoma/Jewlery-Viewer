@@ -2,6 +2,7 @@ import { MeshPhysicalMaterial, MeshStandardMaterial } from 'three'
 import { type MetalController } from '../model/MetalController'
 import * as THREE from 'three'
 import { type CssController } from '../model/CssController'
+import { type ApplicationProperties } from '../properties/ApplicationProperties'
 
 export class MetalUIHandler {
   metalDiv!: HTMLDivElement
@@ -10,13 +11,16 @@ export class MetalUIHandler {
   metalController: MetalController
   texture: THREE.Texture
   cssController: CssController
+  appProperties: ApplicationProperties
 
-  constructor (document: Document, metalController: MetalController, colorController: CssController) {
+  constructor (document: Document, metalController: MetalController, colorController: CssController, appProperties: ApplicationProperties
+  ) {
     this.metalDivAdded = true
     this.document = document
     this.metalController = metalController
     this.texture = new THREE.Texture()
     this.cssController = colorController
+    this.appProperties = appProperties
   }
 
   setMetalDivToDocument (): void {
@@ -85,7 +89,7 @@ export class MetalUIHandler {
       metalness: 0.6
     })
 
-    metalController.changeMetal(material)
+    metalController.changeMetal(this.appProperties.mainObject, material)
   }
 
   gold2OnClick (metalController: MetalController, event: Event): void {
@@ -96,7 +100,7 @@ export class MetalUIHandler {
       envMap: this.texture
     })
 
-    metalController.changeMetal(material)
+    metalController.changeMetal(this.appProperties.mainObject, material)
   }
 
   silverOnClick (metalController: MetalController, event: Event): void {
@@ -106,6 +110,6 @@ export class MetalUIHandler {
       metalness: 0.6
     })
 
-    metalController.changeMetal(material)
+    metalController.changeMetal(this.appProperties.mainObject, material)
   }
 }
