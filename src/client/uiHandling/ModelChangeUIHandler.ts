@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { type CssController } from '../model/CssController'
+import { type CssController } from './CssController'
 import { type ModelController } from '../model/ModelController'
 
 export class ModelUIHandler {

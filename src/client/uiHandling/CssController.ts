@@ -1,4 +1,5 @@
 import { Color } from 'three'
+import { type ColorSet } from '../data/ColorSet'
 
 export class CssController {
   sapphireColor: Color
@@ -7,14 +8,16 @@ export class CssController {
   silverColor: Color
   backgroundColor: Color
   colorChgangingDivsWidth: number
+  colorController: ColorSet
 
-  constructor () {
-    this.emeraldColor = new Color(0x50c878)
-    this.sapphireColor = new Color(0x0f52ba)
-    this.goldColor = new Color(0xffcc88)
-    this.silverColor = new Color(0xc0c0c0)
+  constructor (colorController: ColorSet) {
+    this.emeraldColor = colorController.emeraldColor
+    this.sapphireColor = colorController.sapphireColor
+    this.goldColor = colorController.goldColor
+    this.silverColor = colorController.silverColor
     this.backgroundColor = new Color(0xffffff)
     this.colorChgangingDivsWidth = 200
+    this.colorController = colorController
   }
 
   returnDivLabelStyle (): string {
@@ -51,10 +54,10 @@ export class CssController {
   }
 
   returnSilverButtonStyle (): string {
-    return `color: #${this.silverColor.getHexString()};display:inline-block;vertical-align:bottom;`
+    return `color: #${this.colorController.silverColor.getHexString()};display:inline-block;vertical-align:bottom;`
   }
 
   returnGoldButtonStyle (): string {
-    return `color: #${this.goldColor.getHexString()};display:inline-block;vertical-align:bottom;`
+    return `color: #${this.colorController.goldColor.getHexString()};display:inline-block;vertical-align:bottom;`
   }
 }

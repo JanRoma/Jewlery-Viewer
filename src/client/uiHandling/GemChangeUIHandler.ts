@@ -1,7 +1,7 @@
-import { MeshPhysicalMaterial } from 'three'
 import { type GemController } from '../model/GemController'
-import { type CssController } from '../model/CssController'
+import { type CssController } from './CssController'
 import { type ApplicationProperties } from '../properties/ApplicationProperties'
+import { type MaterialSet } from '../data/MaterialSet'
 
 export class GemUIHandler {
   gemDiv!: HTMLDivElement
@@ -9,14 +9,16 @@ export class GemUIHandler {
   document: Document
   gemController: GemController
   cssController: CssController
+  materialController: MaterialSet
   appProperties: ApplicationProperties
 
-  constructor (document: Document, appProperties: ApplicationProperties, gemController: GemController, cssController: CssController) {
+  constructor (document: Document, appProperties: ApplicationProperties, gemController: GemController, materialController: MaterialSet, cssController: CssController) {
     this.gemlDivAdded = true
     this.document = document
     this.gemController = gemController
     this.cssController = cssController
     this.appProperties = appProperties
+    this.materialController = materialController
   }
 
   setGemDivToDocument (): void {
@@ -64,33 +66,10 @@ export class GemUIHandler {
   }
 
   emeraldOnClick (gemController: GemController, evt: Event): void {
-    const material = new MeshPhysicalMaterial({
-      color: this.cssController.emeraldColor,
-      roughness: 0,
-      transmission: 1
-    })
-    material.thickness = 0.5
-    gemController.changeGem(this.appProperties.mainObject, material)
-  }
-
-  emerald2OnClick (gemController: GemController, evt: Event): void {
-    const material = new MeshPhysicalMaterial({
-      color: 0x50c878,
-      roughness: 0.1,
-      metalness: 0.1,
-      transmission: 0.99
-    })
-    material.thickness = 1
-    gemController.changeGem(this.appProperties.mainObject, material)
+    gemController.changeGem(this.appProperties.mainObject, this.materialController.emeraldMaterial)
   }
 
   sapphireOnClick (gemController: GemController, evt: Event): void {
-    const material = new MeshPhysicalMaterial({
-      color: this.cssController.sapphireColor,
-      roughness: 0.1,
-      metalness: 0.4,
-      transmission: 0.99
-    })
-    gemController.changeGem(this.appProperties.mainObject, material)
+    gemController.changeGem(this.appProperties.mainObject, this.materialController.sapphireMaterial)
   }
 }

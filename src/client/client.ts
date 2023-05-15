@@ -16,9 +16,11 @@ import { MetalUIHandler } from './uiHandling/MetalChangeUIHandler'
 import { MetalController } from './model/MetalController'
 import { GemUIHandler } from './uiHandling/GemChangeUIHandler'
 import { GemController } from './model/GemController'
-import { CssController } from './model/CssController'
+import { CssController } from './uiHandling/CssController'
 import { ModelUIHandler } from './uiHandling/ModelChangeUIHandler'
 import { ModelController } from './model/ModelController'
+import { MaterialSet } from './data/MaterialSet'
+import { ColorSet } from './data/ColorSet'
 // import { type WebGLRenderer } from 'three'
 
 // VARIABLES
@@ -26,14 +28,17 @@ const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById('progress') as HTMLDivElement
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
 const sceneProperties = new SceneProperties()
-const cssController = new CssController()
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
+
+const colorController = new ColorSet()
+const cssController = new CssController(colorController)
+const materialController = new MaterialSet(colorController)
 
 const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties)
 
 const rotationUIHandler = new RotationUIHandler(document, new RotationController(sceneProperties.orbitControls))
-const metalUIHandler = new MetalUIHandler(document, new MetalController(appProperties.mainObject), cssController, appProperties)
-const gemUIHandler = new GemUIHandler(document, appProperties, new GemController(appProperties.mainObject), cssController)
+const metalUIHandler = new MetalUIHandler(document, new MetalController(appProperties.mainObject), cssController, appProperties, materialController)
+const gemUIHandler = new GemUIHandler(document, appProperties, new GemController(materialController, appProperties.mainObject), materialController, cssController)
 const modelUIHandler = new ModelUIHandler(document, new ModelController(appProperties.mainObject, modelLoader), cssController)
 
 const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties, modelLoader), new GUIHandler(new GUI()), Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler)

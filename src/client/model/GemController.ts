@@ -1,17 +1,28 @@
-import { type Mesh, type Object3D, type MeshStandardMaterial } from 'three'
+import { type Mesh, type Object3D, type MeshPhysicalMaterial } from 'three'
+import { type MaterialSet } from '../data/MaterialSet'
 
 export class GemController {
   object: Object3D
+  materialController: MaterialSet
 
-  constructor (object: Object3D) {
+  constructor (materialController: MaterialSet, object: Object3D) {
     this.object = object
+    this.materialController = materialController
   }
 
   changeObject (object: Object3D): void {
     this.object = object
   }
 
-  changeGem (object: Object3D, material: MeshStandardMaterial): void {
+  changeToEmerald (object: Object3D): void {
+    this.changeGem(object, this.materialController.emeraldMaterial)
+  }
+
+  changeToSapphire (object: Object3D): void {
+    this.changeGem(object, this.materialController.sapphireMaterial)
+  }
+
+  changeGem (object: Object3D, material: MeshPhysicalMaterial): void {
     this.object = object
     console.dir(this.object)
     this.object.children.forEach(element => {
