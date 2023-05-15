@@ -1,23 +1,18 @@
-import { type Mesh, type Object3D, type MeshStandardMaterial } from 'three'
+import { type Object3D } from 'three'
+import { type MaterialController } from '../data/MaterialController'
 
 export class MetalController {
-  object: Object3D
+  materialController: MaterialController
 
-  constructor (object: Object3D) {
-    this.object = object
+  constructor (materialController: MaterialController) {
+    this.materialController = materialController
   }
 
-  changeObject (object: Object3D): void {
-    this.object = object
+  changeToGold (object: Object3D): void {
+    this.materialController.changeToGold(object)
   }
 
-  changeMetal (object: Object3D, material: MeshStandardMaterial): void {
-    this.object = object
-    console.dir(this.object)
-    this.object.children.forEach(element => {
-      if (element.name.startsWith('Metal')) {
-        (element as Mesh).material = material
-      }
-    })
+  changeToSilver (object: Object3D): void {
+    this.materialController.changeToSilver(object)
   }
 }

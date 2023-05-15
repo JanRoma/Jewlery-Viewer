@@ -1,8 +1,8 @@
-import { MeshPhysicalMaterial, type Texture } from 'three'
+import { type Mesh, MeshPhysicalMaterial, type Object3D, type Texture } from 'three'
 import { type ColorSet } from './ColorSet'
 import * as THREE from 'three'
 
-export class MaterialSet {
+export class MaterialController {
   sapphireMaterial: MeshPhysicalMaterial
   emeraldMaterial: MeshPhysicalMaterial
   goldMaterial: MeshPhysicalMaterial
@@ -43,8 +43,7 @@ export class MaterialSet {
     this.silverMaterial = new MeshPhysicalMaterial({
       color: this.colorController.silverColor,
       roughness: 0.1,
-      metalness: 0.6,
-      envMap: this.envTexture
+      metalness: 0.6
     })
   }
 
@@ -61,5 +60,39 @@ export class MaterialSet {
     // imgTexture.wrapS = imgTexture.wrapT = THREE.RepeatWrapping
     imgTexture.anisotropy = 16
     return imgTexture
+  }
+
+  changeToEmerald (object: Object3D): void {
+    this.changeGem(object, this.emeraldMaterial)
+  }
+
+  changeToSapphire (object: Object3D): void {
+    this.changeGem(object, this.sapphireMaterial)
+  }
+
+  changeGem (object: Object3D, material: MeshPhysicalMaterial): void {
+    console.dir(object)
+    object.children.forEach(element => {
+      if (element.name.startsWith('Gem')) {
+        (element as Mesh).material = material
+      }
+    })
+  }
+
+  changeToSilver (object: Object3D): void {
+    this.changeMetal(object, this.silverMaterial)
+  }
+
+  changeToGold (object: Object3D): void {
+    this.changeMetal(object, this.goldMaterial)
+  }
+
+  changeMetal (object: Object3D, material: MeshPhysicalMaterial): void {
+    console.dir(object)
+    object.children.forEach(element => {
+      if (element.name.startsWith('Metal')) {
+        (element as Mesh).material = material
+      }
+    })
   }
 }

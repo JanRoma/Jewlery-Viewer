@@ -1,7 +1,7 @@
 import { type GemController } from '../model/GemController'
 import { type CssController } from './CssController'
 import { type ApplicationProperties } from '../properties/ApplicationProperties'
-import { type MaterialSet } from '../data/MaterialSet'
+import { type MaterialController } from '../data/MaterialController'
 
 export class GemUIHandler {
   gemDiv!: HTMLDivElement
@@ -9,10 +9,10 @@ export class GemUIHandler {
   document: Document
   gemController: GemController
   cssController: CssController
-  materialController: MaterialSet
+  materialController: MaterialController
   appProperties: ApplicationProperties
 
-  constructor (document: Document, appProperties: ApplicationProperties, gemController: GemController, materialController: MaterialSet, cssController: CssController) {
+  constructor (document: Document, appProperties: ApplicationProperties, gemController: GemController, materialController: MaterialController, cssController: CssController) {
     this.gemlDivAdded = true
     this.document = document
     this.gemController = gemController
@@ -66,10 +66,10 @@ export class GemUIHandler {
   }
 
   emeraldOnClick (gemController: GemController, evt: Event): void {
-    gemController.changeGem(this.appProperties.mainObject, this.materialController.emeraldMaterial)
+    gemController.changeToEmerald(this.appProperties.mainObject)
   }
 
   sapphireOnClick (gemController: GemController, evt: Event): void {
-    gemController.changeGem(this.appProperties.mainObject, this.materialController.sapphireMaterial)
+    gemController.changeToSapphire(this.appProperties.mainObject)
   }
 }

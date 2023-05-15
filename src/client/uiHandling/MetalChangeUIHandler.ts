@@ -1,8 +1,7 @@
-import { MeshStandardMaterial } from 'three'
 import { type MetalController } from '../model/MetalController'
 import { type CssController } from './CssController'
 import { type ApplicationProperties } from '../properties/ApplicationProperties'
-import { type MaterialSet } from '../data/MaterialSet'
+import { type MaterialController } from '../data/MaterialController'
 
 export class MetalUIHandler {
   metalDiv!: HTMLDivElement
@@ -11,9 +10,9 @@ export class MetalUIHandler {
   metalController: MetalController
   cssController: CssController
   appProperties: ApplicationProperties
-  materialController: MaterialSet
+  materialController: MaterialController
 
-  constructor (document: Document, metalController: MetalController, colorController: CssController, appProperties: ApplicationProperties, materialController: MaterialSet) {
+  constructor (document: Document, metalController: MetalController, colorController: CssController, appProperties: ApplicationProperties, materialController: MaterialController) {
     this.metalDivAdded = true
     this.document = document
     this.metalController = metalController
@@ -65,16 +64,10 @@ export class MetalUIHandler {
   }
 
   goldOnClick (metalController: MetalController, event: Event): void {
-    metalController.changeMetal(this.appProperties.mainObject, this.materialController.goldMaterial)
+    this.metalController.changeToGold(this.appProperties.mainObject)
   }
 
   silverOnClick (metalController: MetalController, event: Event): void {
-    const material = new MeshStandardMaterial({
-      color: this.cssController.silverColor,
-      roughness: 0.1,
-      metalness: 0.6
-    })
-
-    metalController.changeMetal(this.appProperties.mainObject, material)
+    metalController.changeToSilver(this.appProperties.mainObject)
   }
 }

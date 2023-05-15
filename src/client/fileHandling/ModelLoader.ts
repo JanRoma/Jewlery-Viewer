@@ -6,14 +6,22 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 import { type TextureDatabase } from './TextureDatabase'
 import { type SceneProperties } from '../properties/SceneProperties'
+import { type MetalController } from '../model/MetalController'
+import { type GemController } from '../model/GemController'
 
 export class ModelLoader {
   applicationProperties: ApplicationProperties
   sceneProperties: SceneProperties
+  metalController: MetalController
+  gemController: GemController
+  loadingManager: LoadingManager
 
-  constructor (applicationProperties: ApplicationProperties, sceneProperties: SceneProperties) {
+  constructor (applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, metalController: MetalController, gemController: GemController, loadingManager: LoadingManager) {
     this.applicationProperties = applicationProperties
     this.sceneProperties = sceneProperties
+    this.metalController = metalController
+    this.gemController = gemController
+    this.loadingManager = loadingManager
   }
 
   loadOBJModel (path: string, name: string): void {
@@ -25,7 +33,7 @@ export class ModelLoader {
     mtlLoader.setPath(path)
     const url = `/${name}`
 
-    const objLoader = new OBJLoader()
+    const objLoader = new OBJLoader(this.loadingManager)
     objLoader.setPath(path)
     objLoader.load(
       url + '.obj',
@@ -44,6 +52,8 @@ export class ModelLoader {
           }
         })
         this.applicationProperties.mainObject = object
+        this.metalController.changeToGold(object)
+        this.gemController.changeToEmerald(object)
         // this.uiHandler.guiHandler.showGUI(object)
         // this.uiHandler.metalUIHandler.metalController.changeObject(object)
         // this.uiHandler.gemUIHandler.gemController.changeObject(object)

@@ -19,7 +19,7 @@ import { GemController } from './model/GemController'
 import { CssController } from './uiHandling/CssController'
 import { ModelUIHandler } from './uiHandling/ModelChangeUIHandler'
 import { ModelController } from './model/ModelController'
-import { MaterialSet } from './data/MaterialSet'
+import { MaterialController } from './data/MaterialController'
 import { ColorSet } from './data/ColorSet'
 // import { type WebGLRenderer } from 'three'
 
@@ -32,13 +32,14 @@ const sceneProperties = new SceneProperties()
 
 const colorController = new ColorSet()
 const cssController = new CssController(colorController)
-const materialController = new MaterialSet(colorController)
-
-const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties)
+const materialController = new MaterialController(colorController)
+const metalController = new MetalController(materialController)
+const gemController = new GemController(materialController)
+const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties, metalController, gemController, loadingManager)
 
 const rotationUIHandler = new RotationUIHandler(document, new RotationController(sceneProperties.orbitControls))
-const metalUIHandler = new MetalUIHandler(document, new MetalController(appProperties.mainObject), cssController, appProperties, materialController)
-const gemUIHandler = new GemUIHandler(document, appProperties, new GemController(materialController, appProperties.mainObject), materialController, cssController)
+const metalUIHandler = new MetalUIHandler(document, metalController, cssController, appProperties, materialController)
+const gemUIHandler = new GemUIHandler(document, appProperties, gemController, materialController, cssController)
 const modelUIHandler = new ModelUIHandler(document, new ModelController(appProperties.mainObject, modelLoader), cssController)
 
 const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties, modelLoader), new GUIHandler(new GUI()), Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler)
