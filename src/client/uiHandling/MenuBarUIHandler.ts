@@ -7,12 +7,14 @@ export class MenuBarUIHandler {
   menuBarController: MenuBarController
   menuBarDiv: HTMLDivElement
   cssController: CssController
+  lastClickedButton: string
 
   constructor (document: Document, menuBarController: MenuBarController, cssController: CssController) {
     this.document = document
     this.menuBarController = menuBarController
     this.cssController = cssController
     this.menuBarDiv = this.createMenuBarDiv()
+    this.lastClickedButton = 'none'
   }
 
   createMenuBarDiv (): HTMLDivElement {
@@ -41,10 +43,9 @@ export class MenuBarUIHandler {
 
   createMetalButton (): HTMLButtonElement {
     const metalButton = this.document.createElement('button')
-    const metalButtonStyle = `color: #${this.cssController.silverColor.getHexString()};display:inline-block;vertical-align:bottom;`
-    metalButton.className = 'foo-button mdc-button'
-    metalButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="gold-text" class="mdc-button__label"><span class="material-icons">radio_button_unchecked</span></span>'
-    metalButton.style.cssText = metalButtonStyle
+    metalButton.className = this.cssController.returnMenuBarButtonsClassName()
+    metalButton.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', 'Metal')
+    metalButton.style.cssText = this.cssController.returnIconsStyle()
     metalButton.addEventListener('click', (evt) => { this.metalButtonClicked() })
     return metalButton
   }
@@ -52,9 +53,9 @@ export class MenuBarUIHandler {
   createGemButton (): HTMLButtonElement {
     const gemButton = this.document.createElement('button')
 
-    gemButton.className = 'foo-button mdc-button'
-    gemButton.style.cssText = this.cssController.returnGoldButtonStyle()
-    gemButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="gold-text" class="mdc-button__label"><span class="material-icons">diamond</span></span>'
+    gemButton.className = this.cssController.returnMenuBarButtonsClassName()
+    gemButton.style.cssText = this.cssController.returnIconsStyle()
+    gemButton.innerHTML = this.cssController.returnIconLabelButton('diamond', 'Gem')
     gemButton.addEventListener('click', (evt) => { this.gemButtonClicked() })
     return gemButton
   }
@@ -62,22 +63,40 @@ export class MenuBarUIHandler {
   createModelButton (): HTMLButtonElement {
     const modelButton = this.document.createElement('button')
 
-    modelButton.className = 'foo-button mdc-button'
-    modelButton.style.cssText = this.cssController.returnGoldButtonStyle()
-    modelButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="gold-text" class="mdc-button__label"><span class="material-icons">radio_button_unchecked</span></span>'
+    modelButton.className = this.cssController.returnMenuBarButtonsClassName()
+    modelButton.style.cssText = this.cssController.returnIconsStyle()
+    modelButton.innerHTML = this.cssController.returnIconLabelButton('change_circle', 'Model')
     modelButton.addEventListener('click', (evt) => { this.modelButtonClicked() })
     return modelButton
   }
 
   modelButtonClicked (): void {
-    this.menuBarController.showModelDiv()
+    if (this.lastClickedButton === 'model') {
+      this.menuBarController.hideAllDivs()
+      this.lastClickedButton = 'none'
+    } else {
+      this.menuBarController.showModelDiv()
+      this.lastClickedButton = 'model'
+    }
   }
 
   metalButtonClicked (): void {
-    this.menuBarController.showMetalDiv()
+    if (this.lastClickedButton === 'metal') {
+      this.menuBarController.hideAllDivs()
+      this.lastClickedButton = 'none'
+    } else {
+      this.menuBarController.showMetalDiv()
+      this.lastClickedButton = 'metal'
+    }
   }
 
   gemButtonClicked (): void {
-    this.menuBarController.showGemDiv()
+    if (this.lastClickedButton === 'gem') {
+      this.menuBarController.hideAllDivs()
+      this.lastClickedButton = 'none'
+    } else {
+      this.menuBarController.showGemDiv()
+      this.lastClickedButton = 'gem'
+    }
   }
 }

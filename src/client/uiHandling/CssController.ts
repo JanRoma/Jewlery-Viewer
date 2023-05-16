@@ -7,8 +7,9 @@ export class CssController {
   goldColor: Color
   silverColor: Color
   backgroundColor: Color
-  colorChgangingDivsWidth: number
+  colorChangingDivsWidth: number
   colorController: ColorSet
+  iconsColor: Color
 
   constructor (colorController: ColorSet) {
     this.emeraldColor = colorController.emeraldColor
@@ -16,7 +17,8 @@ export class CssController {
     this.goldColor = colorController.goldColor
     this.silverColor = colorController.silverColor
     this.backgroundColor = new Color(0xffffff)
-    this.colorChgangingDivsWidth = 200
+    this.iconsColor = new Color(0xaabbaa)
+    this.colorChangingDivsWidth = 220
     this.colorController = colorController
   }
 
@@ -44,8 +46,8 @@ export class CssController {
     return `
     background-color: #${this.backgroundColor.getHexString()};
     background:rgba(255,255,255,0.5);
-    width: ${this.colorChgangingDivsWidth}px;
-    height: 36px;
+    width: ${this.colorChangingDivsWidth}px;
+    height: 50px;
     position: absolute;
     top: ${top}%;
     left: 50%;
@@ -57,23 +59,27 @@ export class CssController {
     `
   }
 
+  returnIconLabelButton (icon: string, label: string): string {
+    return `<span class="material-icons">${icon}</span><span class="mdc-button__label button-text">${label}</span>`
+  }
+
+  returnIconsStyle (): string {
+    return `color: #${this.iconsColor.getHexString()};`
+  }
+
   returnSilverButtonStyle (): string {
-    return `color: #${this.colorController.silverColor.getHexString()};display:inline-block;vertical-align:bottom;`
+    return `color: #${this.colorController.silverColor.getHexString()};`
   }
 
   returnGoldButtonStyle (): string {
-    return `color: #${this.colorController.goldColor.getHexString()};display:inline-block;vertical-align:bottom;`
+    return `color: #${this.colorController.goldColor.getHexString()};`
   }
 
-  returnGemButtonStyle (): string { // to-do FILL aLL EMPTY
-    return ''
+  returnMenuBarButtonsStyle (): string {
+    return `color: #${this.colorController.goldColor.getHexString()};`
   }
 
-  returnMetalButtonStyle (): string {
-    return ''
-  }
-
-  returnModelButtonStyle (): string {
-    return ''
+  returnMenuBarButtonsClassName (): string {
+    return 'mdc-button button-with-text mdc-ripple-surface'
   }
 }

@@ -62,9 +62,9 @@ export class ModelUIHandler {
 
   createModel1Button (): HTMLButtonElement {
     const model1Button = this.document.createElement('button')
-    const model1ButtonStyle = `color: #${this.cssController.silverColor.getHexString()};display:inline-block;vertical-align:bottom;`
-    model1Button.className = 'foo-button mdc-button'
-    model1Button.innerHTML = '<div class="mdc-button__ripple"></div><span id="model1-text" class="mdc-button__label">1</span>'
+    const model1ButtonStyle = this.cssController.returnSilverButtonStyle()
+    model1Button.className = this.cssController.returnMenuBarButtonsClassName()
+    model1Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', '1')
     model1Button.style.cssText = model1ButtonStyle
     model1Button.addEventListener('click', (evt) => { this.model1OnClick(this.modelController, evt) })
     return model1Button
@@ -73,9 +73,9 @@ export class ModelUIHandler {
   createModel2Button (): HTMLButtonElement {
     const model2Button = this.document.createElement('button')
 
-    model2Button.className = 'foo-button mdc-button'
-    model2Button.style.cssText = this.cssController.returnGoldButtonStyle()
-    model2Button.innerHTML = '<div class="mdc-button__ripple"></div><span id="model2-text" class="mdc-button__label">2</span>'
+    model2Button.className = this.cssController.returnMenuBarButtonsClassName()
+    model2Button.style.cssText = this.cssController.returnSilverButtonStyle()
+    model2Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', '2')
     model2Button.addEventListener('click', (evt) => { this.model2OnClick(this.modelController, evt) })
     return model2Button
   }

@@ -48,8 +48,8 @@ export class MetalUIHandler {
   createSilverButton (): HTMLButtonElement {
     const silverButton = this.document.createElement('button')
     const silverButtonStyle = this.cssController.returnSilverButtonStyle()
-    silverButton.className = 'foo-button mdc-button'
-    silverButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="silver-text" class="mdc-button__label"><span class="material-icons">radio_button_unchecked</span></span>'
+    silverButton.className = this.cssController.returnMenuBarButtonsClassName()
+    silverButton.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', 'Silver')
     silverButton.style.cssText = silverButtonStyle
     silverButton.addEventListener('click', (evt) => { this.silverOnClick(this.metalController, evt) })
     return silverButton
@@ -58,9 +58,9 @@ export class MetalUIHandler {
   createGoldButton (): HTMLButtonElement {
     const goldButton = this.document.createElement('button')
 
-    goldButton.className = 'foo-button mdc-button'
+    goldButton.className = this.cssController.returnMenuBarButtonsClassName()
     goldButton.style.cssText = this.cssController.returnGoldButtonStyle()
-    goldButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="gold-text" class="mdc-button__label"><span class="material-icons">radio_button_unchecked</span></span>'
+    goldButton.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', 'Gold')
     goldButton.addEventListener('click', (evt) => { this.goldOnClick(this.metalController, evt) })
     return goldButton
   }

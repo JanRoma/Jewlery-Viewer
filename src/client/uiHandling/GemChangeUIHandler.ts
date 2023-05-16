@@ -49,8 +49,8 @@ export class GemUIHandler {
     const emeraldButton = this.document.createElement('button')
     const emeraldButtonStyle = `color: #${this.cssController.emeraldColor.getHexString()}`
 
-    emeraldButton.className = 'foo-button mdc-button'
-    emeraldButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="emerald-text" class="mdc-button__label"><span class="material-icons">diamond</span></span>'
+    emeraldButton.className = this.cssController.returnMenuBarButtonsClassName()
+    emeraldButton.innerHTML = this.cssController.returnIconLabelButton('diamond', 'Emerald')
     emeraldButton.style.cssText = emeraldButtonStyle
     emeraldButton.addEventListener('click', (evt) => { this.emeraldOnClick(this.gemController, evt) })
     return emeraldButton
@@ -61,8 +61,8 @@ export class GemUIHandler {
     const sapphireButtonStyle = `color: #${this.cssController.sapphireColor.getHexString()}`
 
     sapphireButton.style.cssText = sapphireButtonStyle
-    sapphireButton.className = 'foo-button mdc-button'
-    sapphireButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="sapphire-text" class="mdc-button__label"><span class="material-icons">diamond</span></span>'
+    sapphireButton.className = this.cssController.returnMenuBarButtonsClassName()
+    sapphireButton.innerHTML = this.cssController.returnIconLabelButton('diamond', 'Sapphire')
     sapphireButton.addEventListener('click', (evt) => { this.sapphireOnClick(this.gemController, evt) })
     return sapphireButton
   }
