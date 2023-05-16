@@ -1,7 +1,7 @@
 import { type RotationController } from '../model/RotationController'
 
 export class RotationUIHandler {
-  rotationDiv!: HTMLDivElement
+  rotationDiv!: HTMLDivElement // to-do -  what with this !
   rotationDivAdded: boolean
   document: Document
   rotationController: RotationController
@@ -10,9 +10,10 @@ export class RotationUIHandler {
     this.rotationDivAdded = true
     this.document = document
     this.rotationController = rotationController
+    this.rotationDiv = this.createRotationDiv()
   }
 
-  setRotationDivToDocument (): void {
+  createRotationDiv (): HTMLDivElement {
     const rotationDivStyle = 'font-size: 10px;width: 200px;height: 100px;position: absolute;bottom: -60px;left:50%;-webkit-transform: translateX(-30%);-ms-transform: translateX(-30%);transform: translateX(-30%);'
 
     this.rotationDiv = this.document.createElement('div')
@@ -23,7 +24,7 @@ export class RotationUIHandler {
     this.rotationDiv.appendChild(button)
     this.rotationDiv.style.cssText = rotationDivStyle
 
-    this.document.body.appendChild(this.rotationDiv)
+    return this.rotationDiv
   }
 
   onClick (rotationController: RotationController, event: Event): void {

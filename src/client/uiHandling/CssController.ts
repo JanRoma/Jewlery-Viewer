@@ -25,7 +25,7 @@ export class CssController {
   }
 
   returnMetalDivStyle (): string {
-    return this.returnDivStyle(85)
+    return this.returnDivStyle(75)
   }
 
   returnGemDivStyle (): string {
@@ -33,7 +33,11 @@ export class CssController {
   }
 
   returnModelDivStyle (): string {
-    return this.returnDivStyle(95)
+    return this.returnDivStyle(75)
+  }
+
+  returnMenuBarDivStyle (): string {
+    return this.returnDivStyle(85)
   }
 
   returnDivStyle (top: number): string {
@@ -59,5 +63,17 @@ export class CssController {
 
   returnGoldButtonStyle (): string {
     return `color: #${this.colorController.goldColor.getHexString()};display:inline-block;vertical-align:bottom;`
+  }
+
+  returnGemButtonStyle (): string { // to-do FILL aLL EMPTY
+    return ''
+  }
+
+  returnMetalButtonStyle (): string {
+    return ''
+  }
+
+  returnModelButtonStyle (): string {
+    return ''
   }
 }

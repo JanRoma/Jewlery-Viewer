@@ -3,8 +3,8 @@ import { type CssController } from './CssController'
 import { type ModelController } from '../model/ModelController'
 
 export class ModelUIHandler {
-  metalDiv!: HTMLDivElement
-  modellDivAdded: boolean
+  modelDiv!: HTMLDivElement
+  modellDivAdded: boolean // to-do DELETE?
   document: Document
   modelController: ModelController
   texture: THREE.Texture
@@ -16,10 +16,11 @@ export class ModelUIHandler {
     this.modelController = metalController
     this.texture = new THREE.Texture()
     this.cssController = cssController
+    this.modelDiv = this.createModelDiv()
   }
 
-  setModelDivToDocument (): void {
-    this.metalDiv = this.document.createElement('div')
+  createModelDiv (): HTMLDivElement {
+    this.modelDiv = this.document.createElement('div')
 
     const textLabel = this.createModelLabel()
     const model1Button = this.createModel1Button()
@@ -27,13 +28,14 @@ export class ModelUIHandler {
 
     this.texture = this.loadTexture()
 
-    this.metalDiv.appendChild(textLabel)
-    this.metalDiv.appendChild(model1Button)
-    this.metalDiv.appendChild(model2Button)
-    this.metalDiv.style.cssText = this.cssController.returnModelDivStyle()
+    this.modelDiv.appendChild(textLabel)
+    this.modelDiv.appendChild(model1Button)
+    this.modelDiv.appendChild(model2Button)
+    this.modelDiv.style.cssText = this.cssController.returnModelDivStyle()
 
-    this.document.body.appendChild(this.metalDiv)
-    this.modellDivAdded = true
+    this.modellDivAdded = true // to-do DELETE??
+    this.modelDiv.style.visibility = 'hidden'
+    return this.modelDiv
   }
 
   loadTexture (): THREE.Texture {

@@ -21,6 +21,8 @@ import { ModelUIHandler } from './uiHandling/ModelChangeUIHandler'
 import { ModelController } from './model/ModelController'
 import { MaterialController } from './data/MaterialController'
 import { ColorSet } from './data/ColorSet'
+import { MenuBarController } from './model/MenuBarController'
+import { MenuBarUIHandler } from './uiHandling/MenuBarUIHandler'
 // import { type WebGLRenderer } from 'three'
 
 // VARIABLES
@@ -37,18 +39,24 @@ const metalController = new MetalController(materialController)
 const gemController = new GemController(materialController)
 const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties, metalController, gemController, loadingManager)
 
+const modelController = new ModelController(appProperties.mainObject, modelLoader)
+
 const rotationUIHandler = new RotationUIHandler(document, new RotationController(sceneProperties.orbitControls))
 const metalUIHandler = new MetalUIHandler(document, metalController, cssController, appProperties, materialController)
 const gemUIHandler = new GemUIHandler(document, appProperties, gemController, materialController, cssController)
-const modelUIHandler = new ModelUIHandler(document, new ModelController(appProperties.mainObject, modelLoader), cssController)
+const modelUIHandler = new ModelUIHandler(document, modelController, cssController)
 
-const uiHandler = new UIHandler(new DragAndDropUIHandler(document, loadingManager, appProperties, modelLoader), new GUIHandler(new GUI()), Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler)
+const dndHandler = new DragAndDropUIHandler(document, loadingManager, appProperties, modelLoader)
+const guiHandler = new GUIHandler(new GUI())
+
+const menuBarController = new MenuBarController(modelUIHandler.modelDiv, metalUIHandler.metalDiv, gemUIHandler.gemDiv)
+const menuBarUIHandler = new MenuBarUIHandler(document, menuBarController, cssController)
+
+const uiHandler = new UIHandler(dndHandler, guiHandler, Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, document)
 
 // const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
-uiHandler.createRotationDiv()
-uiHandler.createMetalDiv()
-uiHandler.createGemDiv()
-uiHandler.createModelDiv()
+uiHandler.setDivsToDocument()
+
 // objectPicker.SetMouseListeners()
 const stats = Utils.addStats()
 

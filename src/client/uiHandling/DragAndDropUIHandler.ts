@@ -16,10 +16,11 @@ export class DragAndDropUIHandler {
     this.appProperties = appProperties
     this.document = document
     this.modelLoader = modelLoader
+    this.dropZoneDiv = this.createDragAndDropDiv()
   }
 
-  SetDragAndDropZoneToDocument (): void {
-    if (this.dropZoneAdded) return
+  createDragAndDropDiv (): HTMLDivElement {
+    if (this.dropZoneAdded) return this.dropZoneDiv
     if (document.readyState === 'complete') {
       this.dropZoneDiv = this.createAndReturnDropZoneDiv()
 
@@ -27,6 +28,7 @@ export class DragAndDropUIHandler {
       this.dropZoneDiv.addEventListener('drop', this.dropHandler, false)
       this.dropZoneDiv.addEventListener('click', this.onClick, false)
     }
+    return this.dropZoneDiv
   }
 
   onClick (ev: Event): void {
@@ -71,8 +73,6 @@ export class DragAndDropUIHandler {
     const dndDiv = document.createElement('div')
     dndDiv.innerHTML = '<p>Drag one or more files to this <i>drop zone</i>.</p>'
     dndDiv.style.cssText = dragAndDropStyle
-
-    document.body.appendChild(dndDiv)
     return dndDiv
   }
 }

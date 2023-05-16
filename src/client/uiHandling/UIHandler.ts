@@ -5,8 +5,10 @@ import { type RotationUIHandler } from './RotationUIHandler'
 import { type MetalUIHandler } from './MetalChangeUIHandler'
 import { type GemUIHandler } from './GemChangeUIHandler'
 import { type ModelUIHandler } from './ModelChangeUIHandler'
+import { type MenuBarUIHandler } from './MenuBarUIHandler'
 
 export class UIHandler {
+  document: Document
   dragAndDropUIHandler: DragAndDropUIHandler
   guiHandler: GUIHandler
   stats: Stats
@@ -14,9 +16,17 @@ export class UIHandler {
   metalUIHandler: MetalUIHandler
   gemUIHandler: GemUIHandler
   modelUIHandler: ModelUIHandler
+  menuBarUIHandler: MenuBarUIHandler
 
-  constructor (dragAndDropUIHandler: DragAndDropUIHandler, guiHandler: GUIHandler, stats: Stats, rotationUIHandler: RotationUIHandler, metalUIHandler: MetalUIHandler, gemUIHandler: GemUIHandler, modelUIHandler: ModelUIHandler
-  ) {
+  constructor (dragAndDropUIHandler: DragAndDropUIHandler,
+    guiHandler: GUIHandler,
+    stats: Stats,
+    rotationUIHandler: RotationUIHandler,
+    metalUIHandler: MetalUIHandler,
+    gemUIHandler: GemUIHandler,
+    modelUIHandler: ModelUIHandler,
+    menuBarUIHandler: MenuBarUIHandler,
+    document: Document) {
     this.dragAndDropUIHandler = dragAndDropUIHandler
     this.guiHandler = guiHandler
     this.stats = stats
@@ -24,25 +34,43 @@ export class UIHandler {
     this.metalUIHandler = metalUIHandler
     this.gemUIHandler = gemUIHandler
     this.modelUIHandler = modelUIHandler
+    this.menuBarUIHandler = menuBarUIHandler
+    this.document = document
   }
 
-  createRotationDiv (): void {
-    this.rotationUIHandler.setRotationDivToDocument()
+  setDivsToDocument (): void {
+    this.document.body.appendChild(this.rotationUIHandler.rotationDiv)
+    console.dir(this.rotationUIHandler.rotationDiv)
+    console.log('aa')
+    // this.document.body.appendChild(this.dragAndDropUIHandler.dropZoneDiv)
+    this.document.body.appendChild(this.metalUIHandler.metalDiv)
+    this.document.body.appendChild(this.gemUIHandler.gemDiv)
+    this.document.body.appendChild(this.modelUIHandler.modelDiv)
+
+    this.document.body.appendChild(this.menuBarUIHandler.menuBarDiv)
   }
 
-  createDragAndDropDiv (): void {
-    this.dragAndDropUIHandler.SetDragAndDropZoneToDocument()
+  createRotationDiv (): HTMLDivElement {
+    return this.rotationUIHandler.createRotationDiv()
   }
 
-  createMetalDiv (): void {
-    this.metalUIHandler.setMetalDivToDocument()
+  createDragAndDropDiv (): HTMLDivElement {
+    return this.dragAndDropUIHandler.createDragAndDropDiv()
   }
 
-  createGemDiv (): void {
-    this.gemUIHandler.setGemDivToDocument()
+  createMetalDiv (): HTMLDivElement {
+    return this.metalUIHandler.createMetalDiv()
   }
 
-  createModelDiv (): void {
-    this.modelUIHandler.setModelDivToDocument()
+  createGemDiv (): HTMLDivElement {
+    return this.gemUIHandler.createGemDiv()
+  }
+
+  createModelDiv (): HTMLDivElement {
+    return this.modelUIHandler.createModelDiv()
+  }
+
+  createMenuBarDiv (): HTMLDivElement {
+    return this.menuBarUIHandler.createMenuBarDiv()
   }
 }

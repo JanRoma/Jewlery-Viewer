@@ -19,9 +19,10 @@ export class MetalUIHandler {
     this.cssController = colorController
     this.appProperties = appProperties
     this.materialController = materialController
+    this.metalDiv = this.createMetalDiv()
   }
 
-  setMetalDivToDocument (): void {
+  createMetalDiv (): HTMLDivElement {
     this.metalDiv = this.document.createElement('div')
 
     const textLabel = this.createMetalLabel()
@@ -32,8 +33,9 @@ export class MetalUIHandler {
     this.metalDiv.appendChild(goldButton)
     this.metalDiv.appendChild(silverButton)
     this.metalDiv.style.cssText = this.cssController.returnMetalDivStyle()
+    this.metalDiv.style.visibility = 'hidden'
 
-    this.document.body.appendChild(this.metalDiv)
+    return this.metalDiv
   }
 
   createMetalLabel (): HTMLLabelElement {
@@ -45,7 +47,7 @@ export class MetalUIHandler {
 
   createSilverButton (): HTMLButtonElement {
     const silverButton = this.document.createElement('button')
-    const silverButtonStyle = `color: #${this.cssController.silverColor.getHexString()};display:inline-block;vertical-align:bottom;`
+    const silverButtonStyle = this.cssController.returnSilverButtonStyle()
     silverButton.className = 'foo-button mdc-button'
     silverButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="silver-text" class="mdc-button__label"><span class="material-icons">radio_button_unchecked</span></span>'
     silverButton.style.cssText = silverButtonStyle

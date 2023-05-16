@@ -19,9 +19,10 @@ export class GemUIHandler {
     this.cssController = cssController
     this.appProperties = appProperties
     this.materialController = materialController
+    this.gemDiv = this.createGemDiv()
   }
 
-  setGemDivToDocument (): void {
+  createGemDiv (): HTMLDivElement {
     this.gemDiv = this.document.createElement('div')
 
     const textLabel = this.createGemLabel()
@@ -32,8 +33,9 @@ export class GemUIHandler {
     this.gemDiv.appendChild(emeraldButton)
     this.gemDiv.appendChild(sapphireButton)
     this.gemDiv.style.cssText = this.cssController.returnGemDivStyle()
+    this.gemDiv.style.visibility = 'hidden'
 
-    this.document.body.appendChild(this.gemDiv)
+    return this.gemDiv
   }
 
   createGemLabel (): HTMLLabelElement {
