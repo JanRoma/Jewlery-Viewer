@@ -8,6 +8,7 @@ import { type TextureDatabase } from './TextureDatabase'
 import { type SceneProperties } from '../properties/SceneProperties'
 import { type MetalController } from '../model/MetalController'
 import { type GemController } from '../model/GemController'
+import { type GUIHandler } from '../uiHandling/GUIHandler'
 
 export class ModelLoader {
   applicationProperties: ApplicationProperties
@@ -15,13 +16,15 @@ export class ModelLoader {
   metalController: MetalController
   gemController: GemController
   loadingManager: LoadingManager
+  guiHandler: GUIHandler
 
-  constructor (applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, metalController: MetalController, gemController: GemController, loadingManager: LoadingManager) {
+  constructor (applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, metalController: MetalController, gemController: GemController, loadingManager: LoadingManager, guiHandler: GUIHandler) {
     this.applicationProperties = applicationProperties
     this.sceneProperties = sceneProperties
     this.metalController = metalController
     this.gemController = gemController
     this.loadingManager = loadingManager
+    this.guiHandler = guiHandler
   }
 
   loadOBJModel (path: string, name: string): void {
@@ -54,7 +57,8 @@ export class ModelLoader {
         this.applicationProperties.mainObject = object
         this.metalController.changeToGold(object)
         this.gemController.changeToEmerald(object)
-        // this.uiHandler.guiHandler.showGUI(object)
+
+        this.guiHandler.showGUI(object)
         // this.uiHandler.metalUIHandler.metalController.changeObject(object)
         // this.uiHandler.gemUIHandler.gemController.changeObject(object)
       },

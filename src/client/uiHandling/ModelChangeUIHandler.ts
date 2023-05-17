@@ -3,37 +3,38 @@ import { type CssController } from './CssController'
 import { type ModelController } from '../model/ModelController'
 
 export class ModelUIHandler {
-  modelDiv!: HTMLDivElement
-  modellDivAdded: boolean // to-do DELETE?
+  modelDiv: HTMLDivElement
   document: Document
   modelController: ModelController
   texture: THREE.Texture
   cssController: CssController
+  model1Button: HTMLButtonElement
+  model2Button: HTMLButtonElement
+  textLabel: HTMLLabelElement
+  modelChecked: number
 
   constructor (document: Document, metalController: ModelController, cssController: CssController) {
-    this.modellDivAdded = false
     this.document = document
     this.modelController = metalController
     this.texture = new THREE.Texture()
     this.cssController = cssController
+    this.textLabel = this.createModelLabel()
+    this.model1Button = this.createModel1Button()
+    this.model2Button = this.createModel2Button()
     this.modelDiv = this.createModelDiv()
+    this.modelChecked = 2
   }
 
   createModelDiv (): HTMLDivElement {
     this.modelDiv = this.document.createElement('div')
 
-    const textLabel = this.createModelLabel()
-    const model1Button = this.createModel1Button()
-    const model2Button = this.createModel2Button()
-
     this.texture = this.loadTexture()
 
-    this.modelDiv.appendChild(textLabel)
-    this.modelDiv.appendChild(model1Button)
-    this.modelDiv.appendChild(model2Button)
+    this.modelDiv.appendChild(this.textLabel)
+    this.modelDiv.appendChild(this.model1Button)
+    this.modelDiv.appendChild(this.model2Button)
     this.modelDiv.style.cssText = this.cssController.returnModelDivStyle()
 
-    this.modellDivAdded = true // to-do DELETE??
     this.modelDiv.style.visibility = 'hidden'
     return this.modelDiv
   }
@@ -75,16 +76,27 @@ export class ModelUIHandler {
 
     model2Button.className = this.cssController.returnMenuBarButtonsClassName()
     model2Button.style.cssText = this.cssController.returnSilverButtonStyle()
-    model2Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', '2')
+    model2Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_checked', '2')
     model2Button.addEventListener('click', (evt) => { this.model2OnClick(this.modelController, evt) })
     return model2Button
   }
 
   model1OnClick (modelController: ModelController, event: Event): void {
-    modelController.changeModel('Jasiu2')
+    if (this.modelChecked === 2) {
+      modelController.changeModel('Jasiu2')
+
+      this.model1Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_checked', '1')
+      this.model2Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', '2')
+      this.modelChecked = 1
+    }
   }
 
   model2OnClick (modelController: ModelController, event: Event): void {
-    modelController.changeModel('Jasiu3')
+    if (this.modelChecked === 1) {
+      modelController.changeModel('Jasiu3')
+      this.model1Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', '1')
+      this.model2Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_checked', '2')
+      this.modelChecked = 2
+    }
   }
 }

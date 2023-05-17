@@ -70,6 +70,25 @@ export class MenuBarUIHandler {
     return modelButton
   }
 
+  showMenuBar (value: boolean): void {
+    if (value) {
+      this.menuBarDiv.style.visibility = 'visible'
+    } else {
+      this.menuBarController.hideAllDivs()
+      this.menuBarDiv.style.visibility = 'hidden'
+    }
+  }
+
+  showLastClickedDiv (): void {
+    if (this.lastClickedButton === 'model') {
+      this.menuBarController.showModelDiv()
+    } else if (this.lastClickedButton === 'metal') {
+      this.menuBarController.showMetalDiv()
+    } else if (this.lastClickedButton === 'gem') {
+      this.menuBarController.showGemDiv()
+    }
+  }
+
   modelButtonClicked (): void {
     if (this.lastClickedButton === 'model') {
       this.menuBarController.hideAllDivs()

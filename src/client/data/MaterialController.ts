@@ -1,6 +1,7 @@
 import { type Mesh, MeshPhysicalMaterial, type Object3D, type Texture } from 'three'
 import { type ColorSet } from './ColorSet'
 import * as THREE from 'three'
+import { type TextureDatabase } from '../fileHandling/TextureDatabase'
 
 export class MaterialController {
   sapphireMaterial: MeshPhysicalMaterial
@@ -9,10 +10,11 @@ export class MaterialController {
   silverMaterial: MeshPhysicalMaterial
 
   envTexture: Texture
+  envTextureName: string
 
   colorController: ColorSet
 
-  constructor (colorController: ColorSet) {
+  constructor (colorController: ColorSet, textureDatabase: TextureDatabase) {
     this.colorController = colorController
 
     const emeraldMaterial = new MeshPhysicalMaterial({
@@ -31,19 +33,22 @@ export class MaterialController {
 
     this.emeraldMaterial = emeraldMaterial
     this.sapphireMaterial = sapphireMaterial
-    this.envTexture = this.loadTexture()
+    this.envTextureName = 'hdi'
+    this.envTexture = textureDatabase.textures.get(this.envTextureName) as Texture
 
+    console.log(this.envTexture)
     this.goldMaterial = new MeshPhysicalMaterial({
       color: this.colorController.goldColor,
       roughness: 0.1,
-      metalness: 0.6
-
+      metalness: 0.6,
+      envMap: this.envTexture
     })
 
     this.silverMaterial = new MeshPhysicalMaterial({
       color: this.colorController.silverColor,
       roughness: 0.1,
-      metalness: 0.6
+      metalness: 0.6,
+      envMap: this.envTexture
     })
   }
 
@@ -57,9 +62,24 @@ export class MaterialController {
         'pz.png',
         'nz.png'
       ])
-    // imgTexture.wrapS = imgTexture.wrapT = THREE.RepeatWrapping
+    imgTexture.wrapS = imgTexture.wrapT = THREE.RepeatWrapping
     imgTexture.anisotropy = 16
     return imgTexture
+  }
+
+  changeMetalEnvMap (envMap: Texture, envMapName: string): void {
+    this.envTextureName = envMapName
+
+    this.envTexture = envMap
+    this.goldMaterial.envMap = envMap
+    this.silverMaterial.envMap = envMap
+  }
+
+  changeGemEnvMap (envMap: Texture, envMapName: string): void {
+    this.envTextureName = envMapName
+    this.envTexture = envMap
+    this.sapphireMaterial.envMap = envMap
+    this.emeraldMaterial.envMap = envMap
   }
 
   changeToEmerald (object: Object3D): void {

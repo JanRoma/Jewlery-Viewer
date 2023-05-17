@@ -1,13 +1,20 @@
 import { type GUI } from 'dat.gui'
+import { type TextureDatabase } from '../fileHandling/TextureDatabase'
+import { type MaterialController } from '../data/MaterialController'
+import { type Texture } from 'three'
 
 export class GUIHandler {
   gui: GUI
   folderName = 'Object'
+  textureDatabase: TextureDatabase
+  materialController: MaterialController
 
-  constructor (gui: GUI) {
+  constructor (gui: GUI, textureDatabase: TextureDatabase, materialController: MaterialController) {
     this.gui = gui
     this.gui.addFolder(this.folderName)
     this.hideGUI()
+    this.textureDatabase = textureDatabase
+    this.materialController = materialController
   }
 
   showGUI (object: THREE.Object3D): void {
@@ -22,6 +29,14 @@ export class GUIHandler {
     objectFolder.add(object, 'visible').name('Visible')
     objectFolder.add(object, 'receiveShadow').name('Receive Shadow')
     objectFolder.add(object, 'castShadow').name('Cast Shadow')
+    const text = { envMap: 'envMap' }
+    console.dir(Array.from(this.textureDatabase.textures.keys()))
+
+    const dropdown = objectFolder.add(text, 'envMap', Array.from(this.textureDatabase.textures.keys())).onChange((value) => {
+      this.materialController.changeMetalEnvMap(this.textureDatabase.textures.get(value) as Texture, value)
+    })
+    console.log(this.materialController.envTexture)
+    dropdown.setValue(this.materialController.envTextureName)
 
     console.dir(object)
 

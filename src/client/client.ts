@@ -23,6 +23,8 @@ import { MaterialController } from './data/MaterialController'
 import { ColorSet } from './data/ColorSet'
 import { MenuBarController } from './model/MenuBarController'
 import { MenuBarUIHandler } from './uiHandling/MenuBarUIHandler'
+import { HideMenuUIHandler } from './uiHandling/HideMenuUIHandler'
+import { TextureDatabase } from './fileHandling/TextureDatabase'
 // import { type WebGLRenderer } from 'three'
 
 // VARIABLES
@@ -34,10 +36,12 @@ const sceneProperties = new SceneProperties()
 
 const colorController = new ColorSet()
 const cssController = new CssController(colorController)
-const materialController = new MaterialController(colorController)
+const textureDatabase = new TextureDatabase(sceneProperties.renderer)
+const materialController = new MaterialController(colorController, textureDatabase)
 const metalController = new MetalController(materialController)
 const gemController = new GemController(materialController)
-const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties, metalController, gemController, loadingManager)
+const guiHandler = new GUIHandler(new GUI(), textureDatabase, materialController)
+const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties, metalController, gemController, loadingManager, guiHandler)
 
 const modelController = new ModelController(appProperties.mainObject, modelLoader)
 
@@ -47,12 +51,12 @@ const gemUIHandler = new GemUIHandler(document, appProperties, gemController, ma
 const modelUIHandler = new ModelUIHandler(document, modelController, cssController)
 
 const dndHandler = new DragAndDropUIHandler(document, loadingManager, appProperties, modelLoader)
-const guiHandler = new GUIHandler(new GUI())
 
 const menuBarController = new MenuBarController(modelUIHandler.modelDiv, metalUIHandler.metalDiv, gemUIHandler.gemDiv)
 const menuBarUIHandler = new MenuBarUIHandler(document, menuBarController, cssController)
+const hideMenuUIHandler = new HideMenuUIHandler(document, menuBarUIHandler)
 
-const uiHandler = new UIHandler(dndHandler, guiHandler, Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, document)
+const uiHandler = new UIHandler(dndHandler, guiHandler, Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
 
 // const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
 uiHandler.setDivsToDocument()

@@ -5,7 +5,6 @@ import { type MaterialController } from '../data/MaterialController'
 
 export class MetalUIHandler {
   metalDiv!: HTMLDivElement
-  metalDivAdded: boolean
   document: Document
   metalController: MetalController
   cssController: CssController
@@ -13,7 +12,6 @@ export class MetalUIHandler {
   materialController: MaterialController
 
   constructor (document: Document, metalController: MetalController, colorController: CssController, appProperties: ApplicationProperties, materialController: MaterialController) {
-    this.metalDivAdded = true
     this.document = document
     this.metalController = metalController
     this.cssController = colorController
@@ -66,7 +64,7 @@ export class MetalUIHandler {
   }
 
   goldOnClick (metalController: MetalController, event: Event): void {
-    this.metalController.changeToGold(this.appProperties.mainObject)
+    metalController.changeToGold(this.appProperties.mainObject)
   }
 
   silverOnClick (metalController: MetalController, event: Event): void {

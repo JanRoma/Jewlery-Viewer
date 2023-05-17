@@ -1,7 +1,7 @@
 import { type RotationController } from '../model/RotationController'
 
 export class RotationUIHandler {
-  rotationDiv!: HTMLDivElement // to-do -  what with this !
+  rotationDiv: HTMLDivElement
   rotationDivAdded: boolean
   document: Document
   rotationController: RotationController
@@ -17,11 +17,11 @@ export class RotationUIHandler {
     const rotationDivStyle = 'font-size: 10px;width: 200px;height: 100px;position: absolute;bottom: -20px;left:50%;-webkit-transform: translateX(-30%);-ms-transform: translateX(-30%);transform: translateX(-30%);'
 
     this.rotationDiv = this.document.createElement('div')
-    const button = this.document.createElement('button')
-    button.className = 'foo-button mdc-button'
-    button.innerHTML = '<div class="mdc-button__ripple"></div><span id="rotation-text" class="mdc-button__label">Rotate On</span><span class="material-icons ">refresh</span>'
-    button.addEventListener('click', (evt) => { this.onClick(this.rotationController, evt) })
-    this.rotationDiv.appendChild(button)
+    const rotationButton = this.document.createElement('button')
+    rotationButton.className = 'foo-button mdc-button'
+    rotationButton.innerHTML = '<div class="mdc-button__ripple"></div><span id="rotation-text" class="mdc-button__label">Rotate On</span><span class="material-icons ">refresh</span>'
+    rotationButton.addEventListener('click', (evt) => { this.onClick(this.rotationController, evt) })
+    this.rotationDiv.appendChild(rotationButton)
     this.rotationDiv.style.cssText = rotationDivStyle
 
     return this.rotationDiv

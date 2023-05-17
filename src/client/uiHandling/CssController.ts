@@ -17,7 +17,7 @@ export class CssController {
     this.goldColor = colorController.goldColor
     this.silverColor = colorController.silverColor
     this.backgroundColor = new Color(0xffffff)
-    this.iconsColor = new Color(0xaabbaa)
+    this.iconsColor = new Color(0x778877)
     this.colorChangingDivsWidth = 220
     this.colorController = colorController
   }
