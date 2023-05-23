@@ -40,7 +40,7 @@ const textureDatabase = new TextureDatabase(sceneProperties.renderer)
 const materialController = new MaterialController(colorController, textureDatabase)
 const metalController = new MetalController(materialController)
 const gemController = new GemController(materialController)
-const guiHandler = new GUIHandler(new GUI(), textureDatabase, materialController)
+const guiHandler = new GUIHandler(new GUI(), textureDatabase, materialController, sceneProperties)
 const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties, metalController, gemController, loadingManager, guiHandler)
 
 const modelController = new ModelController(appProperties.mainObject, modelLoader)

@@ -1,6 +1,5 @@
 import { type Mesh, MeshPhysicalMaterial, type Object3D, type Texture } from 'three'
 import { type ColorSet } from './ColorSet'
-import * as THREE from 'three'
 import { type TextureDatabase } from '../fileHandling/TextureDatabase'
 
 export class MaterialController {
@@ -39,8 +38,8 @@ export class MaterialController {
     console.log(this.envTexture)
     this.goldMaterial = new MeshPhysicalMaterial({
       color: this.colorController.goldColor,
-      roughness: 0.1,
-      metalness: 0.6,
+      roughness: 0.01,
+      metalness: 1,
       envMap: this.envTexture
     })
 
@@ -50,21 +49,6 @@ export class MaterialController {
       metalness: 0.6,
       envMap: this.envTexture
     })
-  }
-
-  loadTexture (): THREE.Texture {
-    const imgTexture = new THREE.CubeTextureLoader().setPath('img/SCM/')
-      .load([
-        'px.png',
-        'nx.png',
-        'py.png',
-        'ny.png',
-        'pz.png',
-        'nz.png'
-      ])
-    imgTexture.wrapS = imgTexture.wrapT = THREE.RepeatWrapping
-    imgTexture.anisotropy = 16
-    return imgTexture
   }
 
   changeMetalEnvMap (envMap: Texture, envMapName: string): void {

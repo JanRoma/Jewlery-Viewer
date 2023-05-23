@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { type Texture, type WebGLRenderer } from 'three'
+import { Texture, type WebGLRenderer } from 'three'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
 
 export class TextureDatabase {
@@ -14,7 +14,21 @@ export class TextureDatabase {
     new RGBELoader().load('img/industrial_sunset_02_puresky_1k.hdr', (hdrmap) => {
       const envmap = generator.fromEquirectangular(hdrmap)
       this.textures.set('hdi', envmap.texture)
+      this.textures.set('none', new Texture())
     })
+
+    const imgTexture = new THREE.CubeTextureLoader().setPath('img/SCM/')
+      .load([
+        'px.png',
+        'nx.png',
+        'py.png',
+        'ny.png',
+        'pz.png',
+        'nz.png'
+      ])
+    imgTexture.wrapS = imgTexture.wrapT = THREE.RepeatWrapping
+    imgTexture.anisotropy = 16
+    this.textures.set('other', imgTexture)
   }
 
   changeTexture (textureName: string, object: THREE.Mesh): void {
