@@ -1,9 +1,6 @@
 import * as Utils from './Utils'
 import { ApplicationProperties } from './properties/ApplicationProperties'
 import { SceneProperties } from './properties/SceneProperties'
-// import { ObjectPicker } from './model/ObjectPicker'
-// import { type WebGLRenderer } from 'three'//
-// import { TextureDatabase } from './fileHandling/TextureDatabase'
 import * as ModelLoadingUtils from './fileHandling/ModelLoader'
 import { GUIHandler } from './uiHandling/GUIHandler'
 import { GUI } from 'dat.gui'
@@ -86,13 +83,14 @@ function animate (): void {
   // appProperties.mainObject.rotateX(0.05)
   // dragAndDropHandler.SetDragAndDrop()
 
+// to-do: this statement is stupid, to delete   
   if (!appProperties.isModelAdded) {
     if (appProperties.isModelLoaded) {
       appProperties.mainObject.scale.set(0.2, 0.2, 0.2)
       sceneProperties.scene.add(appProperties.mainObject)
       // Utils.addGUI(appProperties.mainObject, envProperties.controls)
       appProperties.isModelAdded = true
-      console.dir(appProperties.mainObject)
+      // console.dir(appProperties.mainObject)
     }
   }
   sceneProperties.orbitControls.update()
