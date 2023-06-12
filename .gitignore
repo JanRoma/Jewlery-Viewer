@@ -3,3 +3,7 @@
 /old-threejs/
 
 .DS_Store
+
+# Ignore built ts files
+public/img/
+public/models/

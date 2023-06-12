@@ -16,26 +16,23 @@ export class MaterialController {
   constructor (colorController: ColorSet, textureDatabase: TextureDatabase) {
     this.colorController = colorController
 
-    const emeraldMaterial = new MeshPhysicalMaterial({
+    this.envTextureName = 'hdi'
+    this.envTexture = textureDatabase.textures.get(this.envTextureName) as Texture
+
+    this.emeraldMaterial = new MeshPhysicalMaterial({
       color: this.colorController.emeraldColor,
       roughness: 0.1,
       metalness: 0.1,
       transmission: 0.99
     })
 
-    const sapphireMaterial = new MeshPhysicalMaterial({
+    this.sapphireMaterial = new MeshPhysicalMaterial({
       color: this.colorController.sapphireColor,
       roughness: 0.1,
       metalness: 0.1,
       transmission: 0.99
     })
 
-    this.emeraldMaterial = emeraldMaterial
-    this.sapphireMaterial = sapphireMaterial
-    this.envTextureName = 'hdi'
-    this.envTexture = textureDatabase.textures.get(this.envTextureName) as Texture
-
-    console.log(this.envTexture)
     this.goldMaterial = new MeshPhysicalMaterial({
       color: this.colorController.goldColor,
       roughness: 0.01,

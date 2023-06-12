@@ -31,9 +31,6 @@ export class ModelLoader {
     this.applicationProperties.isModelLoaded = false
     this.applicationProperties.isModelAdded = false
     this.sceneProperties.scene.remove(this.applicationProperties.mainObject)
-    const mtlLoader = new MTLLoader()
-    mtlLoader.setResourcePath(path)
-    mtlLoader.setPath(path)
     const url = `/${name}`
 
     const objLoader = new OBJLoader(this.loadingManager)
@@ -41,19 +38,19 @@ export class ModelLoader {
     objLoader.load(
       url + '.obj',
       (object) => {
-        console.log(url + '.obj')
         object.scale.set(0.1, 0.1, 0.1)
-        console.dir(object)
+
         this.sceneProperties.scene.add(object)
         this.sceneProperties.sceneMeshes.push(object)
-        object.traverse((child) => {
-          if ((child as THREE.Mesh).isMesh) {
-            const m = (child as THREE.Mesh)
-            m.receiveShadow = true
-            m.castShadow = true
-            this.sceneProperties.sceneMeshes.push(m)
-          }
-        })
+        // to-do: to delete?
+        // object.traverse((child) => {
+        //   if ((child as THREE.Mesh).isMesh) {
+        //     const m = (child as THREE.Mesh)
+        //     m.receiveShadow = true
+        //     m.castShadow = true
+        //     this.sceneProperties.sceneMeshes.push(m)
+        //   }
+        // })
         this.applicationProperties.mainObject = object
         this.metalController.changeToGold(object)
         this.gemController.changeToEmerald(object)

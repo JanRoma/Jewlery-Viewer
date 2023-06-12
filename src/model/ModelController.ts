@@ -9,7 +9,7 @@ export class ModelController {
   constructor (object: Object3D, modelLoader: ModelLoader) {
     this.object = object
     this.modelLoader = modelLoader
-    this.path = 'models/jasiu'
+    this.path = 'models/'
   }
 
   changeObject (object: Object3D): void {

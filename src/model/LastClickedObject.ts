@@ -11,6 +11,7 @@ export class LastClickedObject {
     this.originalColor = new Color(0xffffff)
   }
 
+  // to-do
   // Add proper handling for picker, not with changing the color.
   // Decide how it should be handled
   removePickedObject (): void {

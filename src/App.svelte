@@ -8,7 +8,7 @@
   let canvas;
   onMount(() => {
     console.log('abc')
-    runApp()
+    runApp(canvas)
   });
    
 </script>
@@ -17,6 +17,7 @@
 
 <main>
   <Navbar></Navbar>
+
 </main>
 
 <style>

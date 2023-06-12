@@ -7,47 +7,47 @@
   const navs = [
     {
       title: "Viewer",
-      href: "/",
+      href: "#",
     },
     {
       title: "Picking",
-      href: "/",
+      href: "#",
     },
     {
       title: "Scene",
-      href: "/",
+      href: "#",
     },
     {
       title: "Anti-aliasing",
-      href: "/",
+      href: "#",
     },
     {
       title: "Post processing",
-      href: "/",
+      href: "#",
     },
     {
       title: "Export",
-      href: "/",
+      href: "#",
     },
     {
       title: "Animations",
-      href: "/",
+      href: "#",
     },
     {
       title: "Modifiers",
-      href: "/",
+      href: "#",
     },
     {
       title: "Configurators",
-      href: "/",
+      href: "#",
     },
     {
       title: "Plugins",
-      href: "/",
+      href: "#",
     },
     {
       title: "Extras",
-      href: "/",
+      href: "#",
     },
   ];
 
@@ -69,7 +69,7 @@
 
   const setTheme = (theme) => {
     document.documentElement.dataset.theme = theme;
-    document.cookie = `siteTheme=${theme};max-age=31536000;path="/"`;
+    document.cookie = `siteTheme=${theme};max-age=31536000;path="#"`;
     currentTheme = theme;
   };
 

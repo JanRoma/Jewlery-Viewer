@@ -23,12 +23,12 @@ import { HideMenuUIHandler } from './uiHandling/HideMenuUIHandler'
 import { TextureDatabase } from './fileHandling/TextureDatabase'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 // import { type WebGLRenderer } from 'three'
-export function runApp(){
+export function runApp(canvas: HTMLCanvasElement){
 // VARIABLES
 const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById('progress')
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv as HTMLDivElement)
-const sceneProperties = new SceneProperties()
+const sceneProperties = new SceneProperties(canvas)
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
 
 const colorController = new ColorSet()
@@ -62,11 +62,8 @@ uiHandler.setDivsToDocument()
 const stats = Utils.addStats()
 
 document.body.appendChild(sceneProperties.renderer.domElement)
-// Utils.addMouseHandler(envProperties, appProperties)
-// ModelLoadingUtils.loadGLTFModel('models/decorated_ring2/ring.glb', loadingManager, appProperties, sceneProperties, textureDatabase)
-// ModelLoadingUtils.loadGLTFModel('models/jasiu/Jasiu2.glb', loadingManager, appProperties, sceneProperties, textureDatabase)
 
-modelLoader.loadOBJModel('models/jasiu', 'Jasiu3')
+modelLoader.loadOBJModel('models/', 'model3')
 
 window.addEventListener('resize', onWindowResize, false)
 

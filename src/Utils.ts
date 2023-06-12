@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { type LoadingManager } from 'three'
 import { type ApplicationProperties } from './properties/ApplicationProperties'
 import { type SceneProperties } from './properties/SceneProperties'
+import Stats from 'three/examples/jsm/libs/stats.module.js'
 
 export function returnLoadingManager (loadProgressDiv: HTMLDivElement): LoadingManager {
   const manager = new THREE.LoadingManager()

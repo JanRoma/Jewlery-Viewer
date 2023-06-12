@@ -10,14 +10,14 @@ export class SceneProperties {
   orbitControls: OrbitControls
   sceneMeshes: THREE.Object3D[]
 
-  constructor () {
+  constructor (canvas: HTMLCanvasElement) {
     this.scene = new THREE.Scene()
-    const texture = new THREE.TextureLoader().load('img/background2.png')
+    const texture = new THREE.TextureLoader().load('img/background.png')
     this.scene.background = texture
     this.light = createLight(this.scene)
     this.scene.add(this.light)
     this.camera = createPerspectiveCamera()
-    this.renderer = createRenderer()
+    this.renderer = createRenderer(canvas)
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement)
     this.orbitControls.minDistance = 3 // 0.35
     this.orbitControls.maxDistance = 35 // 1
@@ -54,8 +54,8 @@ function createLight (scene: THREE.Scene): THREE.SpotLight {
   return light
 }
 
-function createRenderer (): THREE.WebGLRenderer {
-  const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer()
+function createRenderer (canvas: HTMLCanvasElement): THREE.WebGLRenderer {
+  const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({canvas: canvas})
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap

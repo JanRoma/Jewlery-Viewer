@@ -6,7 +6,6 @@ export class ModelUIHandler {
   modelDiv: HTMLDivElement
   document: Document
   modelController: ModelController
-  texture: THREE.Texture
   cssController: CssController
   model1Button: HTMLButtonElement
   model2Button: HTMLButtonElement
@@ -16,7 +15,6 @@ export class ModelUIHandler {
   constructor (document: Document, metalController: ModelController, cssController: CssController) {
     this.document = document
     this.modelController = metalController
-    this.texture = new THREE.Texture()
     this.cssController = cssController
     this.textLabel = this.createModelLabel()
     this.model1Button = this.createModel1Button()
@@ -27,9 +25,6 @@ export class ModelUIHandler {
 
   createModelDiv (): HTMLDivElement {
     this.modelDiv = this.document.createElement('div')
-
-    this.texture = this.loadTexture()
-
     this.modelDiv.appendChild(this.textLabel)
     this.modelDiv.appendChild(this.model1Button)
     this.modelDiv.appendChild(this.model2Button)
@@ -37,21 +32,6 @@ export class ModelUIHandler {
 
     this.modelDiv.style.visibility = 'hidden'
     return this.modelDiv
-  }
-
-  loadTexture (): THREE.Texture {
-    const imgTexture = new THREE.CubeTextureLoader().setPath('img/SCM/')
-      .load([
-        'px.png',
-        'nx.png',
-        'py.png',
-        'ny.png',
-        'pz.png',
-        'nz.png'
-      ])
-    // imgTexture.wrapS = imgTexture.wrapT = THREE.RepeatWrapping
-    imgTexture.anisotropy = 16
-    return imgTexture
   }
 
   createModelLabel (): HTMLLabelElement {
@@ -83,7 +63,7 @@ export class ModelUIHandler {
 
   model1OnClick (modelController: ModelController, event: Event): void {
     if (this.modelChecked === 2) {
-      modelController.changeModel('Jasiu2')
+      modelController.changeModel('model2')
 
       this.model1Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_checked', '1')
       this.model2Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', '2')
@@ -93,7 +73,7 @@ export class ModelUIHandler {
 
   model2OnClick (modelController: ModelController, event: Event): void {
     if (this.modelChecked === 1) {
-      modelController.changeModel('Jasiu3')
+      modelController.changeModel('model3')
       this.model1Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_unchecked', '1')
       this.model2Button.innerHTML = this.cssController.returnIconLabelButton('radio_button_checked', '2')
       this.modelChecked = 2
