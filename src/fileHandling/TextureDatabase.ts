@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { Texture, type WebGLRenderer } from 'three'
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 
 export class TextureDatabase {
   textures: Map<string, Texture>

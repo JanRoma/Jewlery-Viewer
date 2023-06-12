@@ -5,7 +5,6 @@ import * as ModelLoadingUtils from './fileHandling/ModelLoader'
 import { GUIHandler } from './uiHandling/GUIHandler'
 import { GUI } from 'dat.gui'
 import { UIHandler } from './uiHandling/UIHandler'
-import Stats from 'three/examples/jsm/libs/stats.module'
 import { DragAndDropUIHandler } from './uiHandling/DragAndDropUIHandler'
 import { RotationUIHandler } from './uiHandling/RotationUIHandler'
 import { RotationController } from './model/RotationController'
@@ -22,12 +21,13 @@ import { MenuBarController } from './model/MenuBarController'
 import { MenuBarUIHandler } from './uiHandling/MenuBarUIHandler'
 import { HideMenuUIHandler } from './uiHandling/HideMenuUIHandler'
 import { TextureDatabase } from './fileHandling/TextureDatabase'
+import Stats from 'three/examples/jsm/libs/stats.module.js'
 // import { type WebGLRenderer } from 'three'
-
+export function runApp(){
 // VARIABLES
 const appProperties = new ApplicationProperties()
-const loadProgressDiv = document.getElementById('progress') as HTMLDivElement
-const loadingManager = Utils.returnLoadingManager(loadProgressDiv)
+const loadProgressDiv = document.getElementById('progress')
+const loadingManager = Utils.returnLoadingManager(loadProgressDiv as HTMLDivElement)
 const sceneProperties = new SceneProperties()
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
 
@@ -53,7 +53,7 @@ const menuBarController = new MenuBarController(modelUIHandler.modelDiv, metalUI
 const menuBarUIHandler = new MenuBarUIHandler(document, menuBarController, cssController)
 const hideMenuUIHandler = new HideMenuUIHandler(document, menuBarUIHandler)
 
-const uiHandler = new UIHandler(dndHandler, guiHandler, Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
+const uiHandler = new UIHandler(dndHandler, guiHandler, new Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
 
 // const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
 uiHandler.setDivsToDocument()
@@ -70,14 +70,14 @@ modelLoader.loadOBJModel('models/jasiu', 'Jasiu3')
 
 window.addEventListener('resize', onWindowResize, false)
 
-function onWindowResize (): void {
+function onWindowResize () {
   sceneProperties.camera.aspect = window.innerWidth / window.innerHeight
   sceneProperties.camera.updateProjectionMatrix()
   sceneProperties.renderer.setSize(window.innerWidth, window.innerHeight)
   render()
 }
 
-function animate (): void {
+function animate () {
   requestAnimationFrame(animate)
   stats.update()
   // appProperties.mainObject.rotateX(0.05)
@@ -97,8 +97,13 @@ function animate (): void {
   render()
 }
 
-function render (): void {
+
+function render () {
   sceneProperties.renderer.render(sceneProperties.scene, sceneProperties.camera)
 }
 
 animate()
+
+
+}
+

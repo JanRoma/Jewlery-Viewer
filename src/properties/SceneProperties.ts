@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 
 export class SceneProperties {
   scene: THREE.Scene
@@ -28,6 +28,13 @@ export class SceneProperties {
     const pmremGenerator = new THREE.PMREMGenerator(this.renderer)
     this.scene.environment = pmremGenerator.fromScene(environment).texture
   }
+}
+
+export default function createScene(){
+  // let renderer = new THREE.WebGLRenderer({ antialias: true, canvas: el });
+  console.log('aaa')
+  // resize();
+  // animate();
 }
 
 function createLight (scene: THREE.Scene): THREE.SpotLight {

@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { type LoadingManager } from 'three'
-import Stats from 'three/examples/jsm/libs/stats.module'
 import { type ApplicationProperties } from './properties/ApplicationProperties'
 import { type SceneProperties } from './properties/SceneProperties'
 
@@ -39,7 +38,7 @@ export function addMouseHandler (envProperties: SceneProperties, appProperties: 
 }
 
 export function addStats (): Stats {
-  const stats = Stats()
+  const stats = new Stats()
   document.body.appendChild(stats.dom)
   return stats
 }

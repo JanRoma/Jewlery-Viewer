@@ -47,7 +47,7 @@ export class DragAndDropUIHandler {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault()
     const file: File = ev.dataTransfer?.files[0] as File
-    this.modelLoader.loadGLTFModelFromFile(file, this.loadingManager, this.appProperties)
+    // this.modelLoader.loadGLTFModelFromFile(file, this.loadingManager, this.appProperties)
 
     console.log(ev.dataTransfer?.files[0])
     // if (ev.dataTransfer.items) {

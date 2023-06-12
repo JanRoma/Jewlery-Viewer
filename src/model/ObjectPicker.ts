@@ -48,10 +48,7 @@ export class ObjectPicker {
     event: MouseEvent): void {
     event.preventDefault()
 
-    const mouse = {
-      x: (event.clientX / envProperties.renderer.domElement.clientWidth) * 2 - 1,
-      y: -(event.clientY / envProperties.renderer.domElement.clientHeight) * 2 + 1
-    }
+    const mouse = new THREE.Vector2((event.clientX / envProperties.renderer.domElement.clientWidth) * 2 - 1, -(event.clientY / envProperties.renderer.domElement.clientHeight) * 2 + 1)
 
     raycaster.setFromCamera(mouse, envProperties.camera)
 
