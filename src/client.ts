@@ -21,7 +21,7 @@ import { MenuBarUIHandler } from './uiHandling/MenuBarUIHandler'
 import { HideMenuUIHandler } from './uiHandling/HideMenuUIHandler'
 import { TextureDatabase } from './fileHandling/TextureDatabase'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
-import type { AppState } from './AppState'
+import type { AppState } from './types'
 import { ScreenshotController } from './fileHandling/ScreenshotController'
 // import { type WebGLRenderer } from 'three'
 
@@ -48,27 +48,17 @@ function animate () {
   // appProperties.mainObject.rotateX(0.05)
   // dragAndDropHandler.SetDragAndDrop()
 
-// to-do: this statement is stupid, to delete   
-  if (!appState.appProperties.isModelAdded) {
-    if (appState.appProperties.isModelLoaded) {
-      appState.appProperties.mainObject.scale.set(0.2, 0.2, 0.2)
-      appState.sceneProperties.scene.add(appState.appProperties.mainObject)
-      // Utils.addGUI(appProperties.mainObject, envProperties.controls)
-      appState.appProperties.isModelAdded = true
-      // console.dir(appProperties.mainObject)
-    }
-  }
   appState.sceneProperties.orbitControls.update()
   render()
 }
 
-
 function render () {
   appState.sceneProperties.renderer.render(appState.sceneProperties.scene, appState.sceneProperties.camera)
 }
-animate()
-}
 
+animate()
+
+}
 
 export function initializeAppState(canvas: HTMLCanvasElement): AppState { 
   // VARIABLES

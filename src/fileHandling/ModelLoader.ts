@@ -38,15 +38,6 @@ export class ModelLoader {
 
         this.sceneProperties.scene.add(object)
         this.sceneProperties.sceneMeshes.push(object)
-        // to-do: to delete?
-        // object.traverse((child) => {
-        //   if ((child as THREE.Mesh).isMesh) {
-        //     const m = (child as THREE.Mesh)
-        //     m.receiveShadow = true
-        //     m.castShadow = true
-        //     this.sceneProperties.sceneMeshes.push(m)
-        //   }
-        // })
         this.applicationProperties.mainObject = object
         this.metalController.changeToGold(object)
         this.gemController.changeToEmerald(object)
