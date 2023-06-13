@@ -55,6 +55,15 @@ button:disabled {
 	color: #999;
 }
 
+.div-primary-color{
+  background-color: #333;
+}
+
+.div-secondary-color{
+  background-color: #999;
+  color: #fff;
+}
+
 button:not(:disabled):active {
 	background-color: #ddd;
 }
@@ -62,3 +71,5 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+

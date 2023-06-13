@@ -11,15 +11,15 @@ export class CssController {
   colorController: ColorSet
   iconsColor: Color
 
-  constructor (colorController: ColorSet) {
-    this.emeraldColor = colorController.emeraldColor
-    this.sapphireColor = colorController.sapphireColor
-    this.goldColor = colorController.goldColor
-    this.silverColor = colorController.silverColor
+  constructor (colorSet: ColorSet) {
+    this.emeraldColor = colorSet.emeraldColor
+    this.sapphireColor = colorSet.sapphireColor
+    this.goldColor = colorSet.goldColor
+    this.silverColor = colorSet.silverColor
     this.backgroundColor = new Color(0xffffff)
     this.iconsColor = new Color(0x778877)
     this.colorChangingDivsWidth = 220
-    this.colorController = colorController
+    this.colorController = colorSet
   }
 
   returnDivLabelStyle (): string {

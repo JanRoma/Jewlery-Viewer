@@ -22,19 +22,66 @@ import { MenuBarUIHandler } from './uiHandling/MenuBarUIHandler'
 import { HideMenuUIHandler } from './uiHandling/HideMenuUIHandler'
 import { TextureDatabase } from './fileHandling/TextureDatabase'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
+import type { AppState } from './AppState'
 // import { type WebGLRenderer } from 'three'
-export function runApp(canvas: HTMLCanvasElement){
-// VARIABLES
+
+export function runEnvironment(appState: AppState){
+// const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
+appState.uiHandler.setDivsToDocument()
+
+
+document.body.appendChild(appState.sceneProperties.renderer.domElement)
+
+// modelLoader.loadOBJModel('models/', 'model3')
+
+window.addEventListener('resize', onWindowResize, false)
+
+function onWindowResize () {
+  appState.sceneProperties.camera.aspect = window.innerWidth / window.innerHeight
+  appState.sceneProperties.camera.updateProjectionMatrix()
+  appState.sceneProperties.renderer.setSize(window.innerWidth, window.innerHeight)
+  render()
+}
+
+function animate () {
+  requestAnimationFrame(animate)
+  // appProperties.mainObject.rotateX(0.05)
+  // dragAndDropHandler.SetDragAndDrop()
+
+// to-do: this statement is stupid, to delete   
+  if (!appState.appProperties.isModelAdded) {
+    if (appState.appProperties.isModelLoaded) {
+      appState.appProperties.mainObject.scale.set(0.2, 0.2, 0.2)
+      appState.sceneProperties.scene.add(appState.appProperties.mainObject)
+      // Utils.addGUI(appProperties.mainObject, envProperties.controls)
+      appState.appProperties.isModelAdded = true
+      // console.dir(appProperties.mainObject)
+    }
+  }
+  appState.sceneProperties.orbitControls.update()
+  render()
+}
+
+
+function render () {
+  appState.sceneProperties.renderer.render(appState.sceneProperties.scene, appState.sceneProperties.camera)
+}
+animate()
+}
+
+
+export function initializeAppState(canvas: HTMLCanvasElement): AppState { 
+  // VARIABLES
 const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById('progress')
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv as HTMLDivElement)
 const sceneProperties = new SceneProperties(canvas)
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
 
-const colorController = new ColorSet()
-const cssController = new CssController(colorController)
+const colorSet = new ColorSet()
+const cssController = new CssController(colorSet)
 const textureDatabase = new TextureDatabase(sceneProperties.renderer)
-const materialController = new MaterialController(colorController, textureDatabase)
+const materialController = new MaterialController(colorSet, textureDatabase)
 const metalController = new MetalController(materialController)
 const gemController = new GemController(materialController)
 const guiHandler = new GUIHandler(new GUI(), textureDatabase, materialController, sceneProperties)
@@ -55,52 +102,34 @@ const hideMenuUIHandler = new HideMenuUIHandler(document, menuBarUIHandler)
 
 const uiHandler = new UIHandler(dndHandler, guiHandler, new Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
 
-// const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
-uiHandler.setDivsToDocument()
+const appState: AppState = {
+  appProperties: appProperties,
+  loadingManager:  loadingManager,
+  sceneProperties: sceneProperties,
+  colorSet: colorSet,
+  cssController: cssController,
+  materialController: materialController,
+  textureDatabase: textureDatabase,
 
-// objectPicker.SetMouseListeners()
-const stats = Utils.addStats()
+  guiHandler: guiHandler,
+  metalController: metalController,
+  gemController: gemController,
+  modelLoader: modelLoader,
+  modelController: modelController,
 
-document.body.appendChild(sceneProperties.renderer.domElement)
+  rotationUIHandler: rotationUIHandler,
+  metalUIHandler: metalUIHandler,
+  gemUIHandler: gemUIHandler,
+  modelUIHandler: modelUIHandler,
 
-modelLoader.loadOBJModel('models/', 'model3')
+  dndHandler: dndHandler,
 
-window.addEventListener('resize', onWindowResize, false)
+  menuBarController: menuBarController,
+  menuBarUIHandler: menuBarUIHandler,
+  hideMenuUIHandler: hideMenuUIHandler,
+  uiHandler: uiHandler,
 
-function onWindowResize () {
-  sceneProperties.camera.aspect = window.innerWidth / window.innerHeight
-  sceneProperties.camera.updateProjectionMatrix()
-  sceneProperties.renderer.setSize(window.innerWidth, window.innerHeight)
-  render()
 }
-
-function animate () {
-  requestAnimationFrame(animate)
-  stats.update()
-  // appProperties.mainObject.rotateX(0.05)
-  // dragAndDropHandler.SetDragAndDrop()
-
-// to-do: this statement is stupid, to delete   
-  if (!appProperties.isModelAdded) {
-    if (appProperties.isModelLoaded) {
-      appProperties.mainObject.scale.set(0.2, 0.2, 0.2)
-      sceneProperties.scene.add(appProperties.mainObject)
-      // Utils.addGUI(appProperties.mainObject, envProperties.controls)
-      appProperties.isModelAdded = true
-      // console.dir(appProperties.mainObject)
-    }
-  }
-  sceneProperties.orbitControls.update()
-  render()
-}
-
-
-function render () {
-  sceneProperties.renderer.render(sceneProperties.scene, sceneProperties.camera)
-}
-
-animate()
-
-
+return appState
 }
 

@@ -10,6 +10,17 @@ export class RotationController {
     this.isRotating = false
   }
 
+  changeRotation(): void{
+    if(this.isRotating){
+      this.orbitControls.autoRotate = false
+      this.isRotating = false
+    }
+    else{
+      this.orbitControls.autoRotate = true
+      this.orbitControls.autoRotateSpeed = 3
+      this.isRotating = true
+    }
+  }
   rotate (value: boolean): void {
     if (value) {
       this.orbitControls.autoRotate = true

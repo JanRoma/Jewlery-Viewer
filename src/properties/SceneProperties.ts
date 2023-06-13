@@ -30,13 +30,6 @@ export class SceneProperties {
   }
 }
 
-export default function createScene(){
-  // let renderer = new THREE.WebGLRenderer({ antialias: true, canvas: el });
-  console.log('aaa')
-  // resize();
-  // animate();
-}
-
 function createLight (scene: THREE.Scene): THREE.SpotLight {
   const light = new THREE.SpotLight()
   light.castShadow = true

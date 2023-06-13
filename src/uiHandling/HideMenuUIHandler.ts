@@ -41,9 +41,7 @@ export class HideMenuUIHandler {
 
     if (!menuHidden) {
       menuBarUIHandler.showMenuBar(false)
-      console.log('visible')
     } else {
-      console.log('not visible')
       menuBarUIHandler.showMenuBar(true)
       menuBarUIHandler.showLastClickedDiv()
     }

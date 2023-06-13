@@ -110,6 +110,7 @@
     color: white;
     position: absolute;
     top: 50px;
+    margin: auto;
   }
 
   .container {

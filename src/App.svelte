@@ -2,13 +2,17 @@
   var exports = {};
 
   import { onMount } from 'svelte';
-  import { runApp } from "./client";
+  import { runEnvironment, initializeAppState } from "./client";
   import Navbar from "./Navbar.svelte";
+  import ControlBar from './ControlBar.svelte';
+    import type { AppState } from './AppState';
 
-  let canvas;
+  let canvas : HTMLCanvasElement;
+  let appState: AppState;
+  appState = initializeAppState(canvas)
+    runEnvironment(appState)
   onMount(() => {
-    console.log('abc')
-    runApp(canvas)
+    
   });
    
 </script>
@@ -17,6 +21,7 @@
 
 <main>
   <Navbar></Navbar>
+  <ControlBar appState={appState}></ControlBar>
 
 </main>
 

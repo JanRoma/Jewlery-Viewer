@@ -11,37 +11,37 @@ export class MaterialController {
   envTexture: Texture
   envTextureName: string
 
-  colorController: ColorSet
+  colorSet: ColorSet
 
-  constructor (colorController: ColorSet, textureDatabase: TextureDatabase) {
-    this.colorController = colorController
+  constructor (colorSet: ColorSet, textureDatabase: TextureDatabase) {
+    this.colorSet = colorSet
 
     this.envTextureName = 'hdi'
     this.envTexture = textureDatabase.textures.get(this.envTextureName) as Texture
 
     this.emeraldMaterial = new MeshPhysicalMaterial({
-      color: this.colorController.emeraldColor,
+      color: this.colorSet.emeraldColor,
       roughness: 0.1,
       metalness: 0.1,
       transmission: 0.99
     })
 
     this.sapphireMaterial = new MeshPhysicalMaterial({
-      color: this.colorController.sapphireColor,
+      color: this.colorSet.sapphireColor,
       roughness: 0.1,
       metalness: 0.1,
       transmission: 0.99
     })
 
     this.goldMaterial = new MeshPhysicalMaterial({
-      color: this.colorController.goldColor,
+      color: this.colorSet.goldColor,
       roughness: 0.01,
       metalness: 1,
       envMap: this.envTexture
     })
 
     this.silverMaterial = new MeshPhysicalMaterial({
-      color: this.colorController.silverColor,
+      color: this.colorSet.silverColor,
       roughness: 0.1,
       metalness: 0.6,
       envMap: this.envTexture
