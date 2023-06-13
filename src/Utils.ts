@@ -4,15 +4,16 @@ import { type ApplicationProperties } from './properties/ApplicationProperties'
 import { type SceneProperties } from './properties/SceneProperties'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 
-export function returnLoadingManager (loadProgressDiv: HTMLDivElement): LoadingManager {
+export function returnLoadingManager (): LoadingManager {
   const manager = new THREE.LoadingManager()
 
   manager.onStart = function (url, itemsLoaded, itemsTotal) {
+    const loadProgressDiv = document.getElementById('progress')
     loadProgressDiv.style.visibility = 'visible'
   }
 
   manager.onLoad = function () {
-    console.log('Loading complete!')
+    const loadProgressDiv = document.getElementById('progress')
     loadProgressDiv.style.visibility = 'hidden'
   }
 
