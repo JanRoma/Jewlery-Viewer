@@ -73,10 +73,8 @@ animate()
 export function initializeAppState(canvas: HTMLCanvasElement): AppState { 
   // VARIABLES
 const appProperties = new ApplicationProperties()
-const loadProgressDiv = document.getElementById('progress')
-console.log("loadProgressDiv")
-console.dir(loadProgressDiv)
-const loadingManager = Utils.returnLoadingManager(loadProgressDiv as HTMLDivElement)
+
+const loadingManager = Utils.returnLoadingManager()
 const sceneProperties = new SceneProperties(canvas)
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
 
