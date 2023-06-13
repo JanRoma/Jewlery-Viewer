@@ -56,8 +56,6 @@ export class ObjectPicker {
     const anyObjectWasClickedNow = intersects.length > 0
     const anyObjectClickedBefore = lastClickedObject?.objectLoaded
 
-    console.log('aa')
-
     if (this.mouseClicked) {
       // console.log('mouseClicked')
       // console.log(this.mouseClicked)

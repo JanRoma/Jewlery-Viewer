@@ -47,29 +47,30 @@
 .mdc-button:hover{
   color: #fff !important;
 }
-  nav {
-    position: absolute;
-    bottom: 50px;
-    right: 50px;
-  }
-  .w3-bar{
-    overflow: visible;
-  }
 
-  .w3-bar-item {
-    padding: 4px 2px !important;
-  }
+nav {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+}
 
-  .tooltip {
-  position:relative; /* making the .tooltip span a container for the tooltip text */
-  border-bottom:1px dashed #000; /* little indicater to indicate it's hoverable */
-  } 
+.w3-bar{
+  overflow: visible;
+}
+
+.w3-bar-item {
+  padding: 4px 2px !important;
+}
+
+.tooltip {
+position:relative; /* making the .tooltip span a container for the tooltip text */
+border-bottom:1px dashed #000; /* little indicater to indicate it's hoverable */
+} 
 
 .tooltip:before {
   content: attr(data-text); /* here's the magic */
   position:absolute;
   
-  /* vertically center */
   /* move to right */
   bottom: 100%;
   margin-left: 10%;

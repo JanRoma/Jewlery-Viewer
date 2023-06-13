@@ -6,7 +6,6 @@ import { GUIHandler } from './uiHandling/GUIHandler'
 import { GUI } from 'dat.gui'
 import { UIHandler } from './uiHandling/UIHandler'
 import { DragAndDropUIHandler } from './uiHandling/DragAndDropUIHandler'
-import { RotationUIHandler } from './uiHandling/RotationUIHandler'
 import { RotationController } from './model/RotationController'
 import { MetalUIHandler } from './uiHandling/MetalChangeUIHandler'
 import { MetalController } from './model/MetalController'
@@ -75,6 +74,8 @@ export function initializeAppState(canvas: HTMLCanvasElement): AppState {
   // VARIABLES
 const appProperties = new ApplicationProperties()
 const loadProgressDiv = document.getElementById('progress')
+console.log("loadProgressDiv")
+console.dir(loadProgressDiv)
 const loadingManager = Utils.returnLoadingManager(loadProgressDiv as HTMLDivElement)
 const sceneProperties = new SceneProperties(canvas)
 // const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
@@ -87,10 +88,9 @@ const metalController = new MetalController(materialController)
 const gemController = new GemController(materialController)
 const guiHandler = new GUIHandler(new GUI(), textureDatabase, materialController, sceneProperties)
 const modelLoader = new ModelLoadingUtils.ModelLoader(appProperties, sceneProperties, metalController, gemController, loadingManager, guiHandler)
-
+const rotationController = new RotationController(sceneProperties.orbitControls)
 const modelController = new ModelController(appProperties.mainObject, modelLoader)
 
-const rotationUIHandler = new RotationUIHandler(document, new RotationController(sceneProperties.orbitControls))
 const metalUIHandler = new MetalUIHandler(document, metalController, cssController, appProperties, materialController)
 const gemUIHandler = new GemUIHandler(document, appProperties, gemController, materialController, cssController)
 const modelUIHandler = new ModelUIHandler(document, modelController, cssController)
@@ -101,7 +101,7 @@ const menuBarController = new MenuBarController(modelUIHandler.modelDiv, metalUI
 const menuBarUIHandler = new MenuBarUIHandler(document, menuBarController, cssController)
 const hideMenuUIHandler = new HideMenuUIHandler(document, menuBarUIHandler)
 const screenshotController = new ScreenshotController(sceneProperties)
-const uiHandler = new UIHandler(dndHandler, guiHandler, new Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
+const uiHandler = new UIHandler(dndHandler, guiHandler, new Stats(), metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
 
 const appState: AppState = {
   appProperties: appProperties,
@@ -118,7 +118,7 @@ const appState: AppState = {
   modelLoader: modelLoader,
   modelController: modelController,
 
-  rotationUIHandler: rotationUIHandler,
+  rotationController: rotationController,
   metalUIHandler: metalUIHandler,
   gemUIHandler: gemUIHandler,
   modelUIHandler: modelUIHandler,
