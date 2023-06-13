@@ -1,7 +1,6 @@
 import type Stats from 'three/examples/jsm/libs/stats.module'
 import { type DragAndDropUIHandler } from './DragAndDropUIHandler'
 import { type GUIHandler } from './GUIHandler'
-import { type RotationUIHandler } from './RotationUIHandler'
 import { type MetalUIHandler } from './MetalChangeUIHandler'
 import { type GemUIHandler } from './GemChangeUIHandler'
 import { type ModelUIHandler } from './ModelChangeUIHandler'
@@ -13,7 +12,6 @@ export class UIHandler {
   dragAndDropUIHandler: DragAndDropUIHandler
   guiHandler: GUIHandler
   stats: Stats
-  rotationUIHandler: RotationUIHandler
   metalUIHandler: MetalUIHandler
   gemUIHandler: GemUIHandler
   modelUIHandler: ModelUIHandler
@@ -23,7 +21,6 @@ export class UIHandler {
   constructor (dragAndDropUIHandler: DragAndDropUIHandler,
     guiHandler: GUIHandler,
     stats: Stats,
-    rotationUIHandler: RotationUIHandler,
     metalUIHandler: MetalUIHandler,
     gemUIHandler: GemUIHandler,
     modelUIHandler: ModelUIHandler,
@@ -33,7 +30,6 @@ export class UIHandler {
     this.dragAndDropUIHandler = dragAndDropUIHandler
     this.guiHandler = guiHandler
     this.stats = stats
-    this.rotationUIHandler = rotationUIHandler
     this.metalUIHandler = metalUIHandler
     this.gemUIHandler = gemUIHandler
     this.modelUIHandler = modelUIHandler
@@ -43,7 +39,6 @@ export class UIHandler {
   }
 
   setDivsToDocument (): void {
-    this.document.body.appendChild(this.rotationUIHandler.rotationDiv)
     this.document.body.appendChild(this.hideMenuUIHandler.hideMenuDiv)
     // this.document.body.appendChild(this.dragAndDropUIHandler.dropZoneDiv)
     this.document.body.appendChild(this.metalUIHandler.metalDiv)
@@ -51,10 +46,6 @@ export class UIHandler {
     this.document.body.appendChild(this.modelUIHandler.modelDiv)
 
     this.document.body.appendChild(this.menuBarUIHandler.menuBarDiv)
-  }
-
-  createRotationDiv (): HTMLDivElement {
-    return this.rotationUIHandler.createRotationDiv()
   }
 
   createDragAndDropDiv (): HTMLDivElement {

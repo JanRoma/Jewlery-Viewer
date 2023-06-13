@@ -16,10 +16,10 @@ import { HideMenuUIHandler } from "./uiHandling/HideMenuUIHandler"
 import { MenuBarUIHandler } from "./uiHandling/MenuBarUIHandler"
 import { MetalUIHandler } from "./uiHandling/MetalChangeUIHandler"
 import { ModelUIHandler } from "./uiHandling/ModelChangeUIHandler"
-import { RotationUIHandler } from "./uiHandling/RotationUIHandler"
 import { UIHandler } from "./uiHandling/UIHandler"
 import type { ModelLoader } from "./fileHandling/ModelLoader"
 import type { ScreenshotController } from "./fileHandling/ScreenshotController"
+import type { RotationController } from "./model/RotationController"
 
 export type AppState = {
   appProperties: ApplicationProperties,
@@ -33,10 +33,11 @@ export type AppState = {
   gemController: GemController
   guiHandler: GUIHandler
   modelLoader: ModelLoader
+
+  rotationController: RotationController
   
   modelController: ModelController
   
-  rotationUIHandler: RotationUIHandler
   metalUIHandler: MetalUIHandler
   gemUIHandler: GemUIHandler
   modelUIHandler: ModelUIHandler

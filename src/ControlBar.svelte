@@ -17,7 +17,7 @@
       {
         icon: "refresh",
         title: "Auto Rotate",
-        onClick: appState.rotationUIHandler.rotationController.changeRotation.bind({orbitControls: appState.rotationUIHandler.rotationController.orbitControls}),
+        onClick: appState.rotationController.changeRotation.bind({orbitControls: appState.rotationController.orbitControls}),
       },
       {
         icon: "photo_camera",
