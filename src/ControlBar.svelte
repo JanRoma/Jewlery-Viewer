@@ -22,7 +22,7 @@
       {
         icon: "photo_camera",
         title: "Take Screenshot",
-        onClick: () => {console.log( "screenshot")},
+        onClick: appState.screenshotController.takeScreenshot.bind({sceneProperties: appState.screenshotController.sceneProperties}),
       }
     ]
   });

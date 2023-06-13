@@ -23,6 +23,7 @@ import { HideMenuUIHandler } from './uiHandling/HideMenuUIHandler'
 import { TextureDatabase } from './fileHandling/TextureDatabase'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import type { AppState } from './AppState'
+import { ScreenshotController } from './fileHandling/ScreenshotController'
 // import { type WebGLRenderer } from 'three'
 
 export function runEnvironment(appState: AppState){
@@ -99,7 +100,7 @@ const dndHandler = new DragAndDropUIHandler(document, loadingManager, appPropert
 const menuBarController = new MenuBarController(modelUIHandler.modelDiv, metalUIHandler.metalDiv, gemUIHandler.gemDiv)
 const menuBarUIHandler = new MenuBarUIHandler(document, menuBarController, cssController)
 const hideMenuUIHandler = new HideMenuUIHandler(document, menuBarUIHandler)
-
+const screenshotController = new ScreenshotController(sceneProperties)
 const uiHandler = new UIHandler(dndHandler, guiHandler, new Stats(), rotationUIHandler, metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
 
 const appState: AppState = {
@@ -128,6 +129,8 @@ const appState: AppState = {
   menuBarUIHandler: menuBarUIHandler,
   hideMenuUIHandler: hideMenuUIHandler,
   uiHandler: uiHandler,
+  screenshotController: screenshotController,
+
 
 }
 return appState

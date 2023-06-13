@@ -19,6 +19,7 @@ import { ModelUIHandler } from "./uiHandling/ModelChangeUIHandler"
 import { RotationUIHandler } from "./uiHandling/RotationUIHandler"
 import { UIHandler } from "./uiHandling/UIHandler"
 import type { ModelLoader } from "./fileHandling/ModelLoader"
+import type { ScreenshotController } from "./fileHandling/ScreenshotController"
 
 export type AppState = {
   appProperties: ApplicationProperties,
@@ -47,4 +48,6 @@ export type AppState = {
   hideMenuUIHandler: HideMenuUIHandler
   
   uiHandler: UIHandler
+
+  screenshotController: ScreenshotController
 }
