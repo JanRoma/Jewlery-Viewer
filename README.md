@@ -1,2 +1,3 @@
-# Jewlery-Viewer
-Simple Jewlery Viewer application.
+# Jewlery Viewer
+
+Simple Jewlery Viewer App
