@@ -4,7 +4,7 @@
   import ControlBar from './ControlBar.svelte';
   import ProgressCircle from "./ProgressCircle.svelte";
   import type { AppState } from './types';
-  import SceneMenu from "./SceneMenu.svelte";
+  import SceneMenu from "./sceneSubmenu/SceneMenu.svelte";
 
   let canvas : HTMLCanvasElement;
   let appState: AppState;

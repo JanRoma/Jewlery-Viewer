@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
-
+  
   let shown = false;
 
   let dispatch = createEventDispatcher();
@@ -42,17 +42,29 @@
     
   ]
 
+  function showSubmenuElement(name: string){
+    let display: string = (document.getElementById(name) as HTMLDivElement).style.display;
+    if(display == 'none' || !display){
+      (document.getElementById(name) as HTMLDivElement).style.display = 'block'
+    }
+    else{
+      (document.getElementById(name) as HTMLDivElement).style.display = 'none'
+    }
+  }
+  
 
 </script>
 
 {#if shown}
-
 <div class="overflowContainer">
 <div id="sceneSubmenuContainer">
   <div id="submenuHeader">Configuration</div>
   {#each sceneEntries as {title, id} }
   <div id="{id}">
-    <button id="{id}Button" class="submenuButton"><span class="material-icons expandIcon">expand</span>{title}</button>
+    <button id="{id}Button" class="submenuButton" on:click={() => { showSubmenuElement(id+'Div') }}><span class="material-icons expandIcon">expand</span>{title}</button>
+    <div class="submenuDiv" id='{id}Div'>
+      Submenu description
+    </div>
   </div>
     
   {/each}
@@ -64,6 +76,11 @@
 #sceneSubmenuContainer {
   background-color: #333;
   margin-right: 1em;;
+}
+
+.submenuDiv{
+  display: none;
+  color: #fff;
 }
 
 .overflowContainer{
