@@ -1,100 +1,91 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  const navs = [
+  import SceneMenu from "./SceneMenu.svelte";
+
+  export let showSceneMenu : Function;
+  
+  type NavigationButton = {
+      title: string,
+      onClick: Function
+  }
+
+  let navs: Array<NavigationButton> = []
+
+  onMount(() => {
+   navs = [
     {
       title: "Viewer",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Picking",
-      href: "#",
+      onClick: () => {},    
     },
     {
       title: "Scene",
-      href: "#",
+      onClick: showSceneMenu,
     },
     {
       title: "Anti-aliasing",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Post processing",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Export",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Animations",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Modifiers",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Configurators",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Plugins",
-      href: "#",
+      onClick: () => {},
     },
     {
       title: "Extras",
-      href: "#",
+      onClick: () => {},
     },
   ];
 
-  let currentTheme = "";
-
-  onMount(() => {
-    const userPrefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    const hasUserSetDarkModeManually =
-      document.documentElement.dataset.theme == "dark";
-
-    if (!hasUserSetDarkModeManually) {
-      setTheme(userPrefersDarkMode ? "dark" : "light");
-    }
   });
-
-  const setTheme = (theme) => {
-    document.documentElement.dataset.theme = theme;
-    document.cookie = `siteTheme=${theme};max-age=31536000;path="#"`;
-    currentTheme = theme;
-  };
 </script>
 
 <nav>
   <div class="container">
-    <ul>
-      {#each navs as { title, href }}
-        <li>
-          <a
-            {href}
-            {title}>{title}</a
-          >
-        </li>
+
+      {#each navs as { title, onClick }}
+      <div>
+          <button {title} on:click={() => {onClick()}}>{title}</button>
+        </div>
+
       {/each}
-      <li class="relative">
-        {#if currentTheme == "light"}
-          <a class="moon" href={"#"} on:click={() => setTheme("dark")}>
-          </a>
-        {:else}
-          <a class="sun" href={"#"} on:click={() => setTheme("light")}>
-          </a>
-        {/if}
-      </li>
-    </ul>
   </div>
 </nav>
 
 <style>
+button{
+  background-color: transparent;
+  color: #ddd;
+  border: none;
+}
+
+button:hover{
+  color: #fff;
+}
+
   nav {
     padding: 0.5em;
     background-color: #343a40;

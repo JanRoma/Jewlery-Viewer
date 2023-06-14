@@ -3,19 +3,26 @@
   import Navbar from "./Navbar.svelte";
   import ControlBar from './ControlBar.svelte';
   import ProgressCircle from "./ProgressCircle.svelte";
-  import type { AppState } from './AppState';
+  import type { AppState } from './types';
+  import SceneMenu from "./SceneMenu.svelte";
 
   let canvas : HTMLCanvasElement;
   let appState: AppState;
 
   appState = initializeAppState(canvas)
   runEnvironment(appState)
+  let sceneMenu: SceneMenu; 
+
+  function showSceneMenu(){
+    sceneMenu.show()
+  }
 </script>
 
 <canvas bind:this={canvas}></canvas>
 
 <main>
-  <Navbar></Navbar>
+  <SceneMenu bind:this={sceneMenu}></SceneMenu>
+  <Navbar showSceneMenu={showSceneMenu} ></Navbar>
   <ControlBar appState={appState}></ControlBar>
   <ProgressCircle></ProgressCircle>
 
