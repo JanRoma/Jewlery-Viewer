@@ -52,3 +52,16 @@ export type AppState = {
 
   screenshotController: ScreenshotController
 }
+
+
+export type IconNavigationButton = {
+  icon: string,
+  title: string,
+  onClick: Function
+}
+
+export type NavigationButton = {
+  title: string,
+  onClick: Function
+}
+

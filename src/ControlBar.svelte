@@ -1,16 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { AppState } from "./AppState";
+  import type { AppState, IconNavigationButton } from "./types";
   
   export let appState : AppState;
 
-  type NavigationButton = {
-      icon: string,
-      title: string,
-      onClick: Function
-  }
-
-  let navs: Array<NavigationButton> = []
+  let navs: Array<IconNavigationButton> = []
 
   onMount(() => {
     navs = [

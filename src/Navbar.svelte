@@ -1,14 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
-
-  import SceneMenu from "./SceneMenu.svelte";
-
+  import type { NavigationButton } from "./types";
   export let showSceneMenu : Function;
-  
-  type NavigationButton = {
-      title: string,
-      onClick: Function
-  }
 
   let navs: Array<NavigationButton> = []
 
