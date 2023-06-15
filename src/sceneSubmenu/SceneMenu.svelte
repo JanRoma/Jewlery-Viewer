@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import MenuItemExtended from './MenuItemExtended.svelte';
   
   let shown = false;
 
@@ -41,18 +42,6 @@
     }
     
   ]
-
-  function showSubmenuElement(name: string){
-    let display: string = (document.getElementById(name) as HTMLDivElement).style.display;
-    if(display == 'none' || !display){
-      (document.getElementById(name) as HTMLDivElement).style.display = 'block'
-    }
-    else{
-      (document.getElementById(name) as HTMLDivElement).style.display = 'none'
-    }
-  }
-  
-
 </script>
 
 {#if shown}
@@ -60,13 +49,7 @@
 <div id="sceneSubmenuContainer">
   <div id="submenuHeader">Configuration</div>
   {#each sceneEntries as {title, id} }
-  <div id="{id}">
-    <button id="{id}Button" class="submenuButton" on:click={() => { showSubmenuElement(id+'Div') }}><span class="material-icons expandIcon">expand</span>{title}</button>
-    <div class="submenuDiv" id='{id}Div'>
-      Submenu description
-    </div>
-  </div>
-    
+    <MenuItemExtended title={title} id={id}></MenuItemExtended>
   {/each}
 </div>
 </div>
@@ -76,11 +59,6 @@
 #sceneSubmenuContainer {
   background-color: #333;
   margin-right: 1em;;
-}
-
-.submenuDiv{
-  display: none;
-  color: #fff;
 }
 
 .overflowContainer{
@@ -98,39 +76,11 @@
     border-radius: 0.5rem;
     font-size: small;
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, "system-ui", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    width:16em;
+    width:24em;
 }
 
 #submenuHeader{
   color: #fff;
-}
-
-.submenuButton{
-  width:100%;
-  text-align: left;
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-  border-radius: 6px;
-  border: none;
-
-  background: #333;
-  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
-  color: #DFDEDF;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-
-.submenuButton:focus {
-  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
-  outline: 0;
-}
-
-.expandIcon{
-  font-size: small;
-  margin-right: 1em;
+  
 }
 </style>

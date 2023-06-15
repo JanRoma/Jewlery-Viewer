@@ -5,12 +5,16 @@
   import ProgressCircle from "./ProgressCircle.svelte";
   import type { AppState } from './types';
   import SceneMenu from "./sceneSubmenu/SceneMenu.svelte";
+  import { setContext } from 'svelte'
 
   let canvas : HTMLCanvasElement;
   let appState: AppState;
 
   appState = initializeAppState(canvas)
   runEnvironment(appState)
+
+  setContext('appState', appState)
+  
   let sceneMenu: SceneMenu; 
 
   function showSceneMenu(){
@@ -23,7 +27,7 @@
 <main>
   <SceneMenu bind:this={sceneMenu}></SceneMenu>
   <Navbar showSceneMenu={showSceneMenu} ></Navbar>
-  <ControlBar appState={appState}></ControlBar>
+  <ControlBar></ControlBar>
   <ProgressCircle></ProgressCircle>
 
 </main>

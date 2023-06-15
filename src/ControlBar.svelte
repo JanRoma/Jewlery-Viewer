@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { getContext, onMount } from "svelte";
   import type { AppState, IconNavigationButton } from "./types";
   
-  export let appState : AppState;
+  let appState : AppState = getContext('appState')
 
   let navs: Array<IconNavigationButton> = []
 
