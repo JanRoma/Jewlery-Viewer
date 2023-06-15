@@ -1,10 +1,8 @@
 <script lang="ts">
-    import { Color } from "three";
-  import BackgroundColorPicker from "../controls/BackgroundColorPicker.svelte";
-  import type { AppState } from "../types";
-
-  export let id;
-  export let title;
+    import BackgroundColorPicker from "../controls/BackgroundColorPicker.svelte";
+    import BackgroundImagePicker from "../controls/BackgroundImagePicker.svelte";
+    export let id;
+    export let title;
 
   function showSubmenuElement(name: string){
     let display: string = (document.getElementById(name) as HTMLDivElement).style.display;
@@ -22,6 +20,10 @@
   <button id="{id}Button" class="submenuButton" on:click={() => { showSubmenuElement(id+'Div') }}><span class="material-icons expandIcon">expand</span>{title}</button>
   <div class="submenuDiv" id='{id}Div'>
     <BackgroundColorPicker></BackgroundColorPicker>
+    <hr style="padding-top: 0; margin-top:1em; margin-bottom:0; visibility:hidden;"/>
+    <BackgroundImagePicker></BackgroundImagePicker>
+    <hr style="padding-top: 0; margin-top:1em; margin-bottom:0; visibility:hidden;"/>
+
   </div>
 </div>
 
