@@ -7,10 +7,8 @@
   import SceneMenu from "./sceneSubmenu/SceneMenu.svelte";
   import { setContext } from 'svelte'
 
-  let canvas : HTMLCanvasElement;
   let appState: AppState;
-
-  appState = initializeAppState(canvas)
+  appState = initializeAppState()
   runEnvironment(appState)
 
   setContext('appState', appState)
@@ -21,9 +19,6 @@
     sceneMenu.show()
   }
 </script>
-
-<canvas bind:this={canvas}></canvas>
-
 <main>
   <SceneMenu bind:this={sceneMenu}></SceneMenu>
   <Navbar showSceneMenu={showSceneMenu} ></Navbar>

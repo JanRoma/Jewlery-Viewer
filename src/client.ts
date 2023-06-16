@@ -23,10 +23,10 @@ import { TextureDatabase } from './fileHandling/TextureDatabase'
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 import type { AppState } from './types'
 import { ScreenshotController } from './fileHandling/ScreenshotController'
+import { ObjectPicker } from './model/ObjectPicker'
 // import { type WebGLRenderer } from 'three'
 
 export function runEnvironment(appState: AppState){
-// const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
 appState.uiHandler.setDivsToDocument()
 
 
@@ -60,13 +60,11 @@ animate()
 
 }
 
-export function initializeAppState(canvas: HTMLCanvasElement): AppState { 
-  // VARIABLES
+export function initializeAppState(): AppState { 
 const appProperties = new ApplicationProperties()
 
 const loadingManager = Utils.returnLoadingManager()
-const sceneProperties = new SceneProperties(canvas)
-// const textureDatabase = new TextureDatabase(sceneProperties.renderer as WebGLRenderer)
+const sceneProperties = new SceneProperties()
 
 const colorSet = new ColorSet()
 const cssController = new CssController(colorSet)
@@ -90,6 +88,7 @@ const menuBarUIHandler = new MenuBarUIHandler(document, menuBarController, cssCo
 const hideMenuUIHandler = new HideMenuUIHandler(document, menuBarUIHandler)
 const screenshotController = new ScreenshotController(sceneProperties)
 const uiHandler = new UIHandler(dndHandler, guiHandler, new Stats(), metalUIHandler, gemUIHandler, modelUIHandler, menuBarUIHandler, hideMenuUIHandler, document)
+const objectPicker = new ObjectPicker(sceneProperties, uiHandler)
 
 const appState: AppState = {
   appProperties: appProperties,

@@ -1,34 +1,35 @@
-import { Color, Mesh, type MeshPhongMaterial } from 'three'
+import { BackSide, Color, EdgesGeometry, LineSegments, Mesh, MeshBasicMaterial, type MeshPhongMaterial } from 'three'
+import type { SceneProperties } from '../properties/SceneProperties'
 
 export class LastClickedObject {
   objectLoaded: boolean
   object: Mesh
-  originalColor: Color
 
   constructor () {
     this.objectLoaded = false
     this.object = new Mesh()
-    this.originalColor = new Color(0xffffff)
   }
 
-  // to-do
-  // Add proper handling for picker, not with changing the color.
-  // Decide how it should be handled
   removePickedObject (): void {
     this.objectLoaded = false
     this.object = new Mesh()
-    this.originalColor = new Color(0xffffff)
   }
 
-  setObjectNotPicked (): void {
-    (this.object.material as MeshPhongMaterial).color = this.originalColor
+  setObjectNotPicked (sceneProperties: SceneProperties): void {
     this.removePickedObject()
+    sceneProperties.scene.remove( sceneProperties.objectOutline );
   }
 
-  pickNewObject (object: Mesh): void {
+  pickNewObject (object: Mesh, sceneProperties: SceneProperties): void {
     this.objectLoaded = true
     this.object = object
-    this.originalColor = (object.material as MeshPhongMaterial).color;
-    (this.object.material as MeshPhongMaterial).color = new Color(0xff00ff)
+    object.traverse( function ( node ) {
+      let geometry = (node as Mesh).geometry
+      const edges = new EdgesGeometry( geometry ); 
+      const line = new LineSegments(edges, new MeshBasicMaterial( { color: 0xff0000 } ) ); 
+      line.scale.set(0.1,0.1,0.1)
+      sceneProperties.objectOutline = line
+      sceneProperties.scene.add( sceneProperties.objectOutline );
+     });
   }
 }

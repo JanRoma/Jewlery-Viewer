@@ -28,7 +28,7 @@ export class GUIHandler {
 
   showGUI (object: THREE.Object3D): void {
     this.gui.removeFolder(this.gui.__folders[this.folderName])
-
+    this.gui.removeFolder(this.gui.__folders[this.sceneFolderName])
     const sceneFolder = this.gui.addFolder(this.sceneFolderName)
     this.params.backgroundColor = [255, 0, 255]
     const obj = { add: function () { console.log('clicked') } }

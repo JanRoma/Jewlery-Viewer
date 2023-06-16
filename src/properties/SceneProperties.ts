@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { Mesh, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 
@@ -9,15 +10,16 @@ export class SceneProperties {
   renderer: THREE.WebGLRenderer
   orbitControls: OrbitControls
   sceneMeshes: THREE.Object3D[]
+  objectOutline: THREE.LineSegments
 
-  constructor (canvas: HTMLCanvasElement) {
+  constructor () {
     this.scene = new THREE.Scene()
     const texture = new THREE.TextureLoader().load('img/background.png')
     this.scene.background = texture
     this.light = createLight(this.scene)
     this.scene.add(this.light)
     this.camera = createPerspectiveCamera()
-    this.renderer = createRenderer(canvas)
+    this.renderer = createRenderer()
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement)
     this.orbitControls.minDistance = 3 // 0.35
     this.orbitControls.maxDistance = 35 // 1
@@ -38,17 +40,12 @@ function createLight (scene: THREE.Scene): THREE.SpotLight {
   light.position.y = 10
   light.position.z = 1
 
-  // const axesHelper = new THREE.AxesHelper(5);
-  // const lightHelper = new THREE.SpotLightHelper(light)
-
-  // scene.add(axesHelper)
-  // scene.add(lightHelper)
-  // scene.add(light)
   return light
 }
 
-function createRenderer (canvas: HTMLCanvasElement): THREE.WebGLRenderer {
-  const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({canvas: canvas})
+function createRenderer (): THREE.WebGLRenderer {
+  let canvas = document.getElementById('canvas') as HTMLCanvasElement
+  const renderer: THREE.WebGLRenderer = new WebGLRenderer({canvas: canvas})
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.shadowMap.enabled = true
   renderer.shadowMap.type = THREE.PCFSoftShadowMap

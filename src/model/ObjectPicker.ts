@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { type Mesh, type Raycaster } from 'three'
+import { Mesh, Raycaster } from 'three'
 import { type SceneProperties } from '../properties/SceneProperties'
 import { LastClickedObject } from './LastClickedObject'
 import { type GUIHandler } from '../uiHandling/GUIHandler'
@@ -14,17 +14,19 @@ export class ObjectPicker {
 
   constructor (sceneProperties: SceneProperties, uiHandler: UIHandler) {
     this.raycaster = new THREE.Raycaster()
+    this.raycaster.layers.enableAll()
     this.lastClickedObject = new LastClickedObject()
     this.sceneProperties = sceneProperties
     this.mouseClicked = false
     this.uiHandler = uiHandler
+    this.SetMouseListeners()
   }
 
   SetMouseListeners (): void {
     this.sceneProperties.renderer.domElement.addEventListener('mousedown', (evt) => { this.onMouseDown(evt) }, false)
     this.sceneProperties.renderer.domElement.addEventListener('mouseup', (evt) => { this.onMouseUp(evt) }, false)
     this.sceneProperties.renderer.domElement.addEventListener('click', (evt) => { this.onSingleClick(this.sceneProperties, this.raycaster, this.lastClickedObject, this.uiHandler.guiHandler, evt) }, false)
-    this.sceneProperties.renderer.domElement.addEventListener('mousemove', (evt) => { this.onMouseMove(evt) }, false)
+    this.sceneProperties.renderer.domElement.addEventListener('mousemove', (evt) => {this.onMouseMove(evt)  }, false)
   }
 
   onMouseDown (event: MouseEvent): void {
@@ -41,38 +43,32 @@ export class ObjectPicker {
   }
 
   onSingleClick (
-    envProperties: SceneProperties,
+    sceneProperties: SceneProperties,
     raycaster: Raycaster,
     lastClickedObject: LastClickedObject,
     guiHandler: GUIHandler,
     event: MouseEvent): void {
     event.preventDefault()
 
-    const mouse = new THREE.Vector2((event.clientX / envProperties.renderer.domElement.clientWidth) * 2 - 1, -(event.clientY / envProperties.renderer.domElement.clientHeight) * 2 + 1)
+    const mouse = new THREE.Vector2((event.clientX / sceneProperties.renderer.domElement.clientWidth) * 2 - 1, -(event.clientY / sceneProperties.renderer.domElement.clientHeight) * 2 + 1)
 
-    raycaster.setFromCamera(mouse, envProperties.camera)
+    raycaster.setFromCamera(mouse, sceneProperties.camera)
 
-    const intersects = raycaster.intersectObjects(envProperties.sceneMeshes, false)
+    const intersects = raycaster.intersectObjects(sceneProperties.sceneMeshes, false)
     const anyObjectWasClickedNow = intersects.length > 0
     const anyObjectClickedBefore = lastClickedObject?.objectLoaded
 
     if (this.mouseClicked) {
-      // console.log('mouseClicked')
-      // console.log(this.mouseClicked)
-      console.dir('intersects')
-      console.dir(intersects)
-
-      console.log('any Object Clicked')
       console.log(anyObjectWasClickedNow)
       if (anyObjectWasClickedNow) {
         const object = intersects[0].object as Mesh
         console.log(object.name)
-        lastClickedObject.setObjectNotPicked()
-        lastClickedObject.pickNewObject(object)
+        lastClickedObject.setObjectNotPicked(sceneProperties)
+        lastClickedObject.pickNewObject(object, sceneProperties)
         guiHandler.showGUI(lastClickedObject.object)
       } else {
         if (anyObjectClickedBefore) {
-          lastClickedObject.setObjectNotPicked()
+          lastClickedObject.setObjectNotPicked(sceneProperties)
           guiHandler.hideGUI()
         }
       }
