@@ -40,6 +40,7 @@ function onWindowResize () {
   appState.sceneProperties.camera.aspect = window.innerWidth / window.innerHeight
   appState.sceneProperties.camera.updateProjectionMatrix()
   appState.sceneProperties.renderer.setSize(window.innerWidth, window.innerHeight)
+  appState.sceneProperties.composer.setSize(window.innerWidth, window.innerHeight);
   render()
 }
 
@@ -54,6 +55,7 @@ function animate () {
 
 function render () {
   appState.sceneProperties.renderer.render(appState.sceneProperties.scene, appState.sceneProperties.camera)
+  appState.sceneProperties.composer.render()
 }
 
 animate()

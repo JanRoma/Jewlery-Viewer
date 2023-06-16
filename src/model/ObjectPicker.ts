@@ -14,7 +14,6 @@ export class ObjectPicker {
 
   constructor (sceneProperties: SceneProperties, uiHandler: UIHandler) {
     this.raycaster = new THREE.Raycaster()
-    this.raycaster.layers.enableAll()
     this.lastClickedObject = new LastClickedObject()
     this.sceneProperties = sceneProperties
     this.mouseClicked = false
@@ -53,8 +52,8 @@ export class ObjectPicker {
     const mouse = new THREE.Vector2((event.clientX / sceneProperties.renderer.domElement.clientWidth) * 2 - 1, -(event.clientY / sceneProperties.renderer.domElement.clientHeight) * 2 + 1)
 
     raycaster.setFromCamera(mouse, sceneProperties.camera)
-
-    const intersects = raycaster.intersectObjects(sceneProperties.sceneMeshes, false)
+    
+    const intersects = raycaster.intersectObjects(sceneProperties.sceneMeshes, true) // second parameter must be true for raycaster to work
     const anyObjectWasClickedNow = intersects.length > 0
     const anyObjectClickedBefore = lastClickedObject?.objectLoaded
 
@@ -62,10 +61,9 @@ export class ObjectPicker {
       console.log(anyObjectWasClickedNow)
       if (anyObjectWasClickedNow) {
         const object = intersects[0].object as Mesh
-        console.log(object.name)
         lastClickedObject.setObjectNotPicked(sceneProperties)
         lastClickedObject.pickNewObject(object, sceneProperties)
-        guiHandler.showGUI(lastClickedObject.object)
+        // guiHandler.showGUI(lastClickedObject.object)
       } else {
         if (anyObjectClickedBefore) {
           lastClickedObject.setObjectNotPicked(sceneProperties)
