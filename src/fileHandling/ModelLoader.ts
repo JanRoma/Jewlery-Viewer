@@ -42,7 +42,7 @@ export class ModelLoader {
         this.metalController.changeToGold(object)
         this.gemController.changeToEmerald(object)
 
-        this.guiHandler.showGUI(object)
+        // this.guiHandler.showGUI(object)
         // this.uiHandler.metalUIHandler.metalController.changeObject(object)
         // this.uiHandler.gemUIHandler.gemController.changeObject(object)
       },
