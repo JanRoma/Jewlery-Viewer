@@ -1,20 +1,21 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import MenuItemExtended from './MenuItemExtended.svelte';
+  import SceneBackground from './SceneBackground.svelte';
   
   let shown = false;
-
   let dispatch = createEventDispatcher();
 
   export function show() {
-        shown = !shown;
-				dispatch('show', shown);
-		}
+      shown = !shown;
+      dispatch('show', shown);
+  }
 
   let sceneEntries = [
     {
       title: 'Background',
       id: 'background',
+      component: SceneBackground
     },
     {
       title: 'Progressive Shadow',
@@ -48,8 +49,8 @@
 <div class="overflowContainer">
 <div id="sceneSubmenuContainer">
   <div id="submenuHeader">Configuration</div>
-  {#each sceneEntries as {title, id} }
-    <MenuItemExtended title={title} id={id}></MenuItemExtended>
+  {#each sceneEntries as {title, id, component} }
+    <MenuItemExtended title={title} id={id} component={component}></MenuItemExtended>
   {/each}
 </div>
 </div>
