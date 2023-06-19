@@ -16,7 +16,7 @@
 
 <div class="container">
 <div class="label">Color:</div>
-<ColorPicker bind:rgb on:input={() => {appState.sceneProperties.scene.background = new Color(getRGBString())}}/>
+<ColorPicker bind:rgb disableCloseClickOutside={true} hex="#ffffff" on:input={() => {appState.sceneProperties.scene.background = new Color(getRGBString())}}/>
 </div>
 
 <style>
