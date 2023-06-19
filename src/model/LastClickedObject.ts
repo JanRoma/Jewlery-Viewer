@@ -18,6 +18,7 @@ export class LastClickedObject {
   setObjectNotPicked (sceneProperties: SceneProperties): void {
     this.removePickedObject()
     sceneProperties.scene.remove( sceneProperties.objectOutline );
+    sceneProperties.outlinePass.selectedObjects = [];
   }
 
   pickNewObject (object: Mesh, sceneProperties: SceneProperties): void {
