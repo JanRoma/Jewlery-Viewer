@@ -58,12 +58,10 @@ export class ObjectPicker {
     const anyObjectClickedBefore = lastClickedObject?.objectLoaded
 
     if (this.mouseClicked) {
-      console.log(anyObjectWasClickedNow)
       if (anyObjectWasClickedNow) {
         const object = intersects[0].object as Mesh
         lastClickedObject.setObjectNotPicked(sceneProperties)
         lastClickedObject.pickNewObject(object, sceneProperties)
-        // guiHandler.showGUI(lastClickedObject.object)
       } else {
         if (anyObjectClickedBefore) {
           lastClickedObject.setObjectNotPicked(sceneProperties)

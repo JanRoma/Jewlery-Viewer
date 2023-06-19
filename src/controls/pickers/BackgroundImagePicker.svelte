@@ -37,9 +37,9 @@
   <button class="upload" on:click={()=>{fileinput.click();}} >Pick Image</button>
   <input style="display:none" type="file" accept=".jpg, .jpeg, .png" on:change={(e)=>{onFileSelected(e)}} bind:this={fileinput} >
   {#if avatar}
-  <img class="avatar" src="{avatar}" alt="d"on:click={()=>{fileinput.click();}}/>
+  <img class="avatar" src="{avatar}" alt="d" on:click={()=>{fileinput.click();}} on:keydown on:keyup/>
   {:else}
-  <img class="avatar" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png"  alt="" on:click={()=>{fileinput.click();}}/> 
+  <img class="avatar" src="https://cdn0.iconfinder.com/data/icons/essentials-4/1701/empty_inbox-512.png"  alt="empty" on:click={()=>{fileinput.click();}} on:keydown on:keyup/> 
   {/if}
 </div>
 <style>

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { runEnvironment, initializeAppState } from "./client";
-  import Navbar from "./Navbar.svelte";
-  import ControlBar from './ControlBar.svelte';
-  import ProgressCircle from "./ProgressCircle.svelte";
+  import Navbar from "./controls/Navbar.svelte";
+  import ControlBar from './controls/ControlBar.svelte';
+  import ProgressCircle from "./controls/ProgressCircle.svelte";
   import type { AppState } from './types';
   import SceneMenu from "./sceneSubmenu/SceneMenu.svelte";
   import { setContext } from 'svelte'
