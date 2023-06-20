@@ -1,4 +1,4 @@
-import { type LoadingManager } from 'three'
+import { Group, type LoadingManager } from 'three'
 import { type ApplicationProperties } from '../properties/ApplicationProperties'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { type SceneProperties } from '../properties/SceneProperties'
@@ -24,31 +24,58 @@ export class ModelLoader {
   }
 
   loadOBJModel (path: string, name: string): void {
-    this.applicationProperties.isModelLoaded = false
-    this.applicationProperties.isModelAdded = false
+    this.sceneProperties.outlinePass.selectedObjects = [];
+
     this.sceneProperties.scene.remove(this.applicationProperties.mainObject)
+    this.sceneProperties.sceneMeshes.pop()
     const url = `/${name}`
 
     const objLoader = new OBJLoader(this.loadingManager)
     objLoader.setPath(path)
     objLoader.load(
-      url + '.obj',
+      url,
       (object) => {
         object.scale.set(0.1, 0.1, 0.1)
 
         this.sceneProperties.scene.add(object)
         this.sceneProperties.sceneMeshes.push(object)
+
         this.applicationProperties.mainObject = object
+
         this.metalController.changeToGold(object)
         this.gemController.changeToEmerald(object)
-
-        // this.guiHandler.showGUI(object)
-        // this.uiHandler.metalUIHandler.metalController.changeObject(object)
-        // this.uiHandler.gemUIHandler.gemController.changeObject(object)
       },
       (xhr) => {
       // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
       }
     )
   }
+
+  loadOBJModelFromFileBrowser (url: string): void {
+      this.sceneProperties.outlinePass.selectedObjects = [];
+      this.sceneProperties.scene.remove(this.applicationProperties.mainObject)
+      this.sceneProperties.sceneMeshes.pop()
+
+
+      const objLoader = new OBJLoader(this.loadingManager)
+      objLoader.load(
+        url,
+        (object) => {
+          object.scale.set(0.1, 0.1, 0.1)
+  
+          this.sceneProperties.scene.add(object)
+          this.sceneProperties.sceneMeshes.push(object)
+          this.applicationProperties.mainObject = object
+          // this.metalController.changeToGold(object)
+          // this.gemController.changeToEmerald(object)
+  
+          // this.guiHandler.showGUI(object)
+          // this.uiHandler.metalUIHandler.metalController.changeObject(object)
+          // this.uiHandler.gemUIHandler.gemController.changeObject(object)
+        },
+        (xhr) => {
+        // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+        }
+      )
+    }
 }

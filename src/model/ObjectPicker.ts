@@ -65,7 +65,7 @@ export class ObjectPicker {
       } else {
         if (anyObjectClickedBefore) {
           lastClickedObject.setObjectNotPicked(sceneProperties)
-          guiHandler.hideGUI()
+          // guiHandler.hideGUI()
         }
       }
     }
