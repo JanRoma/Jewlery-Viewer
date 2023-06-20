@@ -2,29 +2,25 @@ import * as THREE from 'three'
 import { Mesh, Raycaster } from 'three'
 import { type SceneProperties } from '../properties/SceneProperties'
 import { LastClickedObject } from './LastClickedObject'
-import { type GUIHandler } from '../uiHandling/GUIHandler'
-import { type UIHandler } from '../uiHandling/UIHandler'
 
 export class ObjectPicker {
   raycaster: THREE.Raycaster
   lastClickedObject: LastClickedObject
   sceneProperties: SceneProperties
   mouseClicked: boolean
-  uiHandler: UIHandler
 
-  constructor (sceneProperties: SceneProperties, uiHandler: UIHandler) {
+  constructor (sceneProperties: SceneProperties) {
     this.raycaster = new THREE.Raycaster()
     this.lastClickedObject = new LastClickedObject()
     this.sceneProperties = sceneProperties
     this.mouseClicked = false
-    this.uiHandler = uiHandler
     this.SetMouseListeners()
   }
 
   SetMouseListeners (): void {
     this.sceneProperties.renderer.domElement.addEventListener('mousedown', (evt) => { this.onMouseDown(evt) }, false)
     this.sceneProperties.renderer.domElement.addEventListener('mouseup', (evt) => { this.onMouseUp(evt) }, false)
-    this.sceneProperties.renderer.domElement.addEventListener('click', (evt) => { this.onSingleClick(this.sceneProperties, this.raycaster, this.lastClickedObject, this.uiHandler.guiHandler, evt) }, false)
+    this.sceneProperties.renderer.domElement.addEventListener('click', (evt) => { this.onSingleClick(this.sceneProperties, this.raycaster, this.lastClickedObject, evt) }, false)
     this.sceneProperties.renderer.domElement.addEventListener('mousemove', (evt) => {this.onMouseMove(evt)  }, false)
   }
 
@@ -45,7 +41,6 @@ export class ObjectPicker {
     sceneProperties: SceneProperties,
     raycaster: Raycaster,
     lastClickedObject: LastClickedObject,
-    guiHandler: GUIHandler,
     event: MouseEvent): void {
     event.preventDefault()
 
@@ -60,12 +55,11 @@ export class ObjectPicker {
     if (this.mouseClicked) {
       if (anyObjectWasClickedNow) {
         const object = intersects[0].object as Mesh
-        lastClickedObject.setObjectNotPicked(sceneProperties)
+        sceneProperties.lastClickedObject.setObjectNotPicked(sceneProperties)
         lastClickedObject.pickNewObject(object, sceneProperties)
       } else {
         if (anyObjectClickedBefore) {
           lastClickedObject.setObjectNotPicked(sceneProperties)
-          // guiHandler.hideGUI()
         }
       }
     }

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { NavigationButton } from "./types";
+  import type { NavigationButton } from "../types";
   export let showSceneMenu : Function;
 
   let navs: Array<NavigationButton> = []

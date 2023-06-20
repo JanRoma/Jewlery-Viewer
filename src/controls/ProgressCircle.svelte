@@ -12,7 +12,7 @@
   background-color: transparent;
   text-align: center;
   padding: 10px;
-  visibility: hidden;
+  visibility: visible;
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #3498db; /* Blue */
   border-radius: 50%;

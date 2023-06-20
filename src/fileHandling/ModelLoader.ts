@@ -1,32 +1,26 @@
-import { Group, type LoadingManager } from 'three'
-import { type ApplicationProperties } from '../properties/ApplicationProperties'
+import { LoadingManager } from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { type SceneProperties } from '../properties/SceneProperties'
 import { type MetalController } from '../model/MetalController'
 import { type GemController } from '../model/GemController'
-import { type GUIHandler } from '../uiHandling/GUIHandler'
 
 export class ModelLoader {
-  applicationProperties: ApplicationProperties
   sceneProperties: SceneProperties
   metalController: MetalController
   gemController: GemController
   loadingManager: LoadingManager
-  guiHandler: GUIHandler
 
-  constructor (applicationProperties: ApplicationProperties, sceneProperties: SceneProperties, metalController: MetalController, gemController: GemController, loadingManager: LoadingManager, guiHandler: GUIHandler) {
-    this.applicationProperties = applicationProperties
+  constructor (sceneProperties: SceneProperties, metalController: MetalController, gemController: GemController) {
     this.sceneProperties = sceneProperties
     this.metalController = metalController
     this.gemController = gemController
-    this.loadingManager = loadingManager
-    this.guiHandler = guiHandler
+    this.loadingManager = this.returnLoadingManager()
   }
 
   loadOBJModel (path: string, name: string): void {
     this.sceneProperties.outlinePass.selectedObjects = [];
 
-    this.sceneProperties.scene.remove(this.applicationProperties.mainObject)
+    this.sceneProperties.scene.remove(this.sceneProperties.mainObject)
     this.sceneProperties.sceneMeshes.pop()
     const url = `/${name}`
 
@@ -40,7 +34,7 @@ export class ModelLoader {
         this.sceneProperties.scene.add(object)
         this.sceneProperties.sceneMeshes.push(object)
 
-        this.applicationProperties.mainObject = object
+        this.sceneProperties.mainObject = object
 
         this.metalController.changeToGold(object)
         this.gemController.changeToEmerald(object)
@@ -53,7 +47,7 @@ export class ModelLoader {
 
   loadOBJModelFromFileBrowser (url: string): void {
       this.sceneProperties.outlinePass.selectedObjects = [];
-      this.sceneProperties.scene.remove(this.applicationProperties.mainObject)
+      this.sceneProperties.scene.remove(this.sceneProperties.mainObject)
       this.sceneProperties.sceneMeshes.pop()
 
 
@@ -65,7 +59,7 @@ export class ModelLoader {
   
           this.sceneProperties.scene.add(object)
           this.sceneProperties.sceneMeshes.push(object)
-          this.applicationProperties.mainObject = object
+          this.sceneProperties.mainObject = object
           // this.metalController.changeToGold(object)
           // this.gemController.changeToEmerald(object)
   
@@ -77,5 +71,30 @@ export class ModelLoader {
         // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
         }
       )
+    }
+
+    returnLoadingManager (): LoadingManager {
+      const manager = new LoadingManager()
+    
+      manager.onStart = function (url, itemsLoaded, itemsTotal) {
+        const loadProgressDiv = document.getElementById('progress')
+        if(loadProgressDiv!=null){
+          loadProgressDiv.style.visibility = 'visible'
+        }
+      }
+    
+      manager.onLoad = function () {
+        const loadProgressDiv = document.getElementById('progress')
+        loadProgressDiv.style.visibility = 'hidden'
+      }
+    
+      manager.onProgress = function (url, itemsLoaded, itemsTotal) {
+      }
+    
+      manager.onError = function (url) {
+        console.log('There was an error loading ' + url)
+      }
+    
+      return manager
     }
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import BackgroundColorPicker from "../controls/pickers/BackgroundColorPicker.svelte";
-  import BackgroundImagePicker from "../controls/pickers/BackgroundImagePicker.svelte";
+  import BackgroundColorPicker from "../pickers/BackgroundColorPicker.svelte";
+  import BackgroundImagePicker from "../pickers/BackgroundImagePicker.svelte";
 </script>
 
 <div>

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import ColorPicker, { type RgbaColor } from 'svelte-awesome-color-picker';
-    import type { AppState } from '../types';
-    import { getContext } from 'svelte'
+  import type { AppState } from '../../types';
+  import { getContext } from 'svelte'
 
-    import { Color } from 'three';
+  import { Color } from 'three';
 
 	let rgb : RgbaColor; // or hsv or hex
 

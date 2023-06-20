@@ -1,6 +1,6 @@
 <script lang="ts">
     import { getContext, onMount } from "svelte";
-    import type { AppState } from "../types";
+    import type { AppState } from "../../types";
     import { TextureLoader } from "three";
 
 	let  avatar, fileinput : HTMLInputElement;

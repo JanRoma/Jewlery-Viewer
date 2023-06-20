@@ -4,8 +4,10 @@
   import ControlBar from './controls/ControlBar.svelte';
   import ProgressCircle from "./controls/ProgressCircle.svelte";
   import type { AppState } from './types';
-  import SceneMenu from "./sceneSubmenu/SceneMenu.svelte";
+  import SceneMenu from "./controls/sceneSubmenu/SceneMenu.svelte";
   import { setContext } from 'svelte'
+  import Notifications from 'svelte-notifications';
+
 
   let appState: AppState;
   appState = initializeAppState()
@@ -19,13 +21,15 @@
     sceneMenu.show()
   }
 </script>
-<main>
-  <SceneMenu bind:this={sceneMenu}></SceneMenu>
-  <Navbar showSceneMenu={showSceneMenu} ></Navbar>
-  <ControlBar></ControlBar>
-  <ProgressCircle></ProgressCircle>
 
-</main>
+<Notifications>
+  <main>
+    <SceneMenu bind:this={sceneMenu}></SceneMenu>
+    <Navbar showSceneMenu={showSceneMenu} ></Navbar>
+    <ControlBar></ControlBar>
+    <ProgressCircle></ProgressCircle>
+  </main>
+</Notifications>
 
 <style>
 	main {

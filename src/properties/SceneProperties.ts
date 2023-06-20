@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Color, WebGLRenderer } from 'three'
+import { Color, Mesh, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
@@ -8,6 +8,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
+import { LastClickedObject } from '../model/LastClickedObject'
+import { ObjectPicker } from '../model/ObjectPicker'
 
 
 export class SceneProperties {
@@ -20,6 +22,9 @@ export class SceneProperties {
   objectOutline: THREE.LineSegments
   composer: EffectComposer
   outlinePass: OutlinePass
+  mainObject: THREE.Object3D
+  lastClickedObject: LastClickedObject
+  objectPicker: ObjectPicker
 
   constructor () {
     this.scene = new THREE.Scene()
@@ -38,6 +43,9 @@ export class SceneProperties {
     const environment = new RoomEnvironment()
     const pmremGenerator = new THREE.PMREMGenerator(this.renderer)
     this.scene.environment = pmremGenerator.fromScene(environment).texture
+    this.mainObject = new Mesh()
+    this.lastClickedObject = new LastClickedObject()
+    this.objectPicker = new ObjectPicker(this)
 
     let effectFXAA;
     this.composer = new EffectComposer( this.renderer );
@@ -48,6 +56,7 @@ export class SceneProperties {
     this.outlinePass.hiddenEdgeColor.set('#f2dfb4');
     this.outlinePass.overlayMaterial.blending = THREE.SubtractiveBlending
     this.outlinePass.edgeStrength = 10
+    this.outlinePass.renderToScreen = true
 
     this.composer.addPass( this.outlinePass );
     const gammaPass = new ShaderPass( GammaCorrectionShader );
@@ -55,9 +64,10 @@ export class SceneProperties {
     effectFXAA = new ShaderPass( FXAAShader );
     effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
     this.composer.addPass( effectFXAA );
-    
   }
 }
+
+
 
 function createLight (): THREE.SpotLight {
   const light = new THREE.SpotLight()
