@@ -48,13 +48,14 @@
             console.log('webkitpath')
             console.log(file.webkitRelativePath)
             dndDiv.style.visibility = 'hidden'
-            appState.modelController.modelLoader.loadOBJModelFromFileBrowser(urlPath)
             addNotification({
-              text: 'Model properly loaded',
+              text: 'Model properly loading',
               position: 'bottom-center',
               type: 'success',
               removeAfter: 3000,
             })
+
+            appState.modelController.modelLoader.loadOBJModelFromFileBrowser(urlPath)
           } else {
             addNotification({
               text: 'File should be of type OBJ',
