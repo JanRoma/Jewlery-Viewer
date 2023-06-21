@@ -1,8 +1,9 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import type { AppState, IconNavigationButton } from "./types";
+  import type { AppState, IconNavigationButton } from "../types";
   
   let appState : AppState = getContext('appState')
+  export let showDnd : Function;
 
   let navs: Array<IconNavigationButton> = []
 
@@ -17,6 +18,11 @@
         icon: "photo_camera",
         title: "Take Screenshot",
         onClick: appState.screenshotController.takeScreenshot.bind({sceneProperties: appState.screenshotController.sceneProperties}),
+      },
+      {
+        icon: "publish",
+        title: "Load model",
+        onClick: showDnd,
       }
     ]
   });

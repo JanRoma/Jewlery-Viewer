@@ -7,27 +7,34 @@
   import SceneMenu from "./controls/sceneSubmenu/SceneMenu.svelte";
   import { setContext } from 'svelte'
   import Notifications from 'svelte-notifications';
-
+  import DragAndDrop from "./controls/DragAndDrop.svelte";
 
   let appState: AppState;
+  let sceneMenu: SceneMenu
+  let dnd: DragAndDrop
+
   appState = initializeAppState()
   runEnvironment(appState)
 
   setContext('appState', appState)
-  
-  let sceneMenu: SceneMenu; 
 
+  function showDnd() {
+    dnd.show()
+  }
+  
   function showSceneMenu(){
     sceneMenu.show()
   }
 </script>
 
+
 <Notifications>
   <main>
     <SceneMenu bind:this={sceneMenu}></SceneMenu>
     <Navbar showSceneMenu={showSceneMenu} ></Navbar>
-    <ControlBar></ControlBar>
+    <ControlBar showDnd={showDnd}></ControlBar>
     <ProgressCircle></ProgressCircle>
+    <DragAndDrop bind:this={dnd}></DragAndDrop>
   </main>
 </Notifications>
 
@@ -44,4 +51,5 @@
 			max-width: none;
 		}
 	}
+
 </style>
