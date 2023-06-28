@@ -10,7 +10,7 @@ export class ObjectPicker {
   mouseClicked: boolean
 
   constructor (sceneProperties: SceneProperties) {
-    this.raycaster = new THREE.Raycaster()
+    this.raycaster = new Raycaster()
     this.lastClickedObject = new LastClickedObject()
     this.sceneProperties = sceneProperties
     this.mouseClicked = false
@@ -20,7 +20,7 @@ export class ObjectPicker {
   SetMouseListeners (): void {
     this.sceneProperties.renderer.domElement.addEventListener('mousedown', (evt) => { this.onMouseDown(evt) }, false)
     this.sceneProperties.renderer.domElement.addEventListener('mouseup', (evt) => { this.onMouseUp(evt) }, false)
-    this.sceneProperties.renderer.domElement.addEventListener('click', (evt) => { this.onSingleClick(this.sceneProperties, this.raycaster, this.lastClickedObject, evt) }, false)
+    this.sceneProperties.renderer.domElement.addEventListener('click', (evt) => { this.onSingleClick(this.sceneProperties, this.lastClickedObject, evt) }, false)
     this.sceneProperties.renderer.domElement.addEventListener('mousemove', (evt) => {this.onMouseMove(evt)  }, false)
   }
 
@@ -39,16 +39,15 @@ export class ObjectPicker {
 
   onSingleClick (
     sceneProperties: SceneProperties,
-    raycaster: Raycaster,
     lastClickedObject: LastClickedObject,
     event: MouseEvent): void {
     event.preventDefault()
 
     const mouse = new THREE.Vector2((event.clientX / sceneProperties.renderer.domElement.clientWidth) * 2 - 1, -(event.clientY / sceneProperties.renderer.domElement.clientHeight) * 2 + 1)
 
-    raycaster.setFromCamera(mouse, sceneProperties.camera)
+    this.raycaster.setFromCamera(mouse, sceneProperties.camera)
     
-    const intersects = raycaster.intersectObjects(sceneProperties.sceneMeshes, true) // second parameter must be true for raycaster to work
+    const intersects = this.raycaster.intersectObjects(sceneProperties.sceneMeshes, true) // second parameter must be true for raycaster to work
     const anyObjectWasClickedNow = intersects.length > 0
     const anyObjectClickedBefore = lastClickedObject?.objectLoaded
 

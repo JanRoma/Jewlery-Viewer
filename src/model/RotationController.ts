@@ -21,6 +21,7 @@ export class RotationController {
       this.isRotating = true
     }
   }
+  
   rotate (value: boolean): void {
     if (value) {
       this.orbitControls.autoRotate = true

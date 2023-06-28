@@ -5,10 +5,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -50px;
-  margin-left: -30px;
-  width: 20px;
-  height: 20px;
+  margin-top: -3em;
+  margin-left: -3em;
+  width: 6em;
+  height: 6em;
   background-color: transparent;
   text-align: center;
   padding: 10px;

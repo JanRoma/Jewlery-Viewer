@@ -63,7 +63,6 @@
       <div>
           <button {title} on:click={() => {onClick()}}>{title}</button>
         </div>
-
       {/each}
   </div>
 </nav>
