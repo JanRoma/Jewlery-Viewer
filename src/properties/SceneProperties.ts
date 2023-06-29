@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Color, Mesh, WebGLRenderer } from 'three'
+import { Mesh, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
@@ -10,6 +10,7 @@ import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectio
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
 import { LastClickedObject } from '../model/LastClickedObject'
 import { ObjectPicker } from '../model/ObjectPicker'
+import { Reflector } from 'three/examples/jsm/objects/Reflector.js'
 
 
 export class SceneProperties {
@@ -25,6 +26,7 @@ export class SceneProperties {
   mainObject: THREE.Object3D
   lastClickedObject: LastClickedObject
   objectPicker: ObjectPicker
+  groundIndex: number
 
   constructor () {
     this.scene = new THREE.Scene()
@@ -64,10 +66,36 @@ export class SceneProperties {
     effectFXAA = new ShaderPass( FXAAShader );
     effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
     this.composer.addPass( effectFXAA );
+    this.groundIndex = this.addGround()
+  }
+
+  addGround() : number{
+    const ground: Reflector = new Reflector(
+      new THREE.PlaneGeometry(4, 4),
+      {
+          textureWidth: window.innerWidth * window.devicePixelRatio,
+          textureHeight: window.innerHeight * window.devicePixelRatio,
+          clipBias: 0.003,
+          color: 0x808080,
+      },
+  )
+    ground.rotateX(-Math.PI/2)
+    ground.position.y = 0
+    ground.position.x = 0
+    this.scene.add(ground)
+    return this.sceneMeshes.push(ground) - 1
+  }
+
+
+  showGround(): void{
+    console.log()
+    this.sceneMeshes[this.groundIndex].visible = true
+  }
+  
+  hideGround(){
+    this.sceneMeshes[this.groundIndex].visible = false
   }
 }
-
-
 
 function createLight (): THREE.SpotLight {
   const light = new THREE.SpotLight()

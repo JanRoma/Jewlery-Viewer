@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import MenuItemExtended from './MenuItemExtended.svelte';
   import SceneBackground from './SceneBackground.svelte';
+  import Ground from './Ground.svelte';
   
   let shown = false;
   let dispatch = createEventDispatcher();
@@ -15,7 +16,7 @@
     {
       title: 'Background',
       id: 'background',
-      component: SceneBackground
+      component: SceneBackground,
     },
     {
       title: 'Progressive Shadow',
@@ -24,6 +25,7 @@
     {
       title: 'Ground',
       id: 'ground',
+      component: Ground,
     },
     {
       title: 'Scene Objects',

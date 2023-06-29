@@ -11,19 +11,24 @@ export class ModelLoader {
   metalController: MetalController
   gemController: GemController
   loadingManager: LoadingManager
+  isModelLoaded: boolean
 
   constructor (sceneProperties: SceneProperties, metalController: MetalController, gemController: GemController) {
     this.sceneProperties = sceneProperties
     this.metalController = metalController
     this.gemController = gemController
     this.loadingManager = this.returnLoadingManager()
+    this.isModelLoaded = false
   }
 
   loadOBJModel (path: string, name: string): void {
     this.sceneProperties.outlinePass.selectedObjects = [];
 
-    this.sceneProperties.scene.remove(this.sceneProperties.mainObject)
-    this.sceneProperties.sceneMeshes.pop()
+    if(this.isModelLoaded){
+      this.sceneProperties.scene.remove(this.sceneProperties.mainObject)
+      this.sceneProperties.sceneMeshes.pop()
+    }
+    this.isModelLoaded = false
     const url = `/${name}`
 
     const objLoader = new OBJLoader(this.loadingManager)
@@ -42,6 +47,7 @@ export class ModelLoader {
 
         this.metalController.changeToGold(object)
         this.gemController.changeToEmerald(object)
+        this.isModelLoaded = true
       },
       (xhr) => {
       // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
@@ -51,8 +57,12 @@ export class ModelLoader {
 
   loadOBJModelFromFileBrowser (url: string): void {
       this.sceneProperties.outlinePass.selectedObjects = [];
-      this.sceneProperties.scene.remove(this.sceneProperties.mainObject)
-      this.sceneProperties.sceneMeshes.pop()
+      
+      if(this.isModelLoaded){
+        this.sceneProperties.scene.remove(this.sceneProperties.mainObject)
+        this.sceneProperties.sceneMeshes.pop()
+      }
+      this.isModelLoaded = false
 
       const objLoader = new OBJLoader(this.loadingManager)
       objLoader.load(
@@ -70,7 +80,8 @@ export class ModelLoader {
           this.sceneProperties.mainObject = object
           this.metalController.changeToGold(object)
           this.gemController.changeToEmerald(object)
-  
+          this.isModelLoaded = true
+
           // this.guiHandler.showGUI(object)
           // this.uiHandler.metalUIHandler.metalController.changeObject(object)
           // this.uiHandler.gemUIHandler.gemController.changeObject(object)
