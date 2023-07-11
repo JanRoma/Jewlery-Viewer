@@ -56,38 +56,44 @@
   });
 </script>
 
-<nav>
-  <div class="container">
-
-      {#each navs as { title, onClick }}
-      <div>
-          <button {title} on:click={() => {onClick()}}>{title}</button>
-        </div>
-      {/each}
-  </div>
-</nav>
+<div class="container">
+  <nav>
+    <div class="itemsContainer">
+        {#each navs as { title, onClick }}
+        <div>
+            <button {title} on:click={() => {onClick()}}>{title}</button>
+          </div>
+        {/each}
+    </div>
+  </nav>
+</div>
 
 <style>
-button{
-  background-color: transparent;
-  color: #ddd;
-  border: none;
-}
+  button{
+    background-color: transparent;
+    color: #ddd;
+    border: none;
+  }
 
-button:hover{
-  color: #fff;
-}
+  button:hover{
+    color: #fff;
+  }
+
+  .container{
+    position: absolute;
+    width: 100%;
+    top: 5em;
+  }
 
   nav {
     padding: 0.5em;
     background-color: #343a40;
     color: white;
-    position: absolute;
-    top: 50px;
     margin: auto;
+    width:70rem;
   }
 
-  .container {
+  .itemsContainer {
     display: flex;
     align-items: center;
   }
