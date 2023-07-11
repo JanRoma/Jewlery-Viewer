@@ -82,6 +82,7 @@ export class SceneProperties {
     ground.rotateX(-Math.PI/2)
     ground.position.y = 0
     ground.position.x = 0
+    ground.visible = false
     this.scene.add(ground)
     return this.sceneMeshes.push(ground) - 1
   }

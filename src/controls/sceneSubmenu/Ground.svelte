@@ -4,10 +4,10 @@
   import type { AppState } from "../../types";
 
   let appState : AppState = getContext('appState')  
-  let checked : boolean
+  let checked : boolean = false
 
   function onChange() : void {
-    appState.sceneProperties.sceneMeshes[appState.sceneProperties.groundIndex].visible = checked ? true : false    
+    appState.sceneProperties.sceneMeshes[appState.sceneProperties.groundIndex].visible = checked ? false : true    
   }
 
 </script>
