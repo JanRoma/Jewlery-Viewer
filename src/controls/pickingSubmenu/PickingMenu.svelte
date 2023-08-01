@@ -1,8 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import MenuItemExtended from '../MenuItemExtended.svelte';
-  import SceneBackground from './SceneBackground.svelte';
-  import Ground from './Ground.svelte';
+    import Picker from './Picker.svelte';
   
   let shown = false;
   let dispatch = createEventDispatcher();
@@ -19,36 +18,22 @@
 
   let sceneEntries = [
     {
-      title: 'Background',
-      id: 'background',
-      component: SceneBackground,
+      title: 'Hierarchy',
+      id: 'hierarchy',
     },
     {
-      title: 'Progressive Shadow',
-      id: 'progressiveShadow',
+      title: 'Material Library',
+      id: 'materialLibrary',
     },
     {
-      title: 'Ground',
-      id: 'ground',
-      component: Ground,
+      title: 'Diamonds',
+      id: 'diamonds',
     },
     {
-      title: 'Scene Objects',
-      id: 'scene',
-    },
-    {
-      title: 'Lights',
-      id: 'lights',
-    },
-    {
-      title: 'Cameras',
-      id: 'cameras',
-    },
-    {
-      title: 'HDRi Ground',
-      id: 'hdriGround',
+      title: 'Picker',
+      id: 'picker',
+      component: Picker,
     }
-    
   ]
 </script>
 

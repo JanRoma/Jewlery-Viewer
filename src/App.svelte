@@ -5,12 +5,14 @@
   import ProgressCircle from "./controls/ProgressCircle.svelte";
   import type { AppState } from './types';
   import SceneMenu from "./controls/sceneSubmenu/SceneMenu.svelte";
+  import PickingMenu from "./controls/pickingSubmenu/PickingMenu.svelte";
   import { setContext } from 'svelte'
   import Notifications from 'svelte-notifications';
   import DragAndDrop from "./controls/DragAndDrop.svelte";
 
   let appState: AppState;
   let sceneMenu: SceneMenu
+  let pickingMenu: PickingMenu
   let dnd: DragAndDrop
 
   appState = initializeAppState()
@@ -23,15 +25,23 @@
   }
   
   function showSceneMenu(){
+    pickingMenu.hide()
     sceneMenu.show()
   }
+
+  function showPickingMenu(){
+    sceneMenu.hide()
+    pickingMenu.show()
+  }
+
 </script>
 
 
 <Notifications>
   <main>
     <SceneMenu bind:this={sceneMenu}></SceneMenu>
-    <Navbar showSceneMenu={showSceneMenu} ></Navbar>
+    <PickingMenu bind:this={pickingMenu}></PickingMenu>
+    <Navbar showSceneMenu={showSceneMenu} showPickingMenu={showPickingMenu} ></Navbar>
     <ControlBar showDnd={showDnd}></ControlBar>
     <ProgressCircle></ProgressCircle>
     <DragAndDrop bind:this={dnd}></DragAndDrop>

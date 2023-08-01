@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Mesh, WebGLRenderer } from 'three'
+import { AxesHelper, Mesh, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
@@ -27,17 +27,21 @@ export class SceneProperties {
   lastClickedObject: LastClickedObject
   objectPicker: ObjectPicker
   groundIndex: number
+  cameraZeroPosition: THREE.Vector3
 
   constructor () {
     this.scene = new THREE.Scene()
+    let axesHelper = new AxesHelper();
+    this.scene.add(axesHelper)
     const texture = new THREE.TextureLoader().load('img/background.png')
     this.scene.background = texture
     this.light = createLight()
     this.scene.add(this.light)
-    this.camera = createPerspectiveCamera()
+    this.cameraZeroPosition =  new THREE.Vector3(0,5,3)
+    this.camera = createPerspectiveCamera(this.cameraZeroPosition)
     this.renderer = createRenderer()
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement)
-    this.orbitControls.minDistance = 3 // 0.35
+    this.orbitControls.minDistance = 0.35 // 0.35
     this.orbitControls.maxDistance = 35 // 1
     this.orbitControls.minPolarAngle = Math.PI / 4
     this.orbitControls.maxPolarAngle = Math.PI - (Math.PI / 4)
@@ -119,7 +123,7 @@ function createRenderer (): THREE.WebGLRenderer {
   return renderer
 }
 
-function createPerspectiveCamera (): THREE.PerspectiveCamera {
+function createPerspectiveCamera (cameraZeroPosition: THREE.Vector3): THREE.PerspectiveCamera {
   const camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,

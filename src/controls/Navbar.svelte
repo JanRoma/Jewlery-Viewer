@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import type { NavigationButton } from "../types";
   export let showSceneMenu : Function;
+  export let showPickingMenu : Function;
 
   let navs: Array<NavigationButton> = []
 
@@ -13,7 +14,7 @@
     },
     {
       title: "Picking",
-      onClick: () => {},    
+      onClick: showPickingMenu,    
     },
     {
       title: "Scene",
