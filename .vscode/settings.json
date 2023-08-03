@@ -1,2 +1,8 @@
 {
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/959de98d-8bb5-4ae1-b9b5-a6b3cb5ef022/resourceGroups/jewlery-test_group/providers/Microsoft.Web/sites/jewlery-test",
+  "appService.deploySubpath": "."
 }
