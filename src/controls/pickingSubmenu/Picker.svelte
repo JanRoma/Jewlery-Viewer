@@ -26,6 +26,8 @@
 <div class="container">
   <div class="label">Active:</div>
   <input type="checkbox" on:change={onActiveChange} bind:checked={activeChecked}  />
+</div>
+<div class="container">
   <div class="label">Auto Focus:</div>
   <input type="checkbox" on:change={onFocusChange} bind:checked={focusChecked}  />
 </div>
