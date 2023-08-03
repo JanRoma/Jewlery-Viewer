@@ -10,11 +10,13 @@
   import Notifications from 'svelte-notifications';
   import DragAndDrop from "./controls/DragAndDrop.svelte";
     import ViewerMenu from "./controls/viewerSubmenu/ViewerMenu.svelte";
+    import PostprocessingMenu from "./controls/postprocessingMenu/PostprocessingMenu.svelte";
 
   let appState: AppState;
   let sceneMenu: SceneMenu
   let pickingMenu: PickingMenu
   let viewerMenu: ViewerMenu
+  let postprocessingMenu: PostprocessingMenu
   let dnd: DragAndDrop
 
   appState = initializeAppState()
@@ -27,21 +29,31 @@
   }
   
   function showSceneMenu(){
+    postprocessingMenu.hide()
     pickingMenu.hide()
     viewerMenu.hide()
     sceneMenu.show()
   }
 
   function showPickingMenu(){
+    postprocessingMenu.hide()
     sceneMenu.hide()
     viewerMenu.hide()
     pickingMenu.show()
   }
 
   function showViewerMenu(){
+    postprocessingMenu.hide()
     sceneMenu.hide()
     pickingMenu.hide()
     viewerMenu.show()
+  }
+
+  function showPostprocessingMenu(){
+    sceneMenu.hide()
+    pickingMenu.hide()
+    viewerMenu.hide()
+    postprocessingMenu.show()
   }
 </script>
 
@@ -51,7 +63,8 @@
     <SceneMenu bind:this={sceneMenu}></SceneMenu>
     <PickingMenu bind:this={pickingMenu}></PickingMenu>
     <ViewerMenu bind:this={viewerMenu}></ViewerMenu>
-    <Navbar showSceneMenu={showSceneMenu} showPickingMenu={showPickingMenu} showViewerMenu={showViewerMenu}></Navbar>
+    <PostprocessingMenu bind:this={postprocessingMenu}></PostprocessingMenu>
+    <Navbar showSceneMenu={showSceneMenu} showPickingMenu={showPickingMenu} showViewerMenu={showViewerMenu} showPostprocessingMenu={showPostprocessingMenu}></Navbar>
     <ControlBar showDnd={showDnd}></ControlBar>
     <ProgressCircle></ProgressCircle>
     <DragAndDrop bind:this={dnd}></DragAndDrop>

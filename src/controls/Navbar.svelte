@@ -4,6 +4,8 @@
   export let showSceneMenu : Function;
   export let showPickingMenu : Function;
   export let showViewerMenu : Function;
+  export let showPostprocessingMenu : Function;
+
 
   let navs: Array<NavigationButton> = []
 
@@ -27,7 +29,7 @@
     },
     {
       title: "Post processing",
-      onClick: () => {},
+      onClick: showPostprocessingMenu,
     },
     {
       title: "Export",
