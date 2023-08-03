@@ -54,7 +54,7 @@ export function initializeAppState(): AppState {
   modelLoader.loadOBJModel('models/', 'model3.obj')
 
   const screenshotController = new ScreenshotController(sceneProperties)
-
+  
   const appState: AppState = {
     sceneProperties: sceneProperties,
     colorSet: colorSet,

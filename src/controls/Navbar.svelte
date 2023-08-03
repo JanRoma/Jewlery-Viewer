@@ -3,6 +3,7 @@
   import type { NavigationButton } from "../types";
   export let showSceneMenu : Function;
   export let showPickingMenu : Function;
+  export let showViewerMenu : Function;
 
   let navs: Array<NavigationButton> = []
 
@@ -10,7 +11,7 @@
    navs = [
     {
       title: "Viewer",
-      onClick: () => {},
+      onClick: showViewerMenu,
     },
     {
       title: "Picking",

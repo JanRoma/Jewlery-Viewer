@@ -9,10 +9,12 @@
   import { setContext } from 'svelte'
   import Notifications from 'svelte-notifications';
   import DragAndDrop from "./controls/DragAndDrop.svelte";
+    import ViewerMenu from "./controls/viewerSubmenu/ViewerMenu.svelte";
 
   let appState: AppState;
   let sceneMenu: SceneMenu
   let pickingMenu: PickingMenu
+  let viewerMenu: ViewerMenu
   let dnd: DragAndDrop
 
   appState = initializeAppState()
@@ -26,14 +28,21 @@
   
   function showSceneMenu(){
     pickingMenu.hide()
+    viewerMenu.hide()
     sceneMenu.show()
   }
 
   function showPickingMenu(){
     sceneMenu.hide()
+    viewerMenu.hide()
     pickingMenu.show()
   }
 
+  function showViewerMenu(){
+    sceneMenu.hide()
+    pickingMenu.hide()
+    viewerMenu.show()
+  }
 </script>
 
 
@@ -41,7 +50,8 @@
   <main>
     <SceneMenu bind:this={sceneMenu}></SceneMenu>
     <PickingMenu bind:this={pickingMenu}></PickingMenu>
-    <Navbar showSceneMenu={showSceneMenu} showPickingMenu={showPickingMenu} ></Navbar>
+    <ViewerMenu bind:this={viewerMenu}></ViewerMenu>
+    <Navbar showSceneMenu={showSceneMenu} showPickingMenu={showPickingMenu} showViewerMenu={showViewerMenu}></Navbar>
     <ControlBar showDnd={showDnd}></ControlBar>
     <ProgressCircle></ProgressCircle>
     <DragAndDrop bind:this={dnd}></DragAndDrop>
