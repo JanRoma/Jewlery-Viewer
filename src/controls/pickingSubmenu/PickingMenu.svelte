@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import MenuItemExtended from '../MenuItemExtended.svelte';
     import Picker from './Picker.svelte';
+    import Hierarchy from './Hierarchy.svelte';
   
   let shown = false;
   let dispatch = createEventDispatcher();
@@ -20,6 +21,7 @@
     {
       title: 'Hierarchy',
       id: 'hierarchy',
+      component: Hierarchy
     },
     {
       title: 'Material Library',

@@ -10,15 +10,11 @@
 
   function onXInput() : void {
     let camera = appState.sceneProperties.camera
-    console.dir(camera.position)
     appState.sceneProperties.camera.position.set(x, camera.position.y, camera.position.z)  
-    console.dir(camera.position)
   }
   function onYInput() : void {
     let camera = appState.sceneProperties.camera
-    console.dir(camera.position)
     appState.sceneProperties.camera.position.set(camera.position.x, y, camera.position.z)  
-    console.dir(camera.position)
   }
   function onZInput() : void {
     let camera = appState.sceneProperties.camera
