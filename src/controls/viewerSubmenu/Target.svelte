@@ -7,6 +7,15 @@
   let x : number = 0
   let y: number = 0
   let z : number = 0
+  
+  appState.sceneProperties.orbitControls.addEventListener( 'change', updateValues );
+
+  function updateValues(){
+    x = appState.sceneProperties.orbitControls.target.x
+    y = appState.sceneProperties.orbitControls.target.y
+    z = appState.sceneProperties.orbitControls.target.z
+    console.log('value.changed')
+  }
 
   function onXInput() : void {
     let target = appState.sceneProperties.orbitControls.target

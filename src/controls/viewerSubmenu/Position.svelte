@@ -2,34 +2,43 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import type { AppState } from "../../types";
+  import type { PerspectiveCamera } from "three";
+  let x : number
+  let y : number
+  let z : number
 
   let appState : AppState = getContext('appState')  
-  let x : number = 0
-  let y: number = 0
-  let z : number = 0
+  x = appState.sceneProperties.camera.position.x
+  y = appState.sceneProperties.camera.position.y
+  z = appState.sceneProperties.camera.position.z
 
-  function onXInput() : void {
-    let camera = appState.sceneProperties.camera
-    appState.sceneProperties.camera.position.set(x, camera.position.y, camera.position.z)  
+  appState.sceneProperties.orbitControls.addEventListener( 'change', updateValues );
+  function updateValues(){
+    x = appState.sceneProperties.camera.position.x
+    y = appState.sceneProperties.camera.position.y
+    z = appState.sceneProperties.camera.position.z
+    console.log('value.changed')
   }
-  function onYInput() : void {
-    let camera = appState.sceneProperties.camera
-    appState.sceneProperties.camera.position.set(camera.position.x, y, camera.position.z)  
+
+  function onChangeX(){
+    appState.sceneProperties.camera.position.x = x
   }
-  function onZInput() : void {
-    let camera = appState.sceneProperties.camera
-    console.dir(camera.position)
-    appState.sceneProperties.camera.position.set(camera.position.x, camera.position.y, z)  
-    console.dir(camera.position)
+
+  function onChangeY(){
+    appState.sceneProperties.camera.position.y = y
+  }
+
+  function onChangeZ(){
+    appState.sceneProperties.camera.position.z = z
   }
 
 </script>
 
 <div class="container">
   <div class="label">Position:</div>
-  <input type='number' class="inputField" bind:value={x} on:input={onXInput} min="-10" max="10"/>
-  <input type='number' class="inputField" bind:value={y} on:input={onYInput} min="-10" max="10"/>
-  <input type='number' class="inputField" bind:value={z} on:input={onZInput} min="-10" max="10"/>
+  <input type='number' class="inputField" bind:value={x} on:change={onChangeX} min="-100" max="100"/>
+  <input type='number' class="inputField" bind:value={y} on:change={onChangeY}  min="-100" max="100"/>
+  <input type='number' class="inputField" bind:value={z} on:change={onChangeZ} min="-100" max="100"/>
 </div>
   
   <style>
