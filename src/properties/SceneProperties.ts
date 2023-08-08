@@ -11,6 +11,7 @@ import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js';
 import { LastClickedObject } from '../model/LastClickedObject'
 import { ObjectPicker } from '../model/ObjectPicker'
 import { Reflector } from 'three/examples/jsm/objects/Reflector.js'
+import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js'
 
 
 export class SceneProperties {
@@ -28,6 +29,9 @@ export class SceneProperties {
   objectPicker: ObjectPicker
   groundIndex: number
   cameraZeroPosition: THREE.Vector3
+  cameraLeftPosition: THREE.Vector3
+  cameraFrontPosition: THREE.Vector3
+  cameraRightPosition: THREE.Vector3
 
   constructor () {
     this.scene = new THREE.Scene()
@@ -38,6 +42,9 @@ export class SceneProperties {
     this.light = createLight()
     this.scene.add(this.light)
     this.cameraZeroPosition =  new THREE.Vector3(0,5,3)
+    this.cameraLeftPosition =  new THREE.Vector3(-5,0,0)
+    this.cameraRightPosition =  new THREE.Vector3(5,0,0)
+    this.cameraFrontPosition =  new THREE.Vector3(0,1,5)
     this.camera = createPerspectiveCamera(this.cameraZeroPosition)
     this.renderer = createRenderer()
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement)

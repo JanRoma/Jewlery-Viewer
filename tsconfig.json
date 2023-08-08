@@ -4,7 +4,7 @@
     "allowJs": true,
     "checkJs": false,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "main.ts"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
   
 }

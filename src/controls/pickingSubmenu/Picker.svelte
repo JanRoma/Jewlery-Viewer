@@ -31,6 +31,7 @@
   <div class="label">Auto Focus:</div>
   <input type="checkbox" on:change={onFocusChange} bind:checked={focusChecked}  />
 </div>
+
   
   <style>
   .label{

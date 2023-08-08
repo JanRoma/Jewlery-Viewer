@@ -1,7 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import MenuItemExtended from '../MenuItemExtended.svelte';
-    import Tonemapping from './Tonemapping.svelte';
+  import Tonemapping from './Tonemapping.svelte';
+  import Passes from './Passes.svelte';
+    import Fog from './Fog.svelte';
   
   let shown = false;
   let dispatch = createEventDispatcher();
@@ -21,6 +23,16 @@
       title: 'Tonemapping',
       id: 'tonemapping',
       component: Tonemapping,
+    },
+    {
+      title: 'Passes',
+      id: 'passes',
+      component: Passes,
+    },
+    {
+      title: 'Fog',
+      id: 'fog',
+      component: Fog,
     },
   ]
 </script>

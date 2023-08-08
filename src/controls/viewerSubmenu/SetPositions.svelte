@@ -19,25 +19,34 @@
     z = appState.sceneProperties.camera.position.z
   }
 
-  function onChangeX(){
-    appState.sceneProperties.camera.position.x = x
+  function onLeftClick(){
+    let left = appState.sceneProperties.cameraLeftPosition
+    appState.sceneProperties.camera.position.set(left.x, left.y, left.z)
   }
 
-  function onChangeY(){
-    appState.sceneProperties.camera.position.y = y
+  function onRightClick(){
+    let right = appState.sceneProperties.cameraRightPosition
+    appState.sceneProperties.camera.position.set(right.x, right.y, right.z)
   }
 
-  function onChangeZ(){
-    appState.sceneProperties.camera.position.z = z
+  function onFrontClick(){
+    let front = appState.sceneProperties.cameraFrontPosition
+    appState.sceneProperties.camera.position.set(front.x, front.y, front.z)
+  }
+
+  function onResetClick(){
+    let zero = appState.sceneProperties.cameraZeroPosition
+    appState.sceneProperties.camera.position.set(zero.x, zero.y, zero.z)
   }
 
 </script>
 
 <div class="container">
-  <div class="label">Position:</div>
-  <input type='number' class="inputField" bind:value={x} on:change={onChangeX} min="-100" max="100"/>
-  <input type='number' class="inputField" bind:value={y} on:change={onChangeY}  min="-100" max="100"/>
-  <input type='number' class="inputField" bind:value={z} on:change={onChangeZ} min="-100" max="100"/>
+  <div class="label">Set Position:</div>
+  <button on:click={onLeftClick}>Left</button>
+  <button on:click={onRightClick}>Right</button>
+  <button on:click={onFrontClick}>Front</button>
+  <button on:click={onResetClick}>Reset</button>
 </div>
   
   <style>

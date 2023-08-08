@@ -9,6 +9,9 @@ import { TextureDatabase } from './fileHandling/TextureDatabase'
 import type { AppState } from './types'
 import { ScreenshotController } from './fileHandling/ScreenshotController'
 import { ModelLoader } from './fileHandling/ModelLoader'
+import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass.js'
+import { Vector2 } from 'three'
+
 
 export function runEnvironment(appState: AppState){
   document.body.appendChild(appState.sceneProperties.renderer.domElement)
@@ -30,8 +33,18 @@ export function runEnvironment(appState: AppState){
   }
 
   function render () {
-    appState.sceneProperties.renderer.render(appState.sceneProperties.scene, appState.sceneProperties.camera)
-    appState.sceneProperties.composer.render()
+    // const renderPass = new RenderPass( appState.sceneProperties.scene, appState.sceneProperties.camera );
+    // appState.sceneProperties.composer.addPass( renderPass );
+
+    // const glitchPass = new GlitchPass();
+    // appState.sceneProperties.composer.addPass( glitchPass );
+
+    // const outputPass = new OutputPass();
+    // appState.sceneProperties.composer.addPass( outputPass );
+    // appState.sceneProperties.renderer.render(appState.sceneProperties.scene, appState.sceneProperties.camera)
+   
+    appState.sceneProperties.composer.render() // working without renderer
+
   }
 
   animate()
